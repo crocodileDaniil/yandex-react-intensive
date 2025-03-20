@@ -1,0 +1,22 @@
+.constructor {
+	height: calc(100vh - 150px);
+
+	/* display: flex;
+	flex-direction: column;
+	gap: 16px;
+	align-items: flex-end; */
+}
+
+.filling {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	height: 470px;
+	overflow-y: scroll;
+}
+
+@media screen and (height <= 960px) {
+	.filling {
+		height: 370px;
+	}
+}
