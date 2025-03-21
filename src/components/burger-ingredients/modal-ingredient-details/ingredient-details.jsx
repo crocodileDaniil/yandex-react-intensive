@@ -1,25 +1,16 @@
 import { useEffect } from 'react';
-import ReactDOM from 'react-dom';
 import styles from './styles.module.css';
 import PropTypes from 'prop-types';
 import { Modal } from '../../modal/modal';
 
-const containerModal = document.getElementById('modal-root');
-
 export const IngredientDetails = ({ dataIngredient, onClose }) => {
 	const { name, calories, fat, proteins, carbohydrates, image } =
 		dataIngredient;
-	useEffect(() => {
-		const closeOnEscape = (e) => e.key === 'Escape' && onClose();
-		document.addEventListener('keydown', closeOnEscape);
-		return () => {
-			document.removeEventListener('keydown', closeOnEscape);
-		};
-	}, [onClose]);
 
 	const modalStylesClass = `${styles.modal} pt-10 pr-10 pl-10 pb-15`;
 	const buttonStylesClass = styles.close ? `${styles.close}` : ' ';
-	return ReactDOM.createPortal(
+
+	return (
 		<Modal
 			onClose={onClose}
 			classModal={modalStylesClass}
@@ -73,16 +64,24 @@ export const IngredientDetails = ({ dataIngredient, onClose }) => {
 					</div>
 				</div>
 			</>
-		</Modal>,
-		containerModal
+		</Modal>
 	);
 };
 
 IngredientDetails.propTypes = {
-	name: PropTypes.string,
-	calories: PropTypes.number,
-	fat: PropTypes.number,
-	proteins: PropTypes.number,
-	carbohydrates: PropTypes.number,
-	image: PropTypes.string,
+	onClose: PropTypes.func,
+	dataIngredient: PropTypes.shape({
+		_id: PropTypes.string,
+		name: PropTypes.string,
+		type: PropTypes.string,
+		proteins: PropTypes.number,
+		fat: PropTypes.number,
+		carbohydrates: PropTypes.number,
+		calories: PropTypes.number,
+		price: PropTypes.number,
+		image: PropTypes.string,
+		image_mobile: PropTypes.string,
+		image_large: PropTypes.string,
+		__v: PropTypes.number,
+	}),
 };

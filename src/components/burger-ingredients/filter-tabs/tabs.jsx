@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 export const FilterIngredients = (props) => {
 	const { namesFilter, current } = props;
 	const onClick = (value) => {
-		console.log(value);
 		props.setFilterIngredients(value);
 	};
 	//TODO: промамить фильтром и вернуть табы
@@ -33,7 +32,7 @@ export const FilterIngredients = (props) => {
 };
 
 FilterIngredients.propTypes = {
-	namesFilter: PropTypes.array,
+	namesFilter: PropTypes.arrayOf(PropTypes.string),
 	current: PropTypes.string,
 	setFilterIngredients: PropTypes.func,
 };

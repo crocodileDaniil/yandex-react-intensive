@@ -1,22 +1,13 @@
 import { CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import React, { useEffect } from 'react';
-import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 import styles from './styles.module.css';
 import { Modal } from '../../modal/modal';
 
-const containerModal = document.getElementById('modal-root');
-
 export const OrderDetails = ({ numberOrder = 88005553535, onClose }) => {
-	useEffect(() => {
-		const closeOnEscape = (e) => e.key === 'Escape' && onClose();
-		document.addEventListener('keydown', closeOnEscape);
-		return () => document.removeEventListener('keydown', closeOnEscape);
-	}, [onClose]);
-
 	const modalStylesClass = `${styles.modal} pt-30 pr-25 pl-25 pb-30`;
 	const buttonStylesClass = styles.close ? `${styles.close}` : ' ';
-	return ReactDOM.createPortal(
+
+	return (
 		<Modal
 			onClose={onClose}
 			classModal={modalStylesClass}
@@ -36,8 +27,7 @@ export const OrderDetails = ({ numberOrder = 88005553535, onClose }) => {
 					Дождитесь готовности на орбитальной станции
 				</p>
 			</>
-		</Modal>,
-		containerModal
+		</Modal>
 	);
 };
 
