@@ -1,0 +1,12 @@
+.place-order {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	gap: 40px;
+}
+
+.price {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}

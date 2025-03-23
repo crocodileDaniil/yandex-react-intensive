@@ -1,36 +1,59 @@
-import { clsx } from 'clsx';
 import { useState } from 'react';
-import s from './app.module.scss';
-import reactLogo from './assets/react.svg';
-import { ReactComponent as TypescriptLogo } from './assets/typescript.svg';
-import { add } from '@utils/one';
-import { AppHeader } from '@components/app-header/app-header';
+import { PageConstructorBurger } from '../pages/page-constructor-burger/page-constructor-burger';
+import { CheckList } from '../pages/check-list/check-list';
+import { MOCK_DATA } from '../../constants/mock';
+import { PersonalAccount } from '../pages/persanal-account/personal-account';
+
+//почему этот импорт не работает?
+// import { MOCK_DATA } from '@constants/mock';
+
+const restaurantPages = ['constructor', 'check-list', 'personal-account'];
 
 export const App = () => {
-	// const num = 0
-	const [count, setCount] = useState(0);
+	const [page, setPage] = useState(restaurantPages[0]);
+
+	// здесь оборачивать не обязаятельно?
+	const setPageConstructor = () => {
+		setPage(restaurantPages[0]);
+	};
+
+	const setPageCheckList = () => {
+		setPage(restaurantPages[1]);
+	};
+
+	const setPagePersonalAccount = () => {
+		setPage(restaurantPages[2]);
+	};
 
 	return (
-		<div className='page'>
-			<AppHeader />
-			<div className='logo-wrapper'>
-				<a href='https://reactjs.org' target='_blank' rel='noreferrer'>
-					<img
-						src={reactLogo}
-						className={clsx(s.logo, s.react)}
-						alt={`React logo ${add(2, 5)}`}
-					/>
-				</a>
-				<a href='https://vitejs.dev' target='_blank' rel='noreferrer'>
-					<TypescriptLogo className={s.logo} />
-				</a>
-			</div>
-			<h1>React + TS</h1>
-			<div className={s.card}>
-				<button onClick={() => setCount((count) => count + 1)}>
-					count is {count}
-				</button>
-			</div>
-		</div>
+		<>
+			{page === restaurantPages[0] ? (
+				<PageConstructorBurger
+					setPageConstructor={setPageConstructor}
+					setPageCheckList={setPageCheckList}
+					setPagePersonalAccount={setPagePersonalAccount}
+					activePage={page}
+					data={MOCK_DATA}
+				/>
+			) : null}
+			{page === restaurantPages[1] ? (
+				<CheckList
+					setPageConstructor={setPageConstructor}
+					setPageCheckList={setPageCheckList}
+					setPagePersonalAccount={setPagePersonalAccount}
+					activePage={page}
+					data={MOCK_DATA}
+				/>
+			) : null}
+			{page === restaurantPages[2] ? (
+				<PersonalAccount
+					setPageConstructor={setPageConstructor}
+					setPageCheckList={setPageCheckList}
+					setPagePersonalAccount={setPagePersonalAccount}
+					activePage={page}
+					data={MOCK_DATA}
+				/>
+			) : null}
+		</>
 	);
 };
