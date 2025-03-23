@@ -6,6 +6,7 @@ import { Ingredients } from './ingredients/ingredients';
 import styles from './styles.module.css';
 import PropTypes from 'prop-types';
 import { IngredientDetails } from './modal-ingredient-details/ingredient-details';
+import { ingredientType } from '@utils/types';
 
 const categorysFilter = Object.keys(FILTER_DECRYPTION);
 const categoryDecr = Object.values(FILTER_DECRYPTION);
@@ -56,21 +57,5 @@ export const BurgerIngredients = (props) => {
 };
 
 BurgerIngredients.propTypes = {
-	// ingredients: PropTypes.object,
-	ingredients: PropTypes.arrayOf(
-		PropTypes.shape({
-			_id: PropTypes.string,
-			name: PropTypes.string,
-			type: PropTypes.string,
-			proteins: PropTypes.number,
-			fat: PropTypes.number,
-			carbohydrates: PropTypes.number,
-			calories: PropTypes.number,
-			price: PropTypes.number,
-			image: PropTypes.string,
-			image_mobile: PropTypes.string,
-			image_large: PropTypes.string,
-			__v: PropTypes.number,
-		})
-	),
+	ingredients: PropTypes.arrayOf(ingredientType),
 };

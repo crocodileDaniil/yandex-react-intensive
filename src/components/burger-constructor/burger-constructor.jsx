@@ -4,6 +4,7 @@ import { IngredientConstructor } from './ingredient-constructor/ingredient-const
 import { PlaceOrder } from './place-order/place-order';
 import { useState } from 'react';
 import { OrderDetails } from './modal-order-details/modal-order-details';
+import { ingredientType } from '@utils/types';
 
 export const BurgerConstructor = (props) => {
 	const [isOpenModal, setIsOpen] = useState(false);
@@ -52,35 +53,7 @@ export const BurgerConstructor = (props) => {
 
 BurgerConstructor.propTypes = {
 	resultBurger: PropTypes.shape({
-		bun: PropTypes.shape({
-			_id: PropTypes.string,
-			name: PropTypes.string,
-			type: PropTypes.string,
-			proteins: PropTypes.number,
-			fat: PropTypes.number,
-			carbohydrates: PropTypes.number,
-			calories: PropTypes.number,
-			price: PropTypes.number,
-			image: PropTypes.string,
-			image_mobile: PropTypes.string,
-			image_large: PropTypes.string,
-			__v: PropTypes.number,
-		}),
-		filling: PropTypes.arrayOf(
-			PropTypes.shape({
-				_id: PropTypes.string,
-				name: PropTypes.string,
-				type: PropTypes.string,
-				proteins: PropTypes.number,
-				fat: PropTypes.number,
-				carbohydrates: PropTypes.number,
-				calories: PropTypes.number,
-				price: PropTypes.number,
-				image: PropTypes.string,
-				image_mobile: PropTypes.string,
-				image_large: PropTypes.string,
-				__v: PropTypes.number,
-			})
-		),
+		bun: ingredientType,
+		filling: PropTypes.arrayOf(ingredientType),
 	}),
 };

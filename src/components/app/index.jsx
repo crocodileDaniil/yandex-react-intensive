@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { PageConstructorBurger } from '../pages/page-constructor-burger/page-constructor-burger';
 import { CheckList } from '../pages/check-list/check-list';
 import { MOCK_DATA } from '../../constants/mock';
@@ -13,9 +13,9 @@ export const App = () => {
 	const [page, setPage] = useState(restaurantPages[0]);
 
 	// здесь оборачивать не обязаятельно?
-	const setPageConstructor = useCallback(() => {
+	const setPageConstructor = () => {
 		setPage(restaurantPages[0]);
-	}, []);
+	};
 
 	const setPageCheckList = () => {
 		setPage(restaurantPages[1]);
