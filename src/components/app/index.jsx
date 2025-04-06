@@ -1,103 +1,41 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { PageConstructorBurger } from '../pages/page-constructor-burger/page-constructor-burger';
 import { CheckList } from '../pages/check-list/check-list';
-import { MOCK_DATA } from '../../constants/mock';
-import { PersonalAccount } from '../pages/persanal-account/personal-account';
-import { url } from '@utils/url';
+import { PersonalAccount } from '../pages/personal-account/personal-account';
 import { CometLoader } from '../loader/comet-loader';
 import { Error } from '../error/error';
-
-//почему этот импорт не работает?
-// import { MOCK_DATA } from '@constants/mock';
-
-const restaurantPages = ['constructor', 'check-list', 'personal-account'];
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllIngredients } from '@services/ingredients/action';
+import { restaurantPages } from '@utils/restaurantPages';
+import {
+	getIngredients,
+	getIngredientsError,
+	getIngredientsHasError,
+	getIngredientsLoading,
+} from '@services/ingredients/reducer';
+import { getPage } from '@services/pages/reducer';
 
 export const App = () => {
-	const [page, setPage] = useState(restaurantPages[0]);
-	const [data, setData] = useState([]);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState({
-		hasError: false,
-		errorMessage: '',
-	});
+	const page = useSelector(getPage);
+	const data = useSelector(getIngredients);
+	const loading = useSelector(getIngredientsLoading);
+	const hasError = useSelector(getIngredientsHasError);
+	const errorMessage = useSelector(getIngredientsError);
+	const dispatch = useDispatch();
 
 	useEffect(() => {
-		const getIngredients = async () => {
-			try {
-				const response = await fetch(url);
-				if (!response.ok) {
-					setLoading(false);
-					setError({
-						hasError: true,
-						errorMessage: 'Error loading data',
-					});
-					throw new Error('Error loading data');
-				}
-				const data = await response.json();
-				setData(data.data);
-				setLoading(false);
-				setError({
-					...error,
-					hasError: false,
-				});
-			} catch (err) {
-				setError({
-					hasError: true,
-					errorMessage: err.message,
-				});
-				setLoading(false);
-			}
-		};
-
-		getIngredients();
+		dispatch(getAllIngredients());
 	}, []);
 
-	// здесь оборачивать не обязаятельно?
-	const setPageConstructor = () => {
-		setPage(restaurantPages[0]);
-	};
-
-	const setPageCheckList = () => {
-		setPage(restaurantPages[1]);
-	};
-
-	const setPagePersonalAccount = () => {
-		setPage(restaurantPages[2]);
-	};
-
-	return loading ? (
-		<CometLoader />
-	) : !error.hasError ? (
+	return !data.length ? (
+		loading && <CometLoader />
+	) : !hasError ? (
 		<>
-			{page === restaurantPages[0] ? (
-				<PageConstructorBurger
-					setPageConstructor={setPageConstructor}
-					setPageCheckList={setPageCheckList}
-					setPagePersonalAccount={setPagePersonalAccount}
-					activePage={page}
-					data={data}
-				/>
-			) : null}
-			{page === restaurantPages[1] ? (
-				<CheckList
-					setPageConstructor={setPageConstructor}
-					setPageCheckList={setPageCheckList}
-					setPagePersonalAccount={setPagePersonalAccount}
-					activePage={page}
-					data={data}
-				/>
-			) : null}
-			{page === restaurantPages[2] ? (
-				<PersonalAccount
-					setPageConstructor={setPageConstructor}
-					setPageCheckList={setPageCheckList}
-					setPagePersonalAccount={setPagePersonalAccount}
-					activePage={page}
-					data={data}
-				/>
-			) : null}
+			{page === restaurantPages[0] ? <PageConstructorBurger /> : null}
+			{page === restaurantPages[1] ? <CheckList data={data} /> : null}
+			{page === restaurantPages[2] ? <PersonalAccount data={data} /> : null}
 		</>
 	) : (
-		<Error text={error.errorMessage} />
+		<Error text={errorMessage} />
 	);
 };

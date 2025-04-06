@@ -3,10 +3,20 @@ import styles from './styles.module.css';
 import PropTypes from 'prop-types';
 import { Modal } from '../../modal/modal';
 import { ingredientType } from '@utils/types';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+	getDataIngredientDetails,
+	removeIngredientDetails,
+} from '@services/ingredient-info/reducer';
 
-export const IngredientDetails = ({ dataIngredient, onClose }) => {
-	const { name, calories, fat, proteins, carbohydrates, image } =
-		dataIngredient;
+export const IngredientDetails = () => {
+	const dispatch = useDispatch();
+	const { name, calories, fat, proteins, carbohydrates, image } = useSelector(
+		getDataIngredientDetails
+	);
+	const onClose = () => {
+		dispatch(removeIngredientDetails());
+	};
 
 	const modalStylesClass = `${styles.modal} pt-10 pr-10 pl-10 pb-15`;
 	const buttonStylesClass = styles.close ? `${styles.close}` : ' ';
@@ -69,7 +79,7 @@ export const IngredientDetails = ({ dataIngredient, onClose }) => {
 	);
 };
 
-IngredientDetails.propTypes = {
-	onClose: PropTypes.func,
-	dataIngredient: ingredientType,
-};
+// IngredientDetails.propTypes = {
+// 	onClose: PropTypes.func,
+// 	dataIngredient: ingredientType,
+// };

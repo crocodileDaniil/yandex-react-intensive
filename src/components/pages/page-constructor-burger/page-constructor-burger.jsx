@@ -6,51 +6,27 @@ import { Layout } from '../../layout/layout';
 import styles from './style.module.css';
 import PropTypes from 'prop-types';
 import { ingredientType } from '@utils/types';
+import { useMemo } from 'react';
 
-export const PageConstructorBurger = (props) => {
-	const {
-		setPageConstructor,
-		setPageCheckList,
-		setPagePersonalAccount,
-		activePage,
-		data,
-	} = props;
+export const PageConstructorBurger = () => {
+	// обернуть в memo, здесь фильтр, лучше в пропсах передать или всё делать в дочернем
+	// const groupIngredients = useMemo(
+	// 	() => getFilteredDataByCategory(data, 'type'),
+	// 	[data]
+	// );
 
-	const groupIngredients = getFilteredDataByCategory(data, 'type');
-	const resultBurger = {
-		bun: groupIngredients.bun[0],
-		filling: [
-			groupIngredients.main[0],
-			groupIngredients.sauce[0],
-			groupIngredients.main[3],
-			groupIngredients.main[4],
-			groupIngredients.main[6],
-			groupIngredients.sauce[3],
-			groupIngredients.main[7],
-			groupIngredients.main[3],
-			groupIngredients.sauce[1],
-		],
-	};
 	return (
-		<Layout
-			setPageConstructor={setPageConstructor}
-			setPageCheckList={setPageCheckList}
-			setPagePersonalAccount={setPagePersonalAccount}
-			activePage={activePage}>
+		<Layout>
 			<Container className={styles['container-main']}>
 				<>
-					<BurgerIngredients ingredients={data} />
-					<BurgerConstructor resultBurger={resultBurger} />
+					<BurgerIngredients />
+					<BurgerConstructor />
 				</>
 			</Container>
 		</Layout>
 	);
 };
 
-PageConstructorBurger.propTypes = {
-	setPageConstructor: PropTypes.func,
-	setPageCheckList: PropTypes.func,
-	setPagePersonalAccount: PropTypes.func,
-	activePage: PropTypes.string,
-	data: PropTypes.arrayOf(ingredientType),
-};
+// PageConstructorBurger.propTypes = {
+// 	data: PropTypes.arrayOf(ingredientType),
+// };

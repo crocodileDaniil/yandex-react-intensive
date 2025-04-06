@@ -1,5 +1,5 @@
 export const FILTER_DECRYPTION = {
 	Булки: 'bun',
-	Cоусы: 'sauce',
+	Соусы: 'sauce',
 	Начинки: 'main',
 };

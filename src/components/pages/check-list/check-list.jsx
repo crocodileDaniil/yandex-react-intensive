@@ -3,18 +3,9 @@ import { Layout } from '../../layout/layout';
 import PropTypes from 'prop-types';
 
 export const CheckList = (props) => {
-	const {
-		setPageConstructor,
-		setPageCheckList,
-		setPagePersonalAccount,
-		activePage,
-	} = props;
+	const { data } = props;
 	return (
-		<Layout
-			setPageConstructor={setPageConstructor}
-			setPageCheckList={setPageCheckList}
-			setPagePersonalAccount={setPagePersonalAccount}
-			activePage={activePage}>
+		<Layout>
 			<Container>
 				<main> пока пусто </main>
 			</Container>
@@ -23,10 +14,6 @@ export const CheckList = (props) => {
 };
 
 CheckList.propTypes = {
-	setPageConstructor: PropTypes.func,
-	setPageCheckList: PropTypes.func,
-	setPagePersonalAccount: PropTypes.func,
-	activePage: PropTypes.string,
 	data: PropTypes.arrayOf(
 		PropTypes.shape({
 			_id: PropTypes.string,
