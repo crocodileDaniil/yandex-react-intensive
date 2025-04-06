@@ -9,7 +9,10 @@ import { useDrag, useDrop } from 'react-dnd';
 import { useRef } from 'react';
 import { ItemDropTypes } from '@utils/items-drop-types';
 import { useDispatch } from 'react-redux';
-import { swapIngredient } from '@services/constructor/reducer';
+import {
+	deleteIngredient,
+	swapIngredient,
+} from '@services/constructor/reducer';
 
 export const IngredientConstructor = (props) => {
 	const { name, image, isLocked, type, price, uniqueId, index } = props;
@@ -57,6 +60,11 @@ export const IngredientConstructor = (props) => {
 			isDragging: monitor.isDragging(),
 		}),
 	});
+
+	const deleteFilling = () => {
+		dispatch(deleteIngredient({ uniqueId }));
+	};
+
 	const styleDrag = isDragging ? 'drag-item' : '';
 	drag(drop(ref));
 	return (
@@ -70,6 +78,9 @@ export const IngredientConstructor = (props) => {
 				price={price}
 				isLocked={isLocked}
 				type={type}
+				{...(!isLocked && {
+					handleClose: () => deleteFilling(),
+				})}
 			/>
 		</article>
 	);
@@ -91,5 +102,5 @@ IngredientConstructor.propTypes = {
 	type: PropTypes.string,
 	isLocked: PropTypes.bool,
 	uniqueId: PropTypes.string,
-	index: PropTypes.number
+	index: PropTypes.number,
 };

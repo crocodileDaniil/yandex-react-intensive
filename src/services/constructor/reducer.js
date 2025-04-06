@@ -39,6 +39,13 @@ export const constructorSlice = createSlice({
 			);
 			state.ingredients = updatedIngredients;
 		},
+		deleteIngredient: (state, action) => {
+			const removeUniqueId = action.payload.uniqueId;
+			const newIngredients = [...state.ingredients].filter(
+				(ingredient) => ingredient.key != removeUniqueId
+			);
+			state.ingredients = newIngredients;
+		},
 	},
 	selectors: {
 		getAllIngredients: (state) => state.ingredients,
@@ -53,6 +60,7 @@ export const {
 	setBun,
 	removeBun,
 	swapIngredient,
+	deleteIngredient,
 } = constructorSlice.actions;
 export const { getAllIngredients, getBun, getFilling } =
 	constructorSlice.selectors;
