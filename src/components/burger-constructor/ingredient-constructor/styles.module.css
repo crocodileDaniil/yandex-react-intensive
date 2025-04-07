@@ -4,3 +4,7 @@
 	align-items: center;
 	gap: 4px;
 }
+
+.drag-item {
+	opacity: 0.3;
+}

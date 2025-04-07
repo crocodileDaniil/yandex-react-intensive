@@ -8,29 +8,27 @@ import { Container } from '../container/container';
 import styles from './styles.module.css';
 import { NavElement } from './nav-element/nav-element';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { getPage, setPage } from '@services/pages/reducer';
+import { restaurantPages } from '@utils/restaurantPages';
 
-const restaurantPages = ['constructor', 'check-list', 'personal-account'];
 export const AppHeader = (props) => {
-	const {
-		setPageConstructor,
-		setPageCheckList,
-		setPagePersonalAccount,
-		activePage,
-	} = props;
+	const activePage = useSelector(getPage);
+	const dispatch = useDispatch();
 
 	const _setPageConstructor = (e) => {
 		e.preventDefault();
-		setPageConstructor();
+		dispatch(setPage(restaurantPages[0]));
 	};
 
 	const _setPageCheckList = (e) => {
 		e.preventDefault();
-		setPageCheckList();
+		dispatch(setPage(restaurantPages[1]));
 	};
 
 	const _setPagePersonalAccount = (e) => {
 		e.preventDefault();
-		setPagePersonalAccount();
+		dispatch(setPage(restaurantPages[2]));
 	};
 
 	return (
@@ -96,8 +94,4 @@ export const AppHeader = (props) => {
 };
 
 AppHeader.propTypes = {
-	setPageConstructor: PropTypes.func,
-	setPageCheckList: PropTypes.func,
-	setPagePersonalAccount: PropTypes.func,
-	activePage: PropTypes.string,
 };
