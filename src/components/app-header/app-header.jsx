@@ -11,6 +11,8 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPage, setPage } from '@services/pages/reducer';
 import { restaurantPages } from '@utils/restaurantPages';
+import { NavLink } from 'react-router-dom';
+import { pathPages } from '@utils/page-paths';
 
 export const AppHeader = (props) => {
 	const activePage = useSelector(getPage);
@@ -41,57 +43,54 @@ export const AppHeader = (props) => {
 						<p className='text text_type_main-default '>Burger constructor</p>
 					</button> */}
 					<section className={styles['burger-ui']}>
-						<NavElement
-							name='Burger constructor'
-							classNameElement={styles['nav-link']}
-							classNameText={
-								activePage === restaurantPages[0]
-									? 'text text_type_main-default'
-									: 'text text_type_main-default text_color_inactive'
-							}
-							onClick={_setPageConstructor}>
-							<BurgerIcon
-								type={
-									activePage === restaurantPages[0] ? 'primary' : 'secondary'
-								}
-							/>
-						</NavElement>
-
-						<NavElement
-							name='CheckList'
-							classNameText={
-								activePage === restaurantPages[1]
-									? 'text text_type_main-default'
-									: 'text text_type_main-default text_color_inactive'
-							}
-							classNameElement={styles['nav-link']}
-							onClick={_setPageCheckList}>
-							<ListIcon
-								type={
-									activePage === restaurantPages[1] ? 'primary' : 'secondary'
-								}
-							/>
-						</NavElement>
+						<NavLink to={pathPages.home} className={styles['nav-link']}>
+							{({ isActive }) => (
+								<NavElement
+									name='Burger constructor'
+									classNameText={
+										isActive
+											? 'text text_type_main-default'
+											: 'text text_type_main-default text_color_inactive'
+									}>
+									<BurgerIcon type={isActive ? 'primary' : 'secondary'} />
+								</NavElement>
+							)}
+						</NavLink>
+						<NavLink to={pathPages.checkList} className={styles['nav-link']}>
+							{({ isActive }) => (
+								<NavElement
+									name='CheckList'
+									classNameText={
+										isActive
+											? 'text text_type_main-default'
+											: 'text text_type_main-default text_color_inactive'
+									}>
+									<ListIcon type={isActive ? 'primary' : 'secondary'} />
+								</NavElement>
+							)}
+						</NavLink>
 					</section>
 					<Logo />
-					<NavElement
-						name='Личный кабинет'
-						classNameText={
-							activePage === restaurantPages[2]
-								? 'text text_type_main-default'
-								: 'text text_type_main-default text_color_inactive'
-						}
-						classNameElement={styles['nav-link']}
-						onClick={_setPagePersonalAccount}>
-						<ProfileIcon
-							type={activePage === restaurantPages[2] ? 'primary' : 'secondary'}
-						/>
-					</NavElement>
+
+					<NavLink
+						to={pathPages.personalAccount}
+						className={styles['nav-link']}>
+						{({ isActive }) => (
+							<NavElement
+								name='Личный кабинет'
+								classNameText={
+									isActive
+										? 'text text_type_main-default'
+										: 'text text_type_main-default text_color_inactive'
+								}>
+								<ProfileIcon type={isActive ? 'primary' : 'secondary'} />
+							</NavElement>
+						)}
+					</NavLink>
 				</nav>
 			</Container>
 		</header>
 	);
 };
 
-AppHeader.propTypes = {
-};
+AppHeader.propTypes = {};

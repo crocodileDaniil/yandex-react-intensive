@@ -25,8 +25,16 @@ export const postPlaceOrderApi = async (body) => {
 			headers: {
 				'Content-type': 'application/json;charset=utf-8',
 			},
-			body: JSON.stringify(body),
+			body: JSON.stringify({ ingredients: body }),
 		});
+
+		// console.log({
+		// 	method: 'POST',
+		// 	headers: {
+		// 		'Content-type': 'application/json;charset=utf-8',
+		// 	},
+		// 	body: JSON.stringify({ ingredients: body }),
+		// });
 		console.log(await getResponse(response));
 		return await getResponse(response);
 	} catch (e) {
