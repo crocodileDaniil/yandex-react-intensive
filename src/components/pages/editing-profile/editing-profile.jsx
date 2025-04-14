@@ -4,6 +4,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './styles.module.css';
 import { useState } from 'react';
+import { useForm } from '@utils/custom-hooks';
 
 const initialFormState = {
 	name: '',
@@ -12,16 +13,9 @@ const initialFormState = {
 };
 
 export const EditingProfile = (props) => {
-	const [form, setFormValue] = useState(initialFormState);
+	const [form, onChange, setFormValue] = useForm(initialFormState);
 
 	const [isVisiblePassword, setIsVisiblePassword] = useState(false);
-
-	const onChange = (e) => {
-		setFormValue({
-			...form,
-			[e.target.name]: e.target.value,
-		});
-	};
 
 	const onIconClick = (key) => {
 		setFormValue({

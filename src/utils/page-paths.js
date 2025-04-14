@@ -5,4 +5,8 @@ export const pathPages = {
 	editingProfile: 'editing-profile',
 	profileOrders: 'orders',
 	profileExit: 'exit',
+	login: '/login',
+	register: '/register',
+	forgotPassword: 'forgot-password',
+	resetPassword: 'reset-password',
 };

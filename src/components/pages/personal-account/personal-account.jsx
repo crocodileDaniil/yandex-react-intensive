@@ -58,7 +58,8 @@ export const PersonalAccount = () => {
 								</NavLink>
 							</li>
 						</ul>
-						<p className={`text text_type_main-default pr-3 ${styles.description}`}>
+						<p
+							className={`text text_type_main-default pr-3 ${styles.description}`}>
 							{description}
 						</p>
 					</nav>
