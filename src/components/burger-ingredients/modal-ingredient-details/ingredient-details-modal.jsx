@@ -1,21 +1,32 @@
 import { useEffect } from 'react';
-import styles from './styles.module.css';
-import PropTypes from 'prop-types';
-import { Modal } from '../../modal/modal';
+import PropTypes, { element } from 'prop-types';
 import { ingredientType } from '@utils/types';
+import { Modal } from '../../modal/modal';
 import { useSelector, useDispatch } from 'react-redux';
 import {
 	getDataIngredientDetails,
 	removeIngredientDetails,
 } from '@services/ingredient-info/reducer';
+import styles from './styles.module.css';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { getIngredients } from '@services/ingredients/reducer';
 
-export const IngredientDetails = () => {
-	const dispatch = useDispatch();
-	const { name, calories, fat, proteins, carbohydrates, image } = useSelector(
-		getDataIngredientDetails
+export const IngredientDetailsModal = () => {
+	const navigate = useNavigate();
+	const location = useLocation();
+
+	const ingredients = useSelector(getIngredients);
+	const ingredientId = location.pathname.split('/')[2];
+	const ingredient = ingredients.find(
+		(element) => element._id === ingredientId
 	);
+	// console.log(location.pathname.split('/'));
+	// console.log(ingredients);
+	// console.log(ingredientId);
+	// console.log(ingredient);
+	const { name, calories, fat, proteins, carbohydrates, image } = ingredient;
 	const onClose = () => {
-		dispatch(removeIngredientDetails());
+		navigate('/', { replace: true });
 	};
 
 	const modalStylesClass = `${styles.modal} pt-10 pr-10 pl-10 pb-15`;

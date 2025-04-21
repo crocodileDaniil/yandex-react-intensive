@@ -1,3 +1,4 @@
+import { IngredientDetailsModal } from './modal-ingredient-details/ingredient-details-modal';
 import { useRef, useState } from 'react';
 import { FilterIngredients } from './filter-tabs/tabs';
 import { FILTER_DECRYPTION } from '@utils/filter-decryption';
@@ -5,7 +6,6 @@ import { getFilteredDataByCategory } from '@utils/helper-function';
 import { Ingredients } from './ingredients/ingredients';
 import styles from './styles.module.css';
 import PropTypes from 'prop-types';
-import { IngredientDetails } from './modal-ingredient-details/ingredient-details';
 import { ingredientType } from '@utils/types';
 import { useSelector } from 'react-redux';
 import { getActiveIngredientDetails } from '@services/ingredient-info/reducer';
@@ -95,7 +95,6 @@ export const BurgerIngredients = () => {
 					mainsRef: mainsRef,
 				}}
 			/>
-			{isOpenModal && <IngredientDetails />}
 		</section>
 	);
 };

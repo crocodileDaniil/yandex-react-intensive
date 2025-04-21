@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import { CheckList } from './check-list/check-list';
 import { PageConstructorBurger } from './page-constructor-burger/page-constructor-burger';
 import { PersonalAccount } from './personal-account/personal-account';
@@ -10,11 +10,17 @@ import { Login } from './login/login';
 import { ForgotPassword } from './forgot-password/forgot-password';
 import { ResetPassword } from './reset-password/reset-password';
 import { Page404 } from './error404-page/erro404-page';
+import { ProductDetails } from './product-info/product-details';
+import { IngredientDetailsModal } from '../burger-ingredients/modal-ingredient-details/ingredient-details-modal';
 
 export const Pages = () => {
+	const location = useLocation();
+	let state = location.state || {};
+	// console.log(location);
+
 	return (
 		<>
-			<Routes>
+			<Routes location={state?.backgroundLocation || location}>
 				{/* домашняя страницы */}
 				<Route path={pathPages.home} element={<PageConstructorBurger />} />
 				<Route path={pathPages.checkList} element={<CheckList />} />
@@ -26,8 +32,20 @@ export const Pages = () => {
 				<Route path={pathPages.login} element={<Login />} />
 				<Route path={pathPages.forgotPassword} element={<ForgotPassword />} />
 				<Route path={pathPages.resetPassword} element={<ResetPassword />} />
+				<Route
+					path={`${pathPages.ingredients}/:id`}
+					element={<ProductDetails />}
+				/>
 				<Route path='*' element={<Page404 />} />
 			</Routes>
+			{state?.backgroundLocation && (
+				<Routes>
+					<Route
+						path={`${pathPages.ingredients}/:id`}
+						element={<IngredientDetailsModal />}
+					/>
+				</Routes>
+			)}
 		</>
 	);
 };

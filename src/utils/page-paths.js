@@ -7,6 +7,7 @@ export const pathPages = {
 	profileExit: 'exit',
 	login: '/login',
 	register: '/register',
-	forgotPassword: 'forgot-password',
-	resetPassword: 'reset-password',
+	forgotPassword: '/forgot-password',
+	resetPassword: '/reset-password',
+	ingredients: '/ingredients',
 };
