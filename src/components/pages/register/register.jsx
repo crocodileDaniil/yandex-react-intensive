@@ -3,25 +3,45 @@ import {
 	Input,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './styles.module.css';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useForm } from '@utils/custom-hooks';
 import { useState } from 'react';
 import { Layout } from '../../layout/layout';
 import { Container } from '../../container/container';
+import { pathPages } from '@utils/page-paths';
+import { useDispatch } from 'react-redux';
+import { registerUser } from '@services/user/action';
+import { useSelector } from 'react-redux';
+import { LoaderForm } from '../../loader-form/loader-form';
+import { getUser, getUserLoading } from '@services/user/reducer';
 
 export const Register = () => {
-	const [form, onChange] = useForm({
+	const [form, onChange, setFormValue] = useForm({
 		name: '',
 		email: '',
 		password: '',
 	});
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const loading = useSelector(getUserLoading);
+	const user = useSelector(getUser)
+
+	const onLoginClick = () => {
+		navigate(pathPages.login);
+	};
+
+	const onRegisterClick = (e) => {
+		e.preventDefault();
+		console.log(form);
+		dispatch(registerUser(form));
+	};
 
 	const [isVisiblePassword, setIsVisiblePassword] = useState(false);
 	return (
 		<Layout>
 			<Container className={styles.container}>
 				<section className={`${styles.register} `}>
-					<form action='' className={`${styles.form} mb-20`}>
+					<form onSubmit={onRegisterClick} className={`${styles.form} mb-20`}>
 						<h3 className='text text_type_main-medium'>Регистрация</h3>
 						<Input
 							name='name'
@@ -58,12 +78,14 @@ export const Register = () => {
 							Уже зарегестрировались?
 						</span>
 						<Button
+							onClick={onLoginClick}
 							htmlType='button'
 							type='secondary'
 							size='medium'
 							extraClass={styles['button-in']}>
 							Войти
 						</Button>
+						{loading && <LoaderForm />}
 					</p>
 				</section>
 			</Container>

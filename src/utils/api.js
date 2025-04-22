@@ -1,4 +1,13 @@
-import { URL_GET_INGREDIENTS, URL_POST_AUTH_TOKEN, URL_POST_PLACE_ORDER } from './url';
+import {
+	URL_GET_AUTH_USER,
+	URL_GET_INGREDIENTS,
+	URL_PATCH_AUTH_USER,
+	URL_POST_AUTH_LOGIN,
+	URL_POST_AUTH_LOGOUT,
+	URL_POST_AUTH_REGISTER,
+	URL_POST_AUTH_TOKEN,
+	URL_POST_PLACE_ORDER,
+} from './url';
 
 const getResponse = async (res) => {
 	if (res.ok) return await res.json();
@@ -20,9 +29,11 @@ export const getAllIngredientsApi = async () => {
 
 export const postPlaceOrderApi = async (body) => {
 	try {
+		let accessToken = localStorage.getItem('accessToken');
 		const response = await fetch(URL_POST_PLACE_ORDER, {
 			method: 'POST',
 			headers: {
+				Authorization: `Bearer ${accessToken}`,
 				'Content-type': 'application/json;charset=utf-8',
 			},
 			body: JSON.stringify({ ingredients: body }),
@@ -42,31 +53,11 @@ export const postPlaceOrderApi = async (body) => {
 	}
 };
 
-export const registerUser = async (userData) => {
-	try {
-		const response = await fetch('https://your-api.com/api/register', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json;charset=utf-8',
-			},
-			body: JSON.stringify(userData),
-		});
-
-		const data = await response.json();
-
-		if (response.ok) {
-			localStorage.setItem('accessToken', data.accessToken);
-			localStorage.setItem('refreshToken', data.refreshToken);
-			console.log('register Completed');
-		} else {
-			console.error('Registration error:', data.message);
-		}
-	} catch (error) {
-		console.error('Request failed:', error);
-	}
-};
-
-export const fetchWithAuth = async (url, options = {}, retry = true) => {
+export const fetchWithAuthRefreshTokenApi = async (
+	url,
+	options = {},
+	retry = true
+) => {
 	let accessToken = localStorage.getItem('accessToken');
 	options.headers = {
 		...(options.headers || {}),
@@ -85,9 +76,9 @@ export const fetchWithAuth = async (url, options = {}, retry = true) => {
 			{
 				method: 'POST',
 				headers: {
-					'Content-Type': 'application/json',
+					'Content-Type': 'application/json ;charset=utf-8',
 				},
-				body: JSON.stringify({ refreshToken }),
+				body: { token: JSON.stringify({ refreshToken }) },
 			}
 		);
 
@@ -97,11 +88,130 @@ export const fetchWithAuth = async (url, options = {}, retry = true) => {
 			localStorage.setItem('refreshToken', newTokens.refreshToken);
 
 			// Повторяем оригинальный запрос с новым токеном
-			return fetchWithAuth(url, options, false);
+			return fetchWithAuthRefreshTokenApi(url, options, false);
 		} else {
-			console.error('Refresh token failed');
+			localStorage.removeItem('accessToken', newTokens.accessToken);
+			localStorage.removeItem('refreshToken', newTokens.refreshToken);
+			return newTokens.statusText;
 		}
 	}
 
 	return response;
+};
+
+export const registerUserApi = async (userData) => {
+	try {
+		const response = await fetch(URL_POST_AUTH_REGISTER, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json;charset=utf-8',
+			},
+			body: JSON.stringify(userData),
+		});
+
+		const data = await response.json();
+
+		if (response.ok) {
+			console.log(data);
+			const accessToken = data.accessToken.split(' ')[1];
+			localStorage.setItem('accessToken', accessToken);
+			localStorage.setItem('refreshToken', data.refreshToken);
+			console.log('register Completed');
+			return data.user;
+		} else {
+			console.error('Registration error:', data.message);
+			return data.message;
+		}
+	} catch (error) {
+		console.error('Request failed:', error);
+	}
+};
+
+export const logoutUserApi = async () => {
+	let refreshToken = localStorage.getItem('refreshToken');
+	try {
+		const res = await fetchWithAuthRefreshTokenApi(URL_POST_AUTH_LOGOUT, {
+			method: 'POST',
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+				'Content-Type': 'application/json ;charset=utf-8',
+			},
+			body: {
+				token: JSON.stringify(refreshToken),
+			},
+		});
+		return await res.json();
+	} catch (err) {
+		localStorage.removeItem('accessToken');
+		localStorage.removeItem('refreshToken');
+		throw err;
+	}
+};
+
+export const loginUserApi = async (body) => {
+	try {
+		const response = await fetch(URL_POST_AUTH_LOGIN, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json;charset=utf-8',
+			},
+			body: JSON.stringify(body),
+		});
+
+		const data = await response.json();
+
+		if (response.ok) {
+			const accessToken = data.accessToken.split(' ')[1];
+			console.log(data);
+			localStorage.setItem('accessToken', accessToken);
+			localStorage.setItem('refreshToken', data.refreshToken);
+			console.log('login Completed');
+			return data.user;
+		} else {
+			console.error('Registration error:', data.message);
+			return data.message;
+		}
+	} catch (error) {
+		console.error('Request failed:', error);
+	}
+};
+
+export const getUserApi = async () => {
+	let accessToken = localStorage.getItem('accessToken');
+	try {
+		const res = await fetchWithAuthRefreshTokenApi(URL_GET_AUTH_USER, {
+			method: 'GET',
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+				'Content-Type': 'application/json ;charset=utf-8',
+			},
+		});
+		const response = await res.json();
+		console.log(response);
+		return response.user;
+	} catch (error) {
+		localStorage.removeItem('accessToken');
+		localStorage.removeItem('refreshToken');
+		throw error;
+	}
+};
+
+export const patchRefreshDataUserApi = async (body) => {
+	let accessToken = localStorage.getItem('accessToken');
+	try {
+		const res = await fetchWithAuthRefreshTokenApi(URL_PATCH_AUTH_USER, {
+			method: 'GET',
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+				'Content-Type': 'application/json ;charset=utf-8',
+			},
+			body: JSON.stringify({ user: body }),
+		});
+		const response = await res.json();
+		return response;
+	} catch (error) {
+		localStorage.removeItem('accessToken');
+		localStorage.removeItem('refreshToken');
+		throw error;
+	}
 };

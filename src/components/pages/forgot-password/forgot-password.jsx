@@ -6,11 +6,19 @@ import styles from './styles.module.css';
 import { useForm } from '@utils/custom-hooks';
 import { Layout } from '../../layout/layout';
 import { Container } from '../../container/container';
+import { useNavigate } from 'react-router-dom';
+import { pathPages } from '@utils/page-paths';
 
 export const ForgotPassword = () => {
 	const [form, onChange] = useForm({
 		email: '',
 	});
+	const navigate = useNavigate();
+
+	const onLoginClick = () => {
+		navigate(pathPages.login);
+	};
+
 	return (
 		<Layout>
 			<Container className={styles.container}>
@@ -35,6 +43,7 @@ export const ForgotPassword = () => {
 							Вы вспомнили пароль?
 						</span>
 						<Button
+							onClick={onLoginClick}
 							htmlType='button'
 							type='secondary'
 							size='medium'

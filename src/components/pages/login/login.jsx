@@ -7,19 +7,39 @@ import { useForm } from '@utils/custom-hooks';
 import { useState } from 'react';
 import { Layout } from '../../layout/layout';
 import { Container } from '../../container/container';
+import { useNavigate } from 'react-router-dom';
+import { pathPages } from '@utils/page-paths';
+import { loginUser } from '@services/user/action';
+import { useDispatch } from 'react-redux';
 
 export const Login = () => {
 	const [form, onChange] = useForm({
 		email: '',
 		password: '',
 	});
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
+
+	const onRegisterClick = () => {
+		navigate(pathPages.register);
+	};
+
+	const onForgotPasswordClick = () => {
+		navigate(pathPages.forgotPassword);
+	};
+
+	const onLoginClick = (e) => {
+		e.preventDefault();
+		console.log(form);
+		dispatch(loginUser(form));
+	};
 
 	const [isVisiblePassword, setIsVisiblePassword] = useState(false);
 	return (
 		<Layout>
 			<Container className={styles.container}>
 				<section className={`${styles.register} `}>
-					<form action='' className={`${styles.form} mb-20`}>
+					<form onSubmit={onLoginClick} className={`${styles.form} mb-20`}>
 						<h3 className='text text_type_main-medium'>Вход</h3>
 						<Input
 							name='email'
@@ -48,6 +68,7 @@ export const Login = () => {
 							Вы — новый пользователь?
 						</span>
 						<Button
+							onClick={onRegisterClick}
 							htmlType='button'
 							type='secondary'
 							size='medium'
@@ -60,6 +81,7 @@ export const Login = () => {
 							Забыли пароль?
 						</span>
 						<Button
+							onClick={onForgotPasswordClick}
 							htmlType='button'
 							type='secondary'
 							size='medium'

@@ -12,11 +12,14 @@ import { ResetPassword } from './reset-password/reset-password';
 import { Page404 } from './error404-page/erro404-page';
 import { ProductDetails } from './product-info/product-details';
 import { IngredientDetailsModal } from '../burger-ingredients/modal-ingredient-details/ingredient-details-modal';
+import { OnlyAuth } from '../protected/protected';
 
 export const Pages = () => {
 	const location = useLocation();
 	let state = location.state || {};
 	// console.log(location);
+
+	
 
 	return (
 		<>
@@ -24,9 +27,17 @@ export const Pages = () => {
 				{/* домашняя страницы */}
 				<Route path={pathPages.home} element={<PageConstructorBurger />} />
 				<Route path={pathPages.checkList} element={<CheckList />} />
-				<Route path={pathPages.personalAccount} element={<PersonalAccount />}>
-					<Route path={pathPages.editingProfile} element={<EditingProfile />} />
-					<Route path={pathPages.profileOrders} element={<ProfileOrder />} />
+				<Route
+					path={pathPages.personalAccount}
+					element={<OnlyAuth component={<PersonalAccount />} />}>
+					<Route
+						path={pathPages.editingProfile}
+						element={<OnlyAuth component={<EditingProfile />} />}
+					/>
+					<Route
+						path={pathPages.profileOrders}
+						element={<OnlyAuth component={<ProfileOrder />} />}
+					/>
 				</Route>
 				<Route path={pathPages.register} element={<Register />} />
 				<Route path={pathPages.login} element={<Login />} />

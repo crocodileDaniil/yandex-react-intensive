@@ -4,13 +4,15 @@ import { ingredientsSlice } from './ingredients/reducer';
 import { orderSlice } from './order/reducer';
 import { constructorSlice } from './constructor/reducer';
 import { pageSlice } from './pages/reducer';
+import { userSlice } from './user/reducer';
 
 const rootReducer = combineSlices(
 	pageSlice,
 	ingredientInfoSlice,
 	ingredientsSlice,
 	orderSlice,
-	constructorSlice
+	constructorSlice,
+	userSlice
 );
 
 const store = configureStore({

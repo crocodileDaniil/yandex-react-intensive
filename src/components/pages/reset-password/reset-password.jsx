@@ -7,6 +7,8 @@ import { useForm } from '@utils/custom-hooks';
 import { useState } from 'react';
 import { Layout } from '../../layout/layout';
 import { Container } from '../../container/container';
+import { useNavigate } from 'react-router-dom';
+import { pathPages } from '@utils/page-paths';
 
 export const ResetPassword = () => {
 	const [form, onChange] = useForm({
@@ -14,13 +16,21 @@ export const ResetPassword = () => {
 		password: '',
 	});
 
+	const navigate = useNavigate();
+
+	const onLoginClick = () => {
+		navigate(pathPages.login);
+	};
+
 	const [isVisiblePassword, setIsVisiblePassword] = useState(false);
 	return (
 		<Layout>
 			<Container className={styles.container}>
 				<section className={`${styles.register} `}>
 					<form action='' className={`${styles.form} mb-20`}>
-						<h3 className='text text_type_main-medium'>Восстановление пароля</h3>
+						<h3 className='text text_type_main-medium'>
+							Восстановление пароля
+						</h3>
 
 						<Input
 							name='password'
@@ -49,6 +59,7 @@ export const ResetPassword = () => {
 							Вспомнил пароль?
 						</span>
 						<Button
+							onClick={onLoginClick}
 							htmlType='button'
 							type='secondary'
 							size='medium'
