@@ -14,7 +14,6 @@ export const PageConstructorBurger = () => {
 	// 	() => getFilteredDataByCategory(data, 'type'),
 	// 	[data]
 	// );
-
 	return (
 		<Layout>
 			<Container className={styles['container-main']}>

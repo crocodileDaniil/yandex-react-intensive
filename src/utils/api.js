@@ -6,6 +6,8 @@ import {
 	URL_POST_AUTH_LOGOUT,
 	URL_POST_AUTH_REGISTER,
 	URL_POST_AUTH_TOKEN,
+	URL_POST_PASSWORD_RESET,
+	URL_POST_PASSWORD_RESET_RESET,
 	URL_POST_PLACE_ORDER,
 } from './url';
 
@@ -30,45 +32,40 @@ export const getAllIngredientsApi = async () => {
 export const postPlaceOrderApi = async (body) => {
 	try {
 		let accessToken = localStorage.getItem('accessToken');
-		const response = await fetch(URL_POST_PLACE_ORDER, {
+		// console.log(JSON.stringify({ ingredients: body }));
+		const response = await fetchWithAuthRefreshTokenApi(URL_POST_PLACE_ORDER, {
 			method: 'POST',
 			headers: {
 				Authorization: `Bearer ${accessToken}`,
-				'Content-type': 'application/json;charset=utf-8',
+				'Content-Type': 'application/json ;charset=utf-8',
 			},
 			body: JSON.stringify({ ingredients: body }),
 		});
 
-		// console.log({
-		// 	method: 'POST',
-		// 	headers: {
-		// 		'Content-type': 'application/json;charset=utf-8',
-		// 	},
-		// 	body: JSON.stringify({ ingredients: body }),
-		// });
-		console.log(await getResponse(response));
-		return await getResponse(response);
+		const data = await getResponse(response);
+		console.log(response);
+		return data;
 	} catch (e) {
 		throw e;
 	}
 };
 
-export const fetchWithAuthRefreshTokenApi = async (
-	url,
-	options = {},
-	retry = true
-) => {
+async function fetchWithAuthRefreshTokenApi(url, options = {}, retry = true) {
 	let accessToken = localStorage.getItem('accessToken');
 	options.headers = {
 		...(options.headers || {}),
 		Authorization: `Bearer ${accessToken}`,
-		'Content-Type': 'application/json ;charset=utf-8',
+		'Content-Type': 'application/json;charset=utf-8',
 	};
-
+	console.log({
+		Authorization: `Bearer ${accessToken}`,
+		'Content-Type': 'application/json;charset=utf-8',
+		...(options.headers || {}),
+	});
 	let response = await fetch(url, options);
 
 	// Если токен истёк
-	if (response.status === 401 && retry) {
+	if (response.status === 403 && retry) {
 		const refreshToken = localStorage.getItem('refreshToken');
 
 		const tokenResponse = await fetch(
@@ -78,26 +75,30 @@ export const fetchWithAuthRefreshTokenApi = async (
 				headers: {
 					'Content-Type': 'application/json ;charset=utf-8',
 				},
-				body: { token: JSON.stringify({ refreshToken }) },
+				body: JSON.stringify({ token: refreshToken }),
 			}
 		);
 
 		if (tokenResponse.ok) {
 			const newTokens = await tokenResponse.json();
-			localStorage.setItem('accessToken', newTokens.accessToken);
+			localStorage.setItem('accessToken', newTokens.accessToken.split(' ')[1]);
 			localStorage.setItem('refreshToken', newTokens.refreshToken);
-
+			options.headers = {
+				...(options.headers || {}),
+				Authorization: `Bearer ${newTokens.accessToken}`,
+				'Content-Type': 'application/json;charset=utf-8',
+			};
 			// Повторяем оригинальный запрос с новым токеном
 			return fetchWithAuthRefreshTokenApi(url, options, false);
 		} else {
-			localStorage.removeItem('accessToken', newTokens.accessToken);
-			localStorage.removeItem('refreshToken', newTokens.refreshToken);
+			localStorage.removeItem('accessToken');
+			localStorage.removeItem('refreshToken');
 			return newTokens.statusText;
 		}
 	}
 
 	return response;
-};
+}
 
 export const registerUserApi = async (userData) => {
 	try {
@@ -120,30 +121,37 @@ export const registerUserApi = async (userData) => {
 			return data.user;
 		} else {
 			console.error('Registration error:', data.message);
-			return data.message;
+			return data;
 		}
 	} catch (error) {
 		console.error('Request failed:', error);
 	}
 };
 
-export const logoutUserApi = async () => {
+export const logoutUserApi = async (arg) => {
 	let refreshToken = localStorage.getItem('refreshToken');
+	let accessToken = localStorage.getItem('accessToken');
 	try {
 		const res = await fetchWithAuthRefreshTokenApi(URL_POST_AUTH_LOGOUT, {
 			method: 'POST',
 			headers: {
 				Authorization: `Bearer ${accessToken}`,
-				'Content-Type': 'application/json ;charset=utf-8',
+				'Content-Type': 'application/json;charset=utf-8',
 			},
-			body: {
-				token: JSON.stringify(refreshToken),
-			},
+			body: JSON.stringify({ token: refreshToken }),
 		});
-		return await res.json();
-	} catch (err) {
+
+		if (!res.ok) {
+			throw new Error(`Ошибка выхода: ${res.status}`);
+		}
+
 		localStorage.removeItem('accessToken');
 		localStorage.removeItem('refreshToken');
+
+		const data = await res.json();
+		console.log(data);
+		return data;
+	} catch (err) {
 		throw err;
 	}
 };
@@ -166,10 +174,10 @@ export const loginUserApi = async (body) => {
 			localStorage.setItem('accessToken', accessToken);
 			localStorage.setItem('refreshToken', data.refreshToken);
 			console.log('login Completed');
-			return data.user;
+			return {user: data.user, success: data.success};
 		} else {
 			console.error('Registration error:', data.message);
-			return data.message;
+			return data;
 		}
 	} catch (error) {
 		console.error('Request failed:', error);
@@ -212,6 +220,50 @@ export const patchRefreshDataUserApi = async (body) => {
 	} catch (error) {
 		localStorage.removeItem('accessToken');
 		localStorage.removeItem('refreshToken');
+		throw error;
+	}
+};
+
+export const forgotPasswordApi = async (body) => {
+	try {
+		const res = await fetch(URL_POST_PASSWORD_RESET, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json ;charset=utf-8',
+			},
+			body: JSON.stringify(body),
+		});
+		if (res.ok) {
+			localStorage.setItem('resetPassword', true);
+			const response = await res.json();
+			return response;
+		} else {
+			const response = await res.json();
+			return response;
+		}
+	} catch (error) {
+		throw error;
+	}
+};
+
+export const resetPasswordApi = async (body) => {
+	try {
+		const res = await fetch(URL_POST_PASSWORD_RESET_RESET, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json ;charset=utf-8',
+			},
+			body: JSON.stringify(body),
+		});
+		if (res.ok) {
+			localStorage.removeItem('resetPassword');
+			const response = await res.json();
+			return response;
+		} else {
+			const response = await res.json();
+			return response;
+		}
+	} catch (error) {
 		throw error;
 	}
 };

@@ -5,6 +5,8 @@ import {
 import styles from './styles.module.css';
 import { useState } from 'react';
 import { useForm } from '@utils/custom-hooks';
+import { useSelector } from 'react-redux';
+import { getUser } from '@services/user/reducer';
 
 const initialFormState = {
 	name: '',
@@ -16,6 +18,8 @@ export const EditingProfile = (props) => {
 	const [form, onChange, setFormValue] = useForm(initialFormState);
 
 	const [isVisiblePassword, setIsVisiblePassword] = useState(false);
+
+	const user = useSelector(getUser)
 
 	const onIconClick = (key) => {
 		setFormValue({
@@ -38,7 +42,7 @@ export const EditingProfile = (props) => {
 					icon={form.name ? 'CloseIcon' : 'EditIcon'}
 					onChange={onChange}
 					{...(form.name && { onIconClick: () => onIconClick('name') })}
-					value={form.name}
+					value={form.name || user.name}
 				/>
 				<Input
 					name='email'
@@ -47,7 +51,7 @@ export const EditingProfile = (props) => {
 					icon={form.email ? 'CloseIcon' : 'EditIcon'}
 					onChange={onChange}
 					{...(form.email && { onIconClick: () => onIconClick('email') })}
-					value={form.email}
+					value={form.email || user.email}
 				/>
 				<Input
 					name='password'

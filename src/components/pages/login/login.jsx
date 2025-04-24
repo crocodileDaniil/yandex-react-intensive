@@ -4,13 +4,20 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './styles.module.css';
 import { useForm } from '@utils/custom-hooks';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Layout } from '../../layout/layout';
 import { Container } from '../../container/container';
 import { useNavigate } from 'react-router-dom';
 import { pathPages } from '@utils/page-paths';
 import { loginUser } from '@services/user/action';
 import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import {
+	clearError,
+	getUserError,
+	getUserLoading,
+} from '@services/user/reducer';
+import { LoaderForm } from '../../loader-form/loader-form';
 
 export const Login = () => {
 	const [form, onChange] = useForm({
@@ -19,6 +26,12 @@ export const Login = () => {
 	});
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
+	const error = useSelector(getUserError);
+	const loading = useSelector(getUserLoading);
+
+	useEffect(() => {
+		dispatch(clearError());
+	}, []);
 
 	const onRegisterClick = () => {
 		navigate(pathPages.register);
@@ -62,6 +75,8 @@ export const Login = () => {
 						<Button htmlType='submit' type='primary' size='large'>
 							Войти
 						</Button>
+						{loading && <LoaderForm />}
+						{error && <p className='text text_type_main-medium'> {error} </p>}
 					</form>
 					<p className={`${styles.login} mb-4`}>
 						<span className='text text_type_main-default text_color_inactive'>

@@ -7,27 +7,49 @@ import { useForm } from '@utils/custom-hooks';
 import { useState } from 'react';
 import { Layout } from '../../layout/layout';
 import { Container } from '../../container/container';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { pathPages } from '@utils/page-paths';
+import { LoaderForm } from '../../loader-form/loader-form';
+import { resetPasswordApi } from '@utils/api';
 
 export const ResetPassword = () => {
 	const [form, onChange] = useForm({
-		code: '',
+		token: '',
 		password: '',
 	});
-
+	const [isVisiblePassword, setIsVisiblePassword] = useState(false);
+	const [isLoading, setLoading] = useState(false);
+	const [error, setError] = useState(null);
+	const [isReset, setReset] = useState(false);
 	const navigate = useNavigate();
+
+	const isResetPassword = localStorage.getItem('resetPassword');
+
+	const forgotPassword = async (e) => {
+		e.preventDefault();
+		setLoading(true);
+		console.log(form);
+		const response = await resetPasswordApi(form);
+		setLoading(false);
+		console.log(response);
+		if (!response.success) setError(response.message);
+		if (response.success) {
+			setReset(true);
+			navigate(pathPages.login);
+		}
+	};
 
 	const onLoginClick = () => {
 		navigate(pathPages.login);
 	};
 
-	const [isVisiblePassword, setIsVisiblePassword] = useState(false);
+	if (!isResetPassword && !isReset)
+		return <Navigate to={pathPages.forgotPassword} />;
 	return (
 		<Layout>
 			<Container className={styles.container}>
 				<section className={`${styles.register} `}>
-					<form action='' className={`${styles.form} mb-20`}>
+					<form onSubmit={forgotPassword} className={`${styles.form} mb-20`}>
 						<h3 className='text text_type_main-medium'>
 							Восстановление пароля
 						</h3>
@@ -44,15 +66,17 @@ export const ResetPassword = () => {
 							onIconClick={() => setIsVisiblePassword(!isVisiblePassword)}
 						/>
 						<Input
-							name='code'
+							name='token'
 							type='text'
-							placeholder={form.code ? '' : 'Введите код из письма'}
+							placeholder={form.token ? '' : 'Введите код из письма'}
 							onChange={onChange}
-							value={form.code}
+							value={form.token}
 						/>
 						<Button htmlType='submit' type='primary' size='large'>
 							Войти
 						</Button>
+						{isLoading && <LoaderForm />}
+						{error && <p className='text text_type_main-medium'> {error} </p>}
 					</form>
 					<p className={`${styles.login} mb-4`}>
 						<span className='text text_type_main-default text_color_inactive'>

@@ -1,3 +1,3 @@
 export const ProfileOrder = () => {
-	return <div> History cel </div>;
+	return <p className="text text_type_main-medium"> History cel </p>;
 };

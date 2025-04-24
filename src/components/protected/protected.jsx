@@ -33,7 +33,8 @@ const Protected = ({ onlyUnAuth = false, component }) => {
 	if (onlyUnAuth && user) {
 		// Для неавторизованного, но авторизован
 		const { from } = location.state ?? { from: { pathname: '/' } };
-		return <Navigate to={from} />;
+		console.log(from.pathname);
+		return <Navigate to={from.pathname} />;
 	}
 
 	// onlyUnAuth && !user для неавторизованного и не авторизован

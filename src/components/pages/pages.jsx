@@ -12,21 +12,23 @@ import { ResetPassword } from './reset-password/reset-password';
 import { Page404 } from './error404-page/erro404-page';
 import { ProductDetails } from './product-info/product-details';
 import { IngredientDetailsModal } from '../burger-ingredients/modal-ingredient-details/ingredient-details-modal';
-import { OnlyAuth } from '../protected/protected';
+import { OnlyAuth, OnlyUnAuth } from '../protected/protected';
+import { Exit } from './exit/exit';
 
 export const Pages = () => {
 	const location = useLocation();
 	let state = location.state || {};
 	// console.log(location);
 
-	
-
 	return (
 		<>
 			<Routes location={state?.backgroundLocation || location}>
 				{/* домашняя страницы */}
 				<Route path={pathPages.home} element={<PageConstructorBurger />} />
-				<Route path={pathPages.checkList} element={<CheckList />} />
+				<Route
+					path={pathPages.checkList}
+					element={<OnlyAuth component={<CheckList />} />}
+				/>
 				<Route
 					path={pathPages.personalAccount}
 					element={<OnlyAuth component={<PersonalAccount />} />}>
@@ -38,11 +40,27 @@ export const Pages = () => {
 						path={pathPages.profileOrders}
 						element={<OnlyAuth component={<ProfileOrder />} />}
 					/>
+					<Route
+						path={pathPages.profileExit}
+						element={<OnlyAuth component={<Exit />} />}
+					/>
 				</Route>
-				<Route path={pathPages.register} element={<Register />} />
-				<Route path={pathPages.login} element={<Login />} />
-				<Route path={pathPages.forgotPassword} element={<ForgotPassword />} />
-				<Route path={pathPages.resetPassword} element={<ResetPassword />} />
+				<Route
+					path={pathPages.register}
+					element={<OnlyUnAuth component={<Register />} />}
+				/>
+				<Route
+					path={pathPages.login}
+					element={<OnlyUnAuth component={<Login />} />}
+				/>
+				<Route
+					path={pathPages.forgotPassword}
+					element={<OnlyUnAuth component={<ForgotPassword />} />}
+				/>
+				<Route
+					path={pathPages.resetPassword}
+					element={<OnlyUnAuth component={<ResetPassword />} />}
+				/>
 				<Route
 					path={`${pathPages.ingredients}/:id`}
 					element={<ProductDetails />}

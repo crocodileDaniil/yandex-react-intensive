@@ -5,7 +5,7 @@ import {
 import styles from './styles.module.css';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useForm } from '@utils/custom-hooks';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Layout } from '../../layout/layout';
 import { Container } from '../../container/container';
 import { pathPages } from '@utils/page-paths';
@@ -13,7 +13,12 @@ import { useDispatch } from 'react-redux';
 import { registerUser } from '@services/user/action';
 import { useSelector } from 'react-redux';
 import { LoaderForm } from '../../loader-form/loader-form';
-import { getUser, getUserLoading } from '@services/user/reducer';
+import {
+	clearError,
+	getUser,
+	getUserError,
+	getUserLoading,
+} from '@services/user/reducer';
 
 export const Register = () => {
 	const [form, onChange, setFormValue] = useForm({
@@ -24,7 +29,11 @@ export const Register = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const loading = useSelector(getUserLoading);
-	const user = useSelector(getUser)
+	const error = useSelector(getUserError);
+
+	useEffect(() => {
+		dispatch(clearError());
+	}, []);
 
 	const onLoginClick = () => {
 		navigate(pathPages.login);
@@ -72,6 +81,7 @@ export const Register = () => {
 						<Button htmlType='submit' type='primary' size='large'>
 							Зарегестрироваться
 						</Button>
+						{error && <p className='text text_type_main-medium'> {error} </p>}
 					</form>
 					<p className={styles.login}>
 						<span className='text text_type_main-default text_color_inactive'>

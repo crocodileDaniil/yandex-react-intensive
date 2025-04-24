@@ -52,6 +52,7 @@ export const orderSlice = createSlice({
 
 export const { closeModal } = orderSlice.actions;
 export const {
+	getOrderNumber,
 	getOrder,
 	getRequestCompleted,
 	getIsOpen,
