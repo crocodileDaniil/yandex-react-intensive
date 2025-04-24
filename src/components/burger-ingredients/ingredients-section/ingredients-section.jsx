@@ -9,7 +9,7 @@ export const IngredientsSection = (props) => {
 	const { name, data, countIngredient, sectionRef } = props;
 
 	const location = useLocation();
-	// console.log(location);
+
 	return (
 		<article>
 			<p className='text text_type_main-medium mb-6' ref={sectionRef}>

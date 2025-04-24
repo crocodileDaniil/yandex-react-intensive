@@ -6,8 +6,6 @@ import styles from './styles.module.css';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { setIngredientDetails } from '@services/ingredient-info/reducer';
-import { useSelector } from 'react-redux';
-import { getFilling } from '@services/constructor/reducer';
 import { useDrag } from 'react-dnd';
 import { ItemDropTypes } from '@utils/items-drop-types';
 
@@ -24,8 +22,6 @@ export const Ingredient = (props) => {
 		end: (item, monitor) => {
 			//для себя, чтобы потом какой эффект попробовать сделать
 			const result = monitor.getDropResult();
-			// console.log(result);
-			// console.log(item);
 		},
 		collect: (monitor) => ({
 			isDrag: monitor.isDragging(),

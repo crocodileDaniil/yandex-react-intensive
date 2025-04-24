@@ -6,15 +6,10 @@ import { IngredientsSection } from '../ingredients-section/ingredients-section';
 import { FILTER_DECRYPTION } from '@utils/filter-decryption';
 import styles from './styles.module.css';
 import PropTypes from 'prop-types';
-import { ingredientType } from '@utils/types';
 import { useSelector } from 'react-redux';
 import { getIngredients } from '@services/ingredients/reducer';
 import { useMemo } from 'react';
-import {
-	getAllIngredients,
-	getBun,
-	getFilling,
-} from '@services/constructor/reducer';
+import { getAllIngredients, getBun } from '@services/constructor/reducer';
 import { REFS_TABS_DECRYPTION } from '@utils/refs-tabs-decryption';
 
 const categoryDecr = Object.values(FILTER_DECRYPTION);

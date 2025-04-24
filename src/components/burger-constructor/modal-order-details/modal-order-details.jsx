@@ -51,8 +51,3 @@ export const OrderDetails = () => {
 		</Modal>
 	);
 };
-
-// OrderDetails.propTypes = {
-// 	numberOrder: PropTypes.number,
-// 	onClose: PropTypes.func,
-// };

@@ -2,11 +2,10 @@ import styles from './styles.module.css';
 import PropTypes from 'prop-types';
 import { IngredientConstructor } from './ingredient-constructor/ingredient-constructor';
 import { PlaceOrder } from './place-order/place-order';
-import { useState } from 'react';
+
 import { OrderDetails } from './modal-order-details/modal-order-details';
-import { ingredientType } from '@utils/types';
 import { useSelector } from 'react-redux';
-import { getBun, getFilling, setBun } from '@services/constructor/reducer';
+import { getBun, setBun } from '@services/constructor/reducer';
 import { IngredientPlace } from './ingredient-place/ingredient-place';
 import { getIsOpen, getRequestCompleted } from '@services/order/reducer';
 import { useDrop } from 'react-dnd';

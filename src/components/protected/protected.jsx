@@ -11,12 +11,6 @@ const Protected = ({ onlyUnAuth = false, component }) => {
 	const dispatch = useDispatch();
 	const location = useLocation();
 
-	// url == /profile, onlyUnAuth = false, user = null
-	// url == /login, from = /profile, onlyUnAuth = true, user = null
-	// url == /login, from = /profile, onlyUnAuth = true, user != null
-	// url == /profile, onlyUnAuth = false, user != null
-	// url == /profile, onlyUnAuth = false, user = null
-
 	useEffect(() => {
 		dispatch(checkUserAuth());
 	}, []);
@@ -33,7 +27,6 @@ const Protected = ({ onlyUnAuth = false, component }) => {
 	if (onlyUnAuth && user) {
 		// Для неавторизованного, но авторизован
 		const { from } = location.state ?? { from: { pathname: '/' } };
-		console.log(from.pathname);
 		return <Navigate to={from.pathname} />;
 	}
 

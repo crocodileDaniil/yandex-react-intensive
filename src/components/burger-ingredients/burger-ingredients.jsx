@@ -1,26 +1,14 @@
-import { IngredientDetailsModal } from './modal-ingredient-details/ingredient-details-modal';
 import { useRef, useState } from 'react';
 import { FilterIngredients } from './filter-tabs/tabs';
 import { FILTER_DECRYPTION } from '@utils/filter-decryption';
-import { getFilteredDataByCategory } from '@utils/helper-function';
 import { Ingredients } from './ingredients/ingredients';
 import styles from './styles.module.css';
 import PropTypes from 'prop-types';
-import { ingredientType } from '@utils/types';
-import { useSelector } from 'react-redux';
-import { getActiveIngredientDetails } from '@services/ingredient-info/reducer';
-import { getIngredients } from '@services/ingredients/selectors';
 
 const categorysFilter = Object.keys(FILTER_DECRYPTION);
-const categoryDecr = Object.values(FILTER_DECRYPTION);
 
 export const BurgerIngredients = () => {
-	const ingredients = useSelector(getIngredients);
-	// лучше данные группировать в каждой секции или в родителе?
-	const filterIngredients = getFilteredDataByCategory(ingredients, 'type');
-
 	const [category, setCategory] = useState(categorysFilter[0]);
-	const isOpenModal = useSelector(getActiveIngredientDetails);
 
 	// const [currentTab, setCurrentTab] = useState('Булки');
 	const containerRef = useRef(null);
@@ -99,6 +87,4 @@ export const BurgerIngredients = () => {
 	);
 };
 
-// BurgerIngredients.propTypes = {
-// 	ingredients: PropTypes.arrayOf(ingredientType),
-// };
+// BurgerIngredients.propTypes = { };
