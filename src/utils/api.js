@@ -32,7 +32,7 @@ export const getAllIngredientsApi = async () => {
 export const postPlaceOrderApi = async (body) => {
 	try {
 		let accessToken = localStorage.getItem('accessToken');
-		// console.log(JSON.stringify({ ingredients: body }));
+
 		const response = await fetchWithAuthRefreshTokenApi(URL_POST_PLACE_ORDER, {
 			method: 'POST',
 			headers: {
@@ -43,7 +43,7 @@ export const postPlaceOrderApi = async (body) => {
 		});
 
 		const data = await getResponse(response);
-		console.log(response);
+
 		return data;
 	} catch (e) {
 		throw e;
@@ -57,15 +57,11 @@ async function fetchWithAuthRefreshTokenApi(url, options = {}, retry = true) {
 		Authorization: `Bearer ${accessToken}`,
 		'Content-Type': 'application/json;charset=utf-8',
 	};
-	console.log({
-		Authorization: `Bearer ${accessToken}`,
-		'Content-Type': 'application/json;charset=utf-8',
-		...(options.headers || {}),
-	});
+
 	let response = await fetch(url, options);
 
 	// Если токен истёк
-	if (response.status === 403 && retry) {
+	if ((response.status === 403 || response.status === 401) && retry) {
 		const refreshToken = localStorage.getItem('refreshToken');
 
 		const tokenResponse = await fetch(
@@ -73,7 +69,7 @@ async function fetchWithAuthRefreshTokenApi(url, options = {}, retry = true) {
 			{
 				method: 'POST',
 				headers: {
-					'Content-Type': 'application/json ;charset=utf-8',
+					'Content-Type': 'application/json;charset=utf-8',
 				},
 				body: JSON.stringify({ token: refreshToken }),
 			}
@@ -81,19 +77,28 @@ async function fetchWithAuthRefreshTokenApi(url, options = {}, retry = true) {
 
 		if (tokenResponse.ok) {
 			const newTokens = await tokenResponse.json();
-			localStorage.setItem('accessToken', newTokens.accessToken.split(' ')[1]);
+			const accessToken = newTokens.accessToken.split(' ')[1];
+
+			localStorage.setItem('accessToken', accessToken);
 			localStorage.setItem('refreshToken', newTokens.refreshToken);
+
 			options.headers = {
 				...(options.headers || {}),
-				Authorization: `Bearer ${newTokens.accessToken}`,
+				Authorization: `Bearer ${accessToken}`,
 				'Content-Type': 'application/json;charset=utf-8',
 			};
 			// Повторяем оригинальный запрос с новым токеном
+
 			return fetchWithAuthRefreshTokenApi(url, options, false);
+			// return newTokens ? newTokens.statusText : 'Необходимо авторизоваться';
 		} else {
+			const errorData = await tokenResponse.json();
+			console.error('Ошибка обновления токена:', errorData);
+
 			localStorage.removeItem('accessToken');
 			localStorage.removeItem('refreshToken');
-			return newTokens.statusText;
+
+			throw new Error(errorData.message || 'Ошибка обновления токена');
 		}
 	}
 
@@ -113,11 +118,10 @@ export const registerUserApi = async (userData) => {
 		const data = await response.json();
 
 		if (response.ok) {
-			console.log(data);
 			const accessToken = data.accessToken.split(' ')[1];
 			localStorage.setItem('accessToken', accessToken);
 			localStorage.setItem('refreshToken', data.refreshToken);
-			console.log('register Completed');
+
 			return data.user;
 		} else {
 			console.error('Registration error:', data.message);
@@ -149,7 +153,7 @@ export const logoutUserApi = async (arg) => {
 		localStorage.removeItem('refreshToken');
 
 		const data = await res.json();
-		console.log(data);
+
 		return data;
 	} catch (err) {
 		throw err;
@@ -170,11 +174,11 @@ export const loginUserApi = async (body) => {
 
 		if (response.ok) {
 			const accessToken = data.accessToken.split(' ')[1];
-			console.log(data);
+
 			localStorage.setItem('accessToken', accessToken);
 			localStorage.setItem('refreshToken', data.refreshToken);
-			console.log('login Completed');
-			return {user: data.user, success: data.success};
+
+			return { user: data.user, success: data.success };
 		} else {
 			console.error('Registration error:', data.message);
 			return data;
@@ -191,11 +195,16 @@ export const getUserApi = async () => {
 			method: 'GET',
 			headers: {
 				Authorization: `Bearer ${accessToken}`,
-				'Content-Type': 'application/json ;charset=utf-8',
+				'Content-Type': 'application/json;charset=utf-8',
 			},
 		});
+		if (typeof res === 'string') {
+			return {
+				success: false,
+				message: res,
+			};
+		}
 		const response = await res.json();
-		console.log(response);
 		return response.user;
 	} catch (error) {
 		localStorage.removeItem('accessToken');
@@ -211,7 +220,7 @@ export const patchRefreshDataUserApi = async (body) => {
 			method: 'GET',
 			headers: {
 				Authorization: `Bearer ${accessToken}`,
-				'Content-Type': 'application/json ;charset=utf-8',
+				'Content-Type': 'application/json;charset=utf-8',
 			},
 			body: JSON.stringify({ user: body }),
 		});
@@ -229,7 +238,7 @@ export const forgotPasswordApi = async (body) => {
 		const res = await fetch(URL_POST_PASSWORD_RESET, {
 			method: 'POST',
 			headers: {
-				'Content-Type': 'application/json ;charset=utf-8',
+				'Content-Type': 'application/json;charset=utf-8',
 			},
 			body: JSON.stringify(body),
 		});
@@ -251,7 +260,7 @@ export const resetPasswordApi = async (body) => {
 		const res = await fetch(URL_POST_PASSWORD_RESET_RESET, {
 			method: 'POST',
 			headers: {
-				'Content-Type': 'application/json ;charset=utf-8',
+				'Content-Type': 'application/json;charset=utf-8',
 			},
 			body: JSON.stringify(body),
 		});
@@ -265,5 +274,29 @@ export const resetPasswordApi = async (body) => {
 		}
 	} catch (error) {
 		throw error;
+	}
+};
+
+export const editingProfileUserApi = async (body) => {
+	const accessToken = localStorage.getItem('accessToken');
+	try {
+		const res = await fetchWithAuthRefreshTokenApi(URL_PATCH_AUTH_USER, {
+			method: 'PATCH',
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+				'Content-Type': 'application/json;charset=utf-8',
+			},
+			body: JSON.stringify(body),
+		});
+
+		if (!res.ok) {
+			throw new Error(`Ошибка выхода: ${res.status}`);
+		}
+
+		const data = await res.json();
+
+		return data;
+	} catch (err) {
+		throw err;
 	}
 };

@@ -28,10 +28,10 @@ export const ResetPassword = () => {
 	const forgotPassword = async (e) => {
 		e.preventDefault();
 		setLoading(true);
-		console.log(form);
+
 		const response = await resetPasswordApi(form);
 		setLoading(false);
-		console.log(response);
+
 		if (!response.success) setError(response.message);
 		if (response.success) {
 			setReset(true);

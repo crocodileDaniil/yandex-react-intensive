@@ -30,7 +30,6 @@ export const ForgotPassword = () => {
 		setLoading(true);
 		const response = await forgotPasswordApi(form);
 		setLoading(false);
-		console.log(response);
 		if (!response.success) setError(response.message);
 		if (response.success) navigate(pathPages.resetPassword);
 	};

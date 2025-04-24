@@ -5,8 +5,9 @@ import {
 import styles from './styles.module.css';
 import { useState } from 'react';
 import { useForm } from '@utils/custom-hooks';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from '@services/user/reducer';
+import { editProfileUser } from '@services/user/action';
 
 const initialFormState = {
 	name: '',
@@ -16,11 +17,10 @@ const initialFormState = {
 
 export const EditingProfile = (props) => {
 	const [form, onChange, setFormValue] = useForm(initialFormState);
-
+	const dispatch = useDispatch();
 	const [isVisiblePassword, setIsVisiblePassword] = useState(false);
 
-	const user = useSelector(getUser)
-
+	const user = useSelector(getUser);
 	const onIconClick = (key) => {
 		setFormValue({
 			...form,
@@ -32,9 +32,15 @@ export const EditingProfile = (props) => {
 		setFormValue(initialFormState);
 	};
 
+	const onEditProfile = async (e) => {
+		e.preventDefault();
+
+		dispatch(editProfileUser({ ...user, ...form }));
+	};
+
 	return (
 		<div>
-			<form action='' className={`${styles.form} mb-6`}>
+			<form onSubmit={onEditProfile} className={`${styles.form} mb-6`}>
 				<Input
 					name='name'
 					type='text'
@@ -65,20 +71,19 @@ export const EditingProfile = (props) => {
 					onIconClick={() => setIsVisiblePassword(!isVisiblePassword)}
 					{...(form.password && { onIconClick: () => onIconClick('password') })}
 				/>
+				{(form.name || form.email || form.password) && (
+					<div className={styles.actions}>
+						<button
+							className={`${styles.cancel} text text_type_main-medium`}
+							onClick={resetAllForm}>
+							Отмена
+						</button>
+						<Button htmlType='submit' type='primary' size='large'>
+							Сохранить
+						</Button>
+					</div>
+				)}
 			</form>
-
-			{(form.name || form.email || form.password) && (
-				<div className={styles.actions}>
-					<button
-						className={`${styles.cancel} text text_type_main-medium`}
-						onClick={resetAllForm}>
-						Отмена
-					</button>
-					<Button htmlType='button' type='primary' size='large'>
-						Сохранить
-					</Button>
-				</div>
-			)}
 		</div>
 	);
 };

@@ -1,5 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { checkUserAuth, loginUser, logoutUser, registerUser } from './action';
+import {
+	checkUserAuth,
+	editProfileUser,
+	loginUser,
+	logoutUser,
+	registerUser,
+} from './action';
 
 const initialState = {
 	user: null,
@@ -39,7 +45,6 @@ export const userSlice = createSlice({
 				state.isAuthChecked = true;
 			})
 			.addCase(registerUser.rejected, (state, action) => {
-				console.log(action);
 				state.loading = false;
 				state.error = action.payload;
 				state.hasError = true;
@@ -77,13 +82,27 @@ export const userSlice = createSlice({
 				state.loading = true;
 			})
 			.addCase(loginUser.fulfilled, (state, action) => {
-				console.log('action', action);
 				state.loading = false;
 				state.hasError = false;
 				state.user = action.payload;
 				state.isAuthChecked = true;
 			})
 			.addCase(loginUser.rejected, (state, action) => {
+				state.loading = false;
+				state.user = null;
+				state.error = action.payload;
+				state.hasError = true;
+			})
+			.addCase(editProfileUser.pending, (state) => {
+				state.loading = true;
+			})
+			.addCase(editProfileUser.fulfilled, (state, action) => {
+				state.loading = false;
+				state.hasError = false;
+				state.user = action.payload;
+				state.isAuthChecked = true;
+			})
+			.addCase(editProfileUser.rejected, (state, action) => {
 				state.loading = false;
 				state.user = null;
 				state.error = action.payload;
