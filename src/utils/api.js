@@ -205,7 +205,8 @@ export const getUserApi = async () => {
 			};
 		}
 		const response = await res.json();
-		return response.user;
+
+		return response;
 	} catch (error) {
 		localStorage.removeItem('accessToken');
 		localStorage.removeItem('refreshToken');

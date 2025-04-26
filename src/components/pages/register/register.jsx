@@ -41,7 +41,6 @@ export const Register = () => {
 
 	const onRegisterClick = (e) => {
 		e.preventDefault();
-		console.log(form);
 		dispatch(registerUser(form));
 	};
 

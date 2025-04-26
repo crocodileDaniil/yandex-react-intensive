@@ -23,13 +23,7 @@ export const App = () => {
 		dispatch(getAllIngredients());
 	}, []);
 
-	return !data.length ? (
-		loading && <CometLoader />
-	) : !hasError ? (
-		<>
-			<Pages />
-		</>
-	) : (
-		<Error text={errorMessage} />
-	);
+	if (!data.length) return loading && <CometLoader />;
+	if (data.length && !hasError) return <Pages />;
+	return <Error text={errorMessage} />;
 };

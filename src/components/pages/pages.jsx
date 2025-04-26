@@ -10,7 +10,7 @@ import { Login } from './login/login';
 import { ForgotPassword } from './forgot-password/forgot-password';
 import { ResetPassword } from './reset-password/reset-password';
 import { Page404 } from './error404-page/erro404-page';
-import { ProductDetails } from './product-info/product-details';
+import { ProductDetails } from './product-details/product-details';
 import { IngredientDetailsModal } from '../burger-ingredients/modal-ingredient-details/ingredient-details-modal';
 import { OnlyAuth, OnlyUnAuth } from '../protected/protected';
 import { Exit } from './exit/exit';
@@ -18,7 +18,6 @@ import { Exit } from './exit/exit';
 export const Pages = () => {
 	const location = useLocation();
 	let state = location.state || {};
-	// console.log(location);
 
 	return (
 		<>

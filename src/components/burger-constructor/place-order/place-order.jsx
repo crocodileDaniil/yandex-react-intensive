@@ -29,7 +29,6 @@ export const PlaceOrder = (props) => {
 		const orderFill = filling.map((fil) => `${fil['_id']}`);
 		order.push(...orderFill);
 		bun['_id'] && order.push(`${bun['_id']}`);
-		// console.log(order)
 		dispatch(postPlaceOrder(order));
 	}, [filling, bun]);
 

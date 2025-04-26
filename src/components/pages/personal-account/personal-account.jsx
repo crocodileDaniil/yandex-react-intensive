@@ -7,6 +7,7 @@ import { pathPages } from '@utils/page-paths';
 import styles from './styles.module.css';
 import { getLastPath } from '@utils/helper-function';
 import { descriptionPersonalAccountPath } from '@utils/description-personal-account-path';
+import { useDispatch } from 'react-redux';
 
 export const PersonalAccount = () => {
 	// const { data } = props;
@@ -14,6 +15,8 @@ export const PersonalAccount = () => {
 	const location = useLocation();
 	const lastPath = getLastPath(location.pathname);
 	const description = descriptionPersonalAccountPath[lastPath];
+
+	const dispatch = useDispatch()
 
 	return (
 		<Layout>

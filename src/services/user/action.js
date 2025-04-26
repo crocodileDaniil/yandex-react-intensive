@@ -46,7 +46,6 @@ export const loginUser = createAsyncThunk(
 			if (!data.success) {
 				return thunkApi.rejectWithValue(data.message ?? 'Неизвестная ошибка');
 			}
-
 			return data.user;
 		} catch (err) {
 			return thunkApi.rejectWithValue(err.message ?? 'Неизвестная ошибка');

@@ -43,7 +43,6 @@ export const Login = () => {
 
 	const onLoginClick = (e) => {
 		e.preventDefault();
-		console.log(form);
 		dispatch(loginUser(form));
 	};
 
