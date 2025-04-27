@@ -59,7 +59,7 @@ export const checkUserAuth = createAsyncThunk(
 		try {
 			const response = await getUserApi();
 			if (!response.success) return thunkApi.rejectWithValue(response.message);
-			return response;
+			return response.user;
 		} catch (err) {
 			return thunkApi.rejectWithValue(err.message ?? 'Неизвестная ошибка');
 		}

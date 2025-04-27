@@ -5,7 +5,6 @@ import { Layout } from '../../layout/layout';
 import styles from './style.module.css';
 import PropTypes from 'prop-types';
 
-
 export const PageConstructorBurger = () => {
 	// обернуть в memo, здесь фильтр, лучше в пропсах передать или всё делать в дочернем
 	// const groupIngredients = useMemo(

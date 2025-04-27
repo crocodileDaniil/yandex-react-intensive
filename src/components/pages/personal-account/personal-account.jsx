@@ -16,7 +16,7 @@ export const PersonalAccount = () => {
 	const lastPath = getLastPath(location.pathname);
 	const description = descriptionPersonalAccountPath[lastPath];
 
-	const dispatch = useDispatch()
+	const dispatch = useDispatch();
 
 	return (
 		<Layout>
