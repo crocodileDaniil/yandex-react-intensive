@@ -5,7 +5,7 @@
 	gap: 16px;
 	height: 470px;
 	overflow-y: scroll;
-  border: 1px solid transparent;
+	border: 1px solid transparent;
 	border-radius: 10px;
 	transition: border-color 0.3s ease-in-out;
 }
@@ -25,5 +25,3 @@
 		height: 370px;
 	}
 }
-
-

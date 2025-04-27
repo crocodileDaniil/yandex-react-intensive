@@ -25,11 +25,10 @@ export const PlaceOrder = (props) => {
 	);
 
 	const makeOrder = useCallback(() => {
-		const order = bun['_id'] ? [`bun_${bun['_id']}`] : [];
-		const orderFill = filling.map((fil) => `ing_${fil['_id']}`);
+		const order = bun['_id'] ? [`${bun['_id']}`] : [];
+		const orderFill = filling.map((fil) => `${fil['_id']}`);
 		order.push(...orderFill);
-		bun['_id'] && order.push(`bun_${bun['_id']}`);
-		// console.log(order)
+		bun['_id'] && order.push(`${bun['_id']}`);
 		dispatch(postPlaceOrder(order));
 	}, [filling, bun]);
 

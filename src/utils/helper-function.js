@@ -14,3 +14,8 @@ export const getFilteredDataByCategory = (arr, filter) => {
 export const getKeyToValue = (obj = FILTER_DECRYPTION, value) => {
 	return Object.keys(obj).find((key) => obj[key] === value);
 };
+
+export const getLastPath = (path) => {
+	const index = path.lastIndexOf('/');
+	return path.slice(index + 1);
+};

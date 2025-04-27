@@ -1,0 +1,24 @@
+.main {
+	/* display: grid;
+  grid-template-columns: 400px 1fr; */
+	display: flex;
+	gap: 60px;
+}
+
+.li {
+	list-style: none;
+}
+
+.nav {
+	flex-basis: 400px;
+}
+
+.nav ul {
+	margin: 0;
+	padding: 0;
+	margin-bottom: 50px;
+}
+
+.description {
+	color: #8585ad;
+}

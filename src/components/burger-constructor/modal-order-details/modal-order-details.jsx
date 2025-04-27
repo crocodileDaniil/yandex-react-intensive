@@ -3,14 +3,20 @@ import PropTypes from 'prop-types';
 import styles from './styles.module.css';
 import { Modal } from '../../modal/modal';
 import { useDispatch, useSelector } from 'react-redux';
-import { closeModal, getIsError, getOrderError } from '@services/order/reducer';
+import {
+	closeModal,
+	getIsError,
+	getOrderError,
+	getOrderNumber,
+} from '@services/order/reducer';
 
-export const OrderDetails = ({ numberOrder = 88005553535 }) => {
+export const OrderDetails = () => {
 	const dispatch = useDispatch();
 	const modalStylesClass = `${styles.modal} pt-30 pr-25 pl-25 pb-30`;
 	const buttonStylesClass = styles.close ? `${styles.close}` : ' ';
 	const isError = useSelector(getIsError);
 	const orderError = useSelector(getOrderError);
+	const numberOrder = useSelector(getOrderNumber);
 
 	const onClose = () => {
 		dispatch(closeModal());
@@ -45,8 +51,3 @@ export const OrderDetails = ({ numberOrder = 88005553535 }) => {
 		</Modal>
 	);
 };
-
-// OrderDetails.propTypes = {
-// 	numberOrder: PropTypes.number,
-// 	onClose: PropTypes.func,
-// };

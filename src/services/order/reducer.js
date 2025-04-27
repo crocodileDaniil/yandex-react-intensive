@@ -24,14 +24,12 @@ export const orderSlice = createSlice({
 				state.loading = true;
 			})
 			.addCase(postPlaceOrder.fulfilled, (state, action) => {
-				console.log(action);
 				state.orderNumbers.push(action.payload.order.number);
 				state.loading = false;
 				state.isOpen = true;
 				state.requestCompleted = true;
 			})
 			.addCase(postPlaceOrder.rejected, (state, action) => {
-				console.log(action);
 				state.orderError = action.payload;
 				state.isError = true;
 				state.loading = false;
@@ -52,6 +50,7 @@ export const orderSlice = createSlice({
 
 export const { closeModal } = orderSlice.actions;
 export const {
+	getOrderNumber,
 	getOrder,
 	getRequestCompleted,
 	getIsOpen,

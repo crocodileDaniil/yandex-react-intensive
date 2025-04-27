@@ -1,12 +1,9 @@
-import { getFilteredDataByCategory } from '@utils/helper-function';
 import { BurgerConstructor } from '../../burger-constructor/burger-constructor';
 import { BurgerIngredients } from '../../burger-ingredients/burger-ingredients';
 import { Container } from '../../container/container';
 import { Layout } from '../../layout/layout';
 import styles from './style.module.css';
 import PropTypes from 'prop-types';
-import { ingredientType } from '@utils/types';
-import { useMemo } from 'react';
 
 export const PageConstructorBurger = () => {
 	// обернуть в memo, здесь фильтр, лучше в пропсах передать или всё делать в дочернем
@@ -14,7 +11,6 @@ export const PageConstructorBurger = () => {
 	// 	() => getFilteredDataByCategory(data, 'type'),
 	// 	[data]
 	// );
-
 	return (
 		<Layout>
 			<Container className={styles['container-main']}>

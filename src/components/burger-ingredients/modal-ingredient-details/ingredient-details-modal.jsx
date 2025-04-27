@@ -1,21 +1,25 @@
-import { useEffect } from 'react';
-import styles from './styles.module.css';
-import PropTypes from 'prop-types';
-import { Modal } from '../../modal/modal';
-import { ingredientType } from '@utils/types';
-import { useSelector, useDispatch } from 'react-redux';
-import {
-	getDataIngredientDetails,
-	removeIngredientDetails,
-} from '@services/ingredient-info/reducer';
+import PropTypes, { element } from 'prop-types';
 
-export const IngredientDetails = () => {
-	const dispatch = useDispatch();
-	const { name, calories, fat, proteins, carbohydrates, image } = useSelector(
-		getDataIngredientDetails
+import { Modal } from '../../modal/modal';
+import { useSelector } from 'react-redux';
+
+import styles from './styles.module.css';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { getIngredients } from '@services/ingredients/reducer';
+
+export const IngredientDetailsModal = () => {
+	const navigate = useNavigate();
+	const location = useLocation();
+
+	const ingredients = useSelector(getIngredients);
+	const ingredientId = location.pathname.split('/')[2];
+	const ingredient = ingredients.find(
+		(element) => element._id === ingredientId
 	);
+
+	const { name, calories, fat, proteins, carbohydrates, image } = ingredient;
 	const onClose = () => {
-		dispatch(removeIngredientDetails());
+		navigate('/', { replace: true });
 	};
 
 	const modalStylesClass = `${styles.modal} pt-10 pr-10 pl-10 pb-15`;
@@ -79,7 +83,4 @@ export const IngredientDetails = () => {
 	);
 };
 
-// IngredientDetails.propTypes = {
-// 	onClose: PropTypes.func,
-// 	dataIngredient: ingredientType,
-// };
+// IngredientDetails.propTypes = { };

@@ -1,28 +1,17 @@
 import styles from './styles.module.css';
 import PropTypes from 'prop-types';
 
-export const NavElement = ({
-	children,
-	name,
-	classNameText,
-	classNameElement,
-	onClick,
-}) => {
+export const NavElement = ({ children, name, classNameText }) => {
 	return (
-		<a
-			href='#'
-			onClick={onClick}
-			className={`${classNameElement} ${styles['nav-element']}`}>
+		<div href='#' className={`${styles['nav-element']}`}>
 			{children}
 			<p className={classNameText}>{name}</p>
-		</a>
+		</div>
 	);
 };
 
 NavElement.propTypes = {
-	children: PropTypes.element,
-	name: PropTypes.string,
-	classNameText: PropTypes.string,
-	classNameElement: PropTypes.string,
-	onClick: PropTypes.func,
+	children: PropTypes.element.isRequired,
+	name: PropTypes.string.isRequired,
+	classNameText: PropTypes.string.isRequired,
 };
