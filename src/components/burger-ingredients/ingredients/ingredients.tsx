@@ -5,25 +5,40 @@ import {
 import { IngredientsSection } from '../ingredients-section/ingredients-section';
 import { FILTER_DECRYPTION } from '@utils/filter-decryption';
 import styles from './styles.module.css';
-import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { getIngredients } from '@services/ingredients/reducer';
 import { useMemo } from 'react';
 import { getAllIngredients, getBun } from '@services/constructor/reducer';
 import { REFS_TABS_DECRYPTION } from '@utils/refs-tabs-decryption';
+import { TObjRefDiv } from '../burger-ingredients';
+import { TIngredient } from '@utils/types';
 
 const categoryDecr = Object.values(FILTER_DECRYPTION);
 
-export const Ingredients = ({ refs, handleScroll }) => {
+type TIngredients = {
+	handleScroll: () => void;
+	refs: {
+		containerRef: TObjRefDiv;
+		bunsRef: TObjRefDiv;
+		saucesRef: TObjRefDiv;
+		mainsRef: TObjRefDiv;
+	};
+};
+
+type TReducerList = {
+	[key: string]: number;
+};
+
+export const Ingredients = ({ refs, handleScroll }: TIngredients) => {
 	const ingredients = useSelector(getIngredients);
-	const fillingConstructor = useSelector(getAllIngredients);
-	const activeBun = useSelector(getBun);
+	const fillingConstructor: TIngredient[] = useSelector(getAllIngredients);
+	const activeBun: TIngredient = useSelector(getBun);
 	const filterIngredients = getFilteredDataByCategory(ingredients, 'type');
 
 	const countIngredient = useMemo(() => {
 		const ingredientList = [...fillingConstructor];
 		activeBun && ingredientList.push(activeBun, activeBun);
-		return ingredientList.reduce((acc, fil) => {
+		return ingredientList.reduce<TReducerList>((acc, fil) => {
 			const filId = fil['_id'];
 			if (acc[filId]) {
 				acc[filId] = acc[filId] + 1;
@@ -54,14 +69,4 @@ export const Ingredients = ({ refs, handleScroll }) => {
 			})}
 		</div>
 	);
-};
-
-Ingredients.propTypes = {
-	handleScroll: PropTypes.func,
-	refs: PropTypes.shape({
-		containerRef: PropTypes.any,
-		bunsRef: PropTypes.any,
-		saucesRef: PropTypes.any,
-		mainsRef: PropTypes.any,
-	}),
 };

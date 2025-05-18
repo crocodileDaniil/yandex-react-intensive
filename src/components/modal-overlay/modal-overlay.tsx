@@ -1,8 +1,12 @@
 import { useLocation } from 'react-router-dom';
 import styles from './styles.module.css';
-import PropTypes from 'prop-types';
+import { TPropsChildren } from '@utils/types';
 
-export const ModalOverlay = (props) => {
+type TPropsModalOverlay = {
+	onClose?: () => void;
+} & TPropsChildren;
+
+export const ModalOverlay = (props: TPropsModalOverlay): React.JSX.Element => {
 	const location = useLocation();
 
 	const blackout =
@@ -12,9 +16,4 @@ export const ModalOverlay = (props) => {
 			{props.children}
 		</div>
 	);
-};
-
-ModalOverlay.propTypes = {
-	onCose: PropTypes.func,
-	children: PropTypes.element,
 };

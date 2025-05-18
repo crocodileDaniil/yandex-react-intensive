@@ -2,16 +2,14 @@ import {
 	Button,
 	CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
 import styles from './styles.module.css';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { getBun, getFilling } from '@services/constructor/reducer';
 import { useCallback, useMemo } from 'react';
 import { getLoading } from '@services/order/reducer';
-import { useDispatch } from 'react-redux';
 import { postPlaceOrder } from '@services/order/action';
 
-export const PlaceOrder = (props) => {
+export const PlaceOrder = () => {
 	const bun = useSelector(getBun) || {};
 	const filling = useSelector(getFilling);
 	const loading = useSelector(getLoading);
@@ -54,5 +52,3 @@ export const PlaceOrder = (props) => {
 		</article>
 	);
 };
-
-PlaceOrder.propTypes = {};

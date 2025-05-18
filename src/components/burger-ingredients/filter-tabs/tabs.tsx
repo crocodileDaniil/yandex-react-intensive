@@ -1,9 +1,16 @@
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
+import { TObjRefDiv } from '../burger-ingredients';
 
-export const FilterIngredients = (props) => {
+type TPropsFilterIngredients = {
+	current: string | null | undefined;
+	namesFilter: string[];
+	setFilterIngredients: (name: string) => void;
+	tabsRef: TObjRefDiv;
+};
+
+export const FilterIngredients = (props: TPropsFilterIngredients) => {
 	const { namesFilter, current, setFilterIngredients, tabsRef } = props;
-	//TODO: промамить фильтром и вернуть табы
+
 	return (
 		<div style={{ display: 'flex' }} className='mb-10' ref={tabsRef}>
 			{namesFilter.map((name) => {
@@ -19,11 +26,4 @@ export const FilterIngredients = (props) => {
 			})}
 		</div>
 	);
-};
-
-FilterIngredients.propTypes = {
-	namesFilter: PropTypes.arrayOf(PropTypes.string),
-	current: PropTypes.string,
-	setFilterIngredients: PropTypes.func,
-	tabsRef: PropTypes.any,
 };

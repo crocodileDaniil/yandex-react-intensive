@@ -7,32 +7,10 @@ import {
 import { Container } from '../container/container';
 import styles from './styles.module.css';
 import { NavElement } from './nav-element/nav-element';
-import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
-import { getPage, setPage } from '@services/pages/reducer';
-import { restaurantPages } from '@utils/restaurantPages';
 import { NavLink } from 'react-router-dom';
 import { pathPages } from '@utils/page-paths';
 
-export const AppHeader = (props) => {
-	const activePage = useSelector(getPage);
-	const dispatch = useDispatch();
-
-	const _setPageConstructor = (e) => {
-		e.preventDefault();
-		dispatch(setPage(restaurantPages[0]));
-	};
-
-	const _setPageCheckList = (e) => {
-		e.preventDefault();
-		dispatch(setPage(restaurantPages[1]));
-	};
-
-	const _setPagePersonalAccount = (e) => {
-		e.preventDefault();
-		dispatch(setPage(restaurantPages[2]));
-	};
-
+export const AppHeader = () => {
 	return (
 		<header className={`${styles.header} mb-10`}>
 			<Container>
@@ -47,7 +25,7 @@ export const AppHeader = (props) => {
 							{({ isActive }) => (
 								<NavElement
 									name='Burger constructor'
-									classNameText={
+									className={
 										isActive
 											? 'text text_type_main-default'
 											: 'text text_type_main-default text_color_inactive'
@@ -60,7 +38,7 @@ export const AppHeader = (props) => {
 							{({ isActive }) => (
 								<NavElement
 									name='CheckList'
-									classNameText={
+									className={
 										isActive
 											? 'text text_type_main-default'
 											: 'text text_type_main-default text_color_inactive'
@@ -78,7 +56,7 @@ export const AppHeader = (props) => {
 						{({ isActive }) => (
 							<NavElement
 								name='Личный кабинет'
-								classNameText={
+								className={
 									isActive
 										? 'text text_type_main-default'
 										: 'text text_type_main-default text_color_inactive'
@@ -92,5 +70,3 @@ export const AppHeader = (props) => {
 		</header>
 	);
 };
-
-AppHeader.propTypes = {};

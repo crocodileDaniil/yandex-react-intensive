@@ -1,8 +1,8 @@
+import { TPropsChildren } from '@utils/types';
 import { AppHeader } from '../app-header/app-header';
 import styles from './styles.module.css';
-import PropTypes from 'prop-types';
 
-export const Layout = (props) => {
+export const Layout = (props: TPropsChildren) => {
 	//TODO: layout сделать grid эксперимент, посмотреть на практике
 	return (
 		<div className={styles.layout}>
@@ -10,8 +10,4 @@ export const Layout = (props) => {
 			<main className={`pb-10 ${styles.main}`}>{props.children}</main>
 		</div>
 	);
-};
-
-Layout.propTypes = {
-	children: PropTypes.element,
 };

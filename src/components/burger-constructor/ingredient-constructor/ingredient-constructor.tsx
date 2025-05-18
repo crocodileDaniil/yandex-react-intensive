@@ -2,7 +2,6 @@ import {
 	ConstructorElement,
 	DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
 
 import styles from './styles.module.css';
 import { useDrag, useDrop } from 'react-dnd';
@@ -13,19 +12,40 @@ import {
 	deleteIngredient,
 	swapIngredient,
 } from '@services/constructor/reducer';
+import { TIngredient } from '@utils/types';
 
-export const IngredientConstructor = (props) => {
+export type TTypeSkin = 'top' | 'bottom' | undefined;
+
+type TPropsIngredientConstructor = Pick<
+	TIngredient,
+	'name' | 'image' | 'price'
+> & {
+	type?: TTypeSkin
+	isLocked?: boolean;
+	uniqueId?: string;
+	index?: number;
+};
+
+// type TDropCollectedProps = {
+// 	hoverClientY: {
+// 		x: number;
+// 		y: number;
+// 	} | null;
+// };
+
+export const IngredientConstructor = (props: TPropsIngredientConstructor) => {
 	const { name, image, isLocked, type, price, uniqueId, index } = props;
-	const ref = useRef(null);
+	const ref = useRef<HTMLElement>(null);
 	const dispatch = useDispatch();
-	const [{}, drop] = useDrop({
+	const [, drop] = useDrop<TPropsIngredientConstructor, unknown, unknown>({
 		accept: ItemDropTypes.INGREDIENT_CONSTRUCTOR_SWAP,
-		collect(monitor) {},
+		// collect(monitor) {},
 		hover(item, monitor) {
 			if (!ref.current) {
 				return;
 			}
 			const fromIndex = item.index;
+			if (index === undefined || fromIndex === undefined) return;
 			const toIndex = index;
 			if (fromIndex === toIndex) {
 				return;
@@ -36,6 +56,7 @@ export const IngredientConstructor = (props) => {
 			const hoverMiddleY =
 				(hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
 			const clientOffset = monitor.getClientOffset();
+			if (clientOffset === null) return;
 			const hoverClientY = clientOffset.y - hoverBoundingRect.top;
 
 			if (fromIndex < toIndex && hoverClientY < hoverMiddleY) {
@@ -84,23 +105,4 @@ export const IngredientConstructor = (props) => {
 			/>
 		</article>
 	);
-};
-
-IngredientConstructor.propTypes = {
-	_id: PropTypes.string,
-	name: PropTypes.string,
-	type: PropTypes.string,
-	proteins: PropTypes.number,
-	fat: PropTypes.number,
-	carbohydrates: PropTypes.number,
-	calories: PropTypes.number,
-	price: PropTypes.number,
-	image: PropTypes.string,
-	image_mobile: PropTypes.string,
-	image_large: PropTypes.string,
-	__v: PropTypes.number,
-	type: PropTypes.string,
-	isLocked: PropTypes.bool,
-	uniqueId: PropTypes.string,
-	index: PropTypes.number,
 };

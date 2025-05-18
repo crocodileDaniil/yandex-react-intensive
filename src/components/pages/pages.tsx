@@ -17,7 +17,7 @@ import { Exit } from './exit/exit';
 
 export const Pages = () => {
 	const location = useLocation();
-	let state = location.state || {};
+	const state = location.state || {};
 
 	return (
 		<>

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { CometLoader } from '../loader/comet-loader';
 import { Error } from '../error/error';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,10 +16,11 @@ export const App = () => {
 	const data = useSelector(getIngredients);
 	const loading = useSelector(getIngredientsLoading);
 	const hasError = useSelector(getIngredientsHasError);
-	const errorMessage = useSelector(getIngredientsError);
+	const errorMessage: string | null = useSelector(getIngredientsError);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
+		// @ts-expect-error "sprint4"
 		dispatch(getAllIngredients());
 	}, []);
 

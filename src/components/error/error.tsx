@@ -1,8 +1,11 @@
-import PropTypes from 'prop-types';
 import { ModalOverlay } from '../modal-overlay/modal-overlay';
 import styles from './styles.module.css';
 
-export const Error = (props) => {
+type TPropsError = {
+	text: string | null;
+};
+
+export const Error = (props: TPropsError): React.JSX.Element => {
 	const text = props.text ? props.text : 'неизвестная ошибка';
 	return (
 		<ModalOverlay>
@@ -15,8 +18,4 @@ export const Error = (props) => {
 			</section>
 		</ModalOverlay>
 	);
-};
-
-Error.propTypes = {
-	name: PropTypes.string,
 };

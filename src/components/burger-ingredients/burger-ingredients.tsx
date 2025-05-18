@@ -3,29 +3,40 @@ import { FilterIngredients } from './filter-tabs/tabs';
 import { FILTER_DECRYPTION } from '@utils/filter-decryption';
 import { Ingredients } from './ingredients/ingredients';
 import styles from './styles.module.css';
-import PropTypes from 'prop-types';
 
 const categorysFilter = Object.keys(FILTER_DECRYPTION);
+
+export type TRef = HTMLElement;
+
+export type TRefDiv = HTMLDivElement;
+
+export type TObjRef = React.RefObject<TRef>;
+
+export type TObjRefDiv = React.RefObject<TRefDiv>;
+
+type TSectionRefs = {
+	[key: string]: TObjRefDiv;
+};
 
 export const BurgerIngredients = () => {
 	const [category, setCategory] = useState(categorysFilter[0]);
 
 	// const [currentTab, setCurrentTab] = useState('Булки');
-	const containerRef = useRef(null);
-	const tabsRef = useRef(null);
+	const containerRef = useRef<TRefDiv>(null);
+	const tabsRef = useRef<TRefDiv>(null);
 
-	const bunsRef = useRef(null);
-	const saucesRef = useRef(null);
-	const mainsRef = useRef(null);
+	const bunsRef = useRef<TRefDiv>(null);
+	const saucesRef = useRef<TRefDiv>(null);
+	const mainsRef = useRef<TRefDiv>(null);
 
-	const sectionRefs = {
+	const sectionRefs: TSectionRefs = {
 		Булки: bunsRef,
 		Соусы: saucesRef,
 		Начинки: mainsRef,
 	};
 
 	// При клике на таб — прокрутка с учётом высоты табов
-	const handleTabClick = (name) => {
+	const handleTabClick = (name: string) => {
 		const block = sectionRefs[name].current;
 		const container = containerRef.current;
 		const tabs = tabsRef.current;
@@ -86,5 +97,3 @@ export const BurgerIngredients = () => {
 		</section>
 	);
 };
-
-// BurgerIngredients.propTypes = { };
