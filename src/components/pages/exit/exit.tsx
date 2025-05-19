@@ -1,9 +1,8 @@
 import { logoutUser } from '@services/user/action';
-import { getUser } from '@services/user/reducer';
 import { pathPages } from '@utils/page-paths';
 import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 export const Exit = () => {
 	const dispatch = useDispatch();
@@ -11,6 +10,7 @@ export const Exit = () => {
 
 	useEffect(() => {
 		const logout = async () => {
+			// @ts-expect-error "sprint4"
 			dispatch(logoutUser());
 			navigate(pathPages.login, { replace: true });
 		};

@@ -1,22 +1,18 @@
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import { Container } from '../../container/container';
 import { Layout } from '../../layout/layout';
-import PropTypes from 'prop-types';
 import { pathPages } from '@utils/page-paths';
 
 import styles from './styles.module.css';
 import { getLastPath } from '@utils/helper-function';
 import { descriptionPersonalAccountPath } from '@utils/description-personal-account-path';
-import { useDispatch } from 'react-redux';
+
+type TLastPath = keyof typeof descriptionPersonalAccountPath;
 
 export const PersonalAccount = () => {
-	// const { data } = props;
-
 	const location = useLocation();
-	const lastPath = getLastPath(location.pathname);
+	const lastPath = getLastPath(location.pathname) as TLastPath;
 	const description = descriptionPersonalAccountPath[lastPath];
-
-	const dispatch = useDispatch();
 
 	return (
 		<Layout>
@@ -74,5 +70,3 @@ export const PersonalAccount = () => {
 		</Layout>
 	);
 };
-
-PersonalAccount.propTypes = {};

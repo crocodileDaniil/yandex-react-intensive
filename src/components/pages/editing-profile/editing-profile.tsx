@@ -15,13 +15,19 @@ const initialFormState = {
 	password: '',
 };
 
-export const EditingProfile = (props) => {
-	const [form, onChange, setFormValue] = useForm(initialFormState);
+export type TUserData = {
+	name: string;
+	email: string;
+	password: string;
+};
+
+export const EditingProfile = () => {
+	const [form, onChange, setFormValue] = useForm<TUserData>(initialFormState);
 	const dispatch = useDispatch();
 	const [isVisiblePassword, setIsVisiblePassword] = useState(false);
 
-	const user = useSelector(getUser);
-	const onIconClick = (key) => {
+	const user: TUserData | null = useSelector(getUser) as TUserData | null;
+	const onIconClick = (key: string) => {
 		setFormValue({
 			...form,
 			[key]: '',
@@ -32,9 +38,9 @@ export const EditingProfile = (props) => {
 		setFormValue(initialFormState);
 	};
 
-	const onEditProfile = async (e) => {
+	const onEditProfile = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-
+		//@ts-expect-error "sprint4"
 		dispatch(editProfileUser({ ...user, ...form }));
 	};
 
@@ -48,7 +54,7 @@ export const EditingProfile = (props) => {
 					icon={form.name ? 'CloseIcon' : 'EditIcon'}
 					onChange={onChange}
 					{...(form.name && { onIconClick: () => onIconClick('name') })}
-					value={form.name || user.name}
+					value={form.name || (user ? user.name : '')}
 				/>
 				<Input
 					name='email'
@@ -57,7 +63,7 @@ export const EditingProfile = (props) => {
 					icon={form.email ? 'CloseIcon' : 'EditIcon'}
 					onChange={onChange}
 					{...(form.email && { onIconClick: () => onIconClick('email') })}
-					value={form.email || user.email}
+					value={form.email || (user ? user.email : '')}
 				/>
 				<Input
 					name='password'

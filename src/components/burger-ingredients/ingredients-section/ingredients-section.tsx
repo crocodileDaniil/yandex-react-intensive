@@ -1,11 +1,18 @@
-import { ingredientType } from '@utils/types';
 import { Ingredient } from '../ingredient/ingredient';
 import styles from './styles.module.css';
-import PropTypes from 'prop-types';
 import { Link, useLocation } from 'react-router-dom';
 import { pathPages } from '@utils/page-paths';
+import { TIngredient } from '@utils/types';
+import { TObjRefDiv } from '../burger-ingredients';
 
-export const IngredientsSection = (props) => {
+type TIngredientSection = {
+	name: string | undefined;
+	data: TIngredient[];
+	countIngredient: Record<string, number>;
+	sectionRef: TObjRefDiv;
+};
+
+export const IngredientsSection = (props: TIngredientSection) => {
 	const { name, data, countIngredient, sectionRef } = props;
 
 	const location = useLocation();
@@ -31,11 +38,4 @@ export const IngredientsSection = (props) => {
 			</div>
 		</article>
 	);
-};
-
-IngredientsSection.propTypes = {
-	name: PropTypes.string,
-	data: PropTypes.arrayOf(ingredientType),
-	sectionRef: PropTypes.any,
-	countIngredient: PropTypes.objectOf(PropTypes.number),
 };

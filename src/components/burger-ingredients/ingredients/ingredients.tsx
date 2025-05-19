@@ -33,7 +33,10 @@ export const Ingredients = ({ refs, handleScroll }: TIngredients) => {
 	const ingredients = useSelector(getIngredients);
 	const fillingConstructor: TIngredient[] = useSelector(getAllIngredients);
 	const activeBun: TIngredient = useSelector(getBun);
-	const filterIngredients = getFilteredDataByCategory(ingredients, 'type');
+	const filterIngredients = getFilteredDataByCategory<TIngredient, 'type'>(
+		ingredients,
+		'type'
+	);
 
 	const countIngredient = useMemo(() => {
 		const ingredientList = [...fillingConstructor];

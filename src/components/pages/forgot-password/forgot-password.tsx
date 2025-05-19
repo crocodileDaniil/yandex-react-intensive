@@ -4,47 +4,42 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './styles.module.css';
 import { useForm } from '@utils/custom-hooks';
-import { useState } from 'react';
 import { Layout } from '../../layout/layout';
 import { Container } from '../../container/container';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { pathPages } from '@utils/page-paths';
+import { forgotPasswordApi } from '@utils/api';
+import { useEffect, useState } from 'react';
 import { LoaderForm } from '../../loader-form/loader-form';
-import { resetPasswordApi } from '@utils/api';
 
-export const ResetPassword = () => {
+export const ForgotPassword = () => {
 	const [form, onChange] = useForm({
-		token: '',
-		password: '',
+		email: '',
 	});
-	const [isVisiblePassword, setIsVisiblePassword] = useState(false);
+	const navigate = useNavigate();
 	const [isLoading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
-	const [isReset, setReset] = useState(false);
-	const navigate = useNavigate();
-
 	const isResetPassword = localStorage.getItem('resetPassword');
 
-	const forgotPassword = async (e) => {
+	useEffect(() => {
+		setError(null);
+	}, []);
+
+	const forgotPassword = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		setLoading(true);
-
-		const response = await resetPasswordApi(form);
+		const response = await forgotPasswordApi(form);
 		setLoading(false);
-
 		if (!response.success) setError(response.message);
-		if (response.success) {
-			setReset(true);
-			navigate(pathPages.login);
-		}
+		if (response.success) navigate(pathPages.resetPassword);
 	};
 
 	const onLoginClick = () => {
 		navigate(pathPages.login);
 	};
 
-	if (!isResetPassword && !isReset)
-		return <Navigate to={pathPages.forgotPassword} />;
+	if (isResetPassword) return <Navigate to={pathPages.resetPassword} />;
+
 	return (
 		<Layout>
 			<Container className={styles.container}>
@@ -53,34 +48,22 @@ export const ResetPassword = () => {
 						<h3 className='text text_type_main-medium'>
 							Восстановление пароля
 						</h3>
-
 						<Input
-							name='password'
-							type={isVisiblePassword ? 'text' : 'password'}
-							placeholder={form.password ? '' : 'Введите новый пароль'}
-							{...(isVisiblePassword
-								? { icon: 'HideIcon' }
-								: { icon: 'ShowIcon' })}
+							name='email'
+							type='email'
+							placeholder={form.email ? '' : 'Укажите e-mail'}
 							onChange={onChange}
-							value={form.password}
-							onIconClick={() => setIsVisiblePassword(!isVisiblePassword)}
-						/>
-						<Input
-							name='token'
-							type='text'
-							placeholder={form.token ? '' : 'Введите код из письма'}
-							onChange={onChange}
-							value={form.token}
+							value={form.email}
 						/>
 						<Button htmlType='submit' type='primary' size='large'>
-							Войти
+							Восстановить
 						</Button>
 						{isLoading && <LoaderForm />}
 						{error && <p className='text text_type_main-medium'> {error} </p>}
 					</form>
 					<p className={`${styles.login} mb-4`}>
 						<span className='text text_type_main-default text_color_inactive'>
-							Вспомнил пароль?
+							Вы вспомнили пароль?
 						</span>
 						<Button
 							onClick={onLoginClick}

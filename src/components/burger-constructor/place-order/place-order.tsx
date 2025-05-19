@@ -8,25 +8,27 @@ import { getBun, getFilling } from '@services/constructor/reducer';
 import { useCallback, useMemo } from 'react';
 import { getLoading } from '@services/order/reducer';
 import { postPlaceOrder } from '@services/order/action';
+import { TIngredient } from '@utils/types';
 
 export const PlaceOrder = () => {
-	const bun = useSelector(getBun) || {};
-	const filling = useSelector(getFilling);
+	const bun: TIngredient | undefined = useSelector(getBun);
+	const filling: TIngredient[] = useSelector(getFilling);
 	const loading = useSelector(getLoading);
 	const dispatch = useDispatch();
 
 	const totalPrice = useMemo(
 		() =>
 			filling.reduce((acc, elem) => elem.price + acc, 0) +
-			(bun?.price * 2 || 0),
+			(bun ? bun.price : 0 * 2),
 		[bun, filling]
 	);
 
 	const makeOrder = useCallback(() => {
-		const order = bun['_id'] ? [`${bun['_id']}`] : [];
+		const order = bun ? [`${bun['_id']}`] : [];
 		const orderFill = filling.map((fil) => `${fil['_id']}`);
 		order.push(...orderFill);
-		bun['_id'] && order.push(`${bun['_id']}`);
+		bun && order.push(`${bun['_id']}`);
+		//@ts-expect-error "sprint4"
 		dispatch(postPlaceOrder(order));
 	}, [filling, bun]);
 

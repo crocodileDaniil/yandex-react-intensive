@@ -3,19 +3,17 @@ import {
 	Input,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './styles.module.css';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from '@utils/custom-hooks';
 import { useEffect, useState } from 'react';
 import { Layout } from '../../layout/layout';
 import { Container } from '../../container/container';
 import { pathPages } from '@utils/page-paths';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from '@services/user/action';
-import { useSelector } from 'react-redux';
 import { LoaderForm } from '../../loader-form/loader-form';
 import {
 	clearError,
-	getUser,
 	getUserError,
 	getUserLoading,
 } from '@services/user/reducer';
@@ -32,6 +30,7 @@ export const Register = () => {
 	const error = useSelector(getUserError);
 
 	useEffect(() => {
+		// @ts-expect-error "sprint4"
 		dispatch(clearError());
 	}, []);
 
@@ -39,12 +38,20 @@ export const Register = () => {
 		navigate(pathPages.login);
 	};
 
-	const onRegisterClick = (e) => {
+	const onRegisterClick = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+		// @ts-expect-error "sprint4"
 		dispatch(registerUser(form));
 	};
 
 	const [isVisiblePassword, setIsVisiblePassword] = useState(false);
+
+	const iconType = isVisiblePassword
+		? 'HideIcon'
+		: form.password
+		? 'CloseIcon'
+		: 'EditIcon';
+
 	return (
 		<Layout>
 			<Container className={styles.container}>
@@ -69,10 +76,7 @@ export const Register = () => {
 							name='password'
 							type={isVisiblePassword ? 'text' : 'password'}
 							placeholder={form.password ? '' : 'Пароль'}
-							icon={form.password ? 'CloseIcon' : 'EditIcon'}
-							{...(isVisiblePassword
-								? { icon: 'HideIcon' }
-								: { icon: 'ShowIcon' })}
+							icon={iconType}
 							onChange={onChange}
 							value={form.password}
 							onIconClick={() => setIsVisiblePassword(!isVisiblePassword)}

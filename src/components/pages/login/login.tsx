@@ -10,8 +10,7 @@ import { Container } from '../../container/container';
 import { useNavigate } from 'react-router-dom';
 import { pathPages } from '@utils/page-paths';
 import { loginUser } from '@services/user/action';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
 	clearError,
 	getUserError,
@@ -30,6 +29,7 @@ export const Login = () => {
 	const loading = useSelector(getUserLoading);
 
 	useEffect(() => {
+		//@ts-expect-error "sprint4"
 		dispatch(clearError());
 	}, []);
 
@@ -41,8 +41,9 @@ export const Login = () => {
 		navigate(pathPages.forgotPassword);
 	};
 
-	const onLoginClick = (e) => {
+	const onLoginClick = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+		//@ts-expect-error "sprint4"
 		dispatch(loginUser(form));
 	};
 

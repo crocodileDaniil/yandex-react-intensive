@@ -20,7 +20,7 @@ type TPropsIngredientConstructor = Pick<
 	TIngredient,
 	'name' | 'image' | 'price'
 > & {
-	type?: TTypeSkin
+	type?: TTypeSkin;
 	isLocked?: boolean;
 	uniqueId?: string;
 	index?: number;

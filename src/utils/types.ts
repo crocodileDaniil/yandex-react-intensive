@@ -1,5 +1,5 @@
 export type TPropsChildren = {
-	children: React.ReactNode;
+	children?: React.ReactNode;
 };
 
 export type TPropsClassName = {
@@ -20,3 +20,32 @@ export type TIngredient = {
 	image_large: string;
 	__v: number;
 };
+
+export type TAccessToken = string | null;
+
+//как будет более правильно*
+export type TRequestOptions = RequestInit;
+
+// export type TRequestOptions =  {
+// 	method?: string;
+// 	headers?: Record<string, string>;
+// 	body?: string;
+// };
+
+export type TRegisterUser = {
+	email: string;
+	password: string;
+	name: string;
+};
+
+export type TLoginUser = {
+	email: string;
+	password: string;
+};
+
+export type TResetPassword = {
+	token: string;
+	password: string;
+};
+
+export type TEditingProfileUser = TRegisterUser;

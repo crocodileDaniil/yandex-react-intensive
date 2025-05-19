@@ -1,21 +1,24 @@
-import PropTypes, { element } from 'prop-types';
-
 import { Modal } from '../../modal/modal';
 import { useSelector } from 'react-redux';
 
 import styles from './styles.module.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getIngredients } from '@services/ingredients/reducer';
+import { TIngredient } from '@utils/types';
 
 export const IngredientDetailsModal = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
 
-	const ingredients = useSelector(getIngredients);
+	const ingredients: TIngredient[] | null | undefined =
+		useSelector(getIngredients);
 	const ingredientId = location.pathname.split('/')[2];
-	const ingredient = ingredients.find(
+	if (!ingredients) return;
+	const ingredient: TIngredient | undefined = ingredients.find(
 		(element) => element._id === ingredientId
 	);
+
+	if (!ingredient) return;
 
 	const { name, calories, fat, proteins, carbohydrates, image } = ingredient;
 	const onClose = () => {
@@ -82,5 +85,3 @@ export const IngredientDetailsModal = () => {
 		</Modal>
 	);
 };
-
-// IngredientDetails.propTypes = { };
