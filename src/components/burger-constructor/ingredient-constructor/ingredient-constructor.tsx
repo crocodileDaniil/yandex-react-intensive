@@ -12,7 +12,7 @@ import {
 	deleteIngredient,
 	swapIngredient,
 } from '@services/constructor/reducer';
-import { TIngredient } from '@utils/types';
+import { TIngredient } from '@utils/types/types';
 
 export type TTypeSkin = 'top' | 'bottom' | undefined;
 

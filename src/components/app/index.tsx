@@ -16,7 +16,7 @@ export const App = () => {
 	const data = useSelector(getIngredients);
 	const loading = useSelector(getIngredientsLoading);
 	const hasError = useSelector(getIngredientsHasError);
-	const errorMessage: string | null = useSelector(getIngredientsError);
+	const errorMessage: string | undefined = useSelector(getIngredientsError);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -26,5 +26,5 @@ export const App = () => {
 
 	if (!data.length) return loading && <CometLoader />;
 	if (data.length && !hasError) return <Pages />;
-	return <Error text={errorMessage} />;
+	return <Error text={errorMessage || ''} />;
 };

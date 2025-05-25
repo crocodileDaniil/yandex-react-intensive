@@ -5,7 +5,7 @@ import { IngredientPlace } from '../ingredient-place/ingredient-place';
 import { getFilling, setIngredient } from '@services/constructor/reducer';
 import { useDrop } from 'react-dnd';
 import { ItemDropTypes } from '@utils/items-drop-types';
-import { TIngredient } from '@utils/types';
+import { TIngredient } from '@utils/types/types';
 
 type TCollectedPropsFilling = {
 	isOverFil: boolean;
@@ -15,7 +15,7 @@ type TCollectedPropsFilling = {
 type TFilling = TIngredient & { key: string };
 
 export const IngredientFilling = () => {
-	const filling: TFilling[] = useSelector(getFilling);
+	const filling: TFilling[] | null = useSelector(getFilling);
 	const dispatch = useDispatch();
 	const [{ isOverFil, canDropFil }, dropRefFilling] = useDrop<
 		TIngredient,

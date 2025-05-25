@@ -9,7 +9,7 @@ import { getIsOpen, getRequestCompleted } from '@services/order/reducer';
 import { useDrop } from 'react-dnd';
 import { ItemDropTypes } from '@utils/items-drop-types';
 import { IngredientFilling } from './ingredient-filling/ingredient-filling';
-import { TIngredient } from '@utils/types';
+import { TIngredient } from '@utils/types/types';
 
 export const BurgerConstructor = () => {
 	const isOpenModal = useSelector(getIsOpen);
@@ -27,7 +27,7 @@ export const BurgerConstructor = () => {
 		}),
 	}));
 
-	const bun: TIngredient = useSelector(getBun);
+	const bun: TIngredient | null | undefined = useSelector(getBun);
 	const styleDropBun = canDropBun ? 'drop-bun' : '';
 	const styleOverBun = isOverBun ? 'over-bun' : '';
 

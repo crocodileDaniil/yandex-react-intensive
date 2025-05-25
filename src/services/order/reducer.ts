@@ -1,12 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { postPlaceOrder } from './action';
 
-const initialState = {
+type TOrderState = {
+	orderNumbers: number[];
+	requestCompleted: boolean;
+	isOpen: boolean;
+	loading: boolean;
+	orderError: string | undefined;
+	isError: boolean;
+};
+
+const initialState: TOrderState = {
 	orderNumbers: [],
 	requestCompleted: false,
 	isOpen: false,
 	loading: false,
-	orderError: null,
+	orderError: '',
 	isError: false,
 };
 
@@ -51,7 +60,6 @@ export const orderSlice = createSlice({
 export const { closeModal } = orderSlice.actions;
 export const {
 	getOrderNumber,
-	getOrder,
 	getRequestCompleted,
 	getIsOpen,
 	getLoading,

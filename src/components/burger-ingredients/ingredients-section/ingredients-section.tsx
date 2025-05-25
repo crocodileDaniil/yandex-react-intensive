@@ -2,7 +2,7 @@ import { Ingredient } from '../ingredient/ingredient';
 import styles from './styles.module.css';
 import { Link, useLocation } from 'react-router-dom';
 import { pathPages } from '@utils/page-paths';
-import { TIngredient } from '@utils/types';
+import { TIngredient } from '@utils/types/types';
 import { TObjRefDiv } from '../burger-ingredients';
 
 type TIngredientSection = {

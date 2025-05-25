@@ -1,7 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { TIngredient } from '@utils/types/types';
 
-const initialState = {
-	ingredient: {},
+type TStateIngredientInfo = {
+	ingredient: TIngredient | null;
+	isOpenModal: boolean;
+};
+
+const initialState: TStateIngredientInfo = {
+	ingredient: null,
 	isOpenModal: false,
 };
 
@@ -14,7 +20,7 @@ export const ingredientInfoSlice = createSlice({
 			state.isOpenModal = !state.isOpenModal;
 		},
 		removeIngredientDetails: (state) => {
-			state.ingredient = {};
+			state.ingredient = null;
 			state.isOpenModal = !state.isOpenModal;
 		},
 		closeIngredientDetails: (state) => {

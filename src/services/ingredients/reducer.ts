@@ -1,10 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getAllIngredients } from './action';
+import { TIngredient } from '@utils/types/types';
 
-const initialState = {
+type TStateIngredients = {
+	ingredients: TIngredient[];
+	loading: boolean;
+	error: string | undefined;
+	hasError: boolean;
+};
+
+const initialState: TStateIngredients = {
 	ingredients: [],
 	loading: false,
-	error: null,
+	error: '',
 	hasError: false,
 };
 
@@ -42,10 +50,3 @@ export const {
 	getIngredientsError,
 	getIngredientsHasError,
 } = ingredientsSlice.selectors;
-// где-то читал писали так нужно
-// export const {
-// 	getAllIngredients,
-// 	getIngredientsLoading,
-// 	getIngredientsError,
-// 	getIngredientshasError,
-// } = ingredientsSlice.getSelectors();

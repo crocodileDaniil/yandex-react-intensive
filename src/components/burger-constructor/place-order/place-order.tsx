@@ -8,10 +8,10 @@ import { getBun, getFilling } from '@services/constructor/reducer';
 import { useCallback, useMemo } from 'react';
 import { getLoading } from '@services/order/reducer';
 import { postPlaceOrder } from '@services/order/action';
-import { TIngredient } from '@utils/types';
+import { TIngredient } from '@utils/types/types';
 
 export const PlaceOrder = () => {
-	const bun: TIngredient | undefined = useSelector(getBun);
+	const bun: TIngredient | undefined | null = useSelector(getBun);
 	const filling: TIngredient[] = useSelector(getFilling);
 	const loading = useSelector(getLoading);
 	const dispatch = useDispatch();

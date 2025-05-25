@@ -1,4 +1,4 @@
-import { TPropsChildren, TPropsClassName } from '@utils/types';
+import { TPropsChildren, TPropsClassName } from '@utils/types/types';
 import styles from './styles.module.css';
 
 type TNavElement = { name: string } & TPropsChildren & TPropsClassName;

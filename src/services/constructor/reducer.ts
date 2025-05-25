@@ -1,6 +1,14 @@
-import { createSlice, nanoid } from '@reduxjs/toolkit';
+import { createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
+import { TIngredient } from '@utils/types/types';
 
-const initialState = {
+type TIngredientWithKey = TIngredient & { key: string };
+
+type TConstructorState = {
+	bun: TIngredient | undefined | null;
+	ingredients: TIngredientWithKey[];
+};
+
+const initialState: TConstructorState = {
 	bun: null,
 	ingredients: [],
 };
@@ -10,10 +18,13 @@ export const constructorSlice = createSlice({
 	initialState,
 	reducers: {
 		setIngredient: {
-			reducer: (state, action) => {
+			reducer: (
+				state,
+				action: PayloadAction<{ ingredient: TIngredientWithKey }>
+			) => {
 				state.ingredients.push(action.payload.ingredient);
 			},
-			prepare: ({ ingredient }) => {
+			prepare: ({ ingredient }: { ingredient: TIngredient }) => {
 				const key = nanoid();
 				return { payload: { ingredient: { ...ingredient, key } } };
 			},
@@ -27,7 +38,7 @@ export const constructorSlice = createSlice({
 			state.bun = action.payload.bun;
 		},
 		removeBun: (state) => {
-			state.bun = {};
+			state.bun = null;
 		},
 		swapIngredient: (state, action) => {
 			const updatedIngredients = [...state.ingredients];

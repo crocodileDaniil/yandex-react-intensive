@@ -5,7 +5,7 @@ import {
 	TRegisterUser,
 	TRequestOptions,
 	TResetPassword,
-} from './types';
+} from './types/types';
 import {
 	URL_GET_AUTH_USER,
 	URL_GET_INGREDIENTS,
@@ -136,7 +136,8 @@ export const registerUserApi = async (userData: TRegisterUser) => {
 			localStorage.setItem('accessToken', accessToken);
 			localStorage.setItem('refreshToken', data.refreshToken);
 
-			return data.user;
+			const { success, user } = data;
+			return { success, user };
 		} else {
 			console.error('Registration error:', data.message);
 			return data;

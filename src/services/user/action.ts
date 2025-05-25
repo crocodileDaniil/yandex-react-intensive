@@ -7,6 +7,8 @@ import {
 	editingProfileUserApi,
 } from '@utils/api';
 
+
+
 export const registerUser = createAsyncThunk(
 	'user/register',
 	async (arg, thunkApi) => {
@@ -18,8 +20,8 @@ export const registerUser = createAsyncThunk(
 					response.message ?? 'Неизвестная ошибка'
 				);
 			}
-			return response;
-		} catch (err) {
+			return response.user;
+		} catch (err: any) {
 			return thunkApi.rejectWithValue(err.message ?? 'Неизвестная ошибка');
 		}
 	}
