@@ -30,7 +30,6 @@ export const Register = () => {
 	const error = useSelector(getUserError);
 
 	useEffect(() => {
-		// @ts-expect-error "sprint4"
 		dispatch(clearError());
 	}, []);
 

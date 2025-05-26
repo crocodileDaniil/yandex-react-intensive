@@ -19,3 +19,8 @@ export type TRegisterUserResponse = Pick<TLogoutUserResponse, 'success'> & {
 };
 
 export type TAuthUserResponse = TRegisterUserResponse;
+
+export type TGetUserResponse = TAuthUserResponse;
+
+export type TUpdateUser = TRegisterUser;
+export type TUpdateUserResponse = TAuthUserResponse;

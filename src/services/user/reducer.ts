@@ -6,12 +6,21 @@ import {
 	logoutUser,
 	registerUser,
 } from './action';
+import { TRegisterUser } from '@utils/types/types';
 
-const initialState = {
+type TInitialUserState = {
+	user: Omit<TRegisterUser, 'password'> | null;
+	isAuthChecked: boolean;
+	loading: boolean;
+	error: string | null | undefined;
+	hasError: boolean;
+};
+
+const initialState: TInitialUserState = {
 	user: null,
 	isAuthChecked: false,
 	loading: false,
-	error: null,
+	error: '',
 	hasError: false,
 };
 
@@ -22,7 +31,8 @@ export const userSlice = createSlice({
 		setUser: (state, action) => {
 			state.user = action.payload;
 		},
-		clearError: (state, action) => {
+		// (state, action)  было так, на случай чего-либо
+		clearError: (state) => {
 			state.error = null;
 		},
 	},
@@ -41,7 +51,7 @@ export const userSlice = createSlice({
 			.addCase(registerUser.fulfilled, (state, action) => {
 				state.loading = false;
 				state.hasError = false;
-				state.user = action.payload;
+				state.user = action.payload.user;
 				state.isAuthChecked = true;
 			})
 			.addCase(registerUser.rejected, (state, action) => {
@@ -55,7 +65,7 @@ export const userSlice = createSlice({
 			.addCase(checkUserAuth.fulfilled, (state, action) => {
 				state.loading = false;
 				state.hasError = false;
-				state.user = action.payload;
+				state.user = action.payload.user;
 				state.isAuthChecked = true;
 			})
 			.addCase(checkUserAuth.rejected, (state, action) => {
@@ -67,7 +77,7 @@ export const userSlice = createSlice({
 			.addCase(logoutUser.pending, (state) => {
 				state.loading = true;
 			})
-			.addCase(logoutUser.fulfilled, (state, action) => {
+			.addCase(logoutUser.fulfilled, (state) => {
 				state.loading = false;
 				state.hasError = false;
 				state.user = null;
@@ -84,7 +94,7 @@ export const userSlice = createSlice({
 			.addCase(loginUser.fulfilled, (state, action) => {
 				state.loading = false;
 				state.hasError = false;
-				state.user = action.payload;
+				state.user = action.payload.user;
 				state.isAuthChecked = true;
 			})
 			.addCase(loginUser.rejected, (state, action) => {
@@ -99,7 +109,7 @@ export const userSlice = createSlice({
 			.addCase(editProfileUser.fulfilled, (state, action) => {
 				state.loading = false;
 				state.hasError = false;
-				state.user = action.payload;
+				state.user = action.payload.user;
 				state.isAuthChecked = true;
 			})
 			.addCase(editProfileUser.rejected, (state, action) => {

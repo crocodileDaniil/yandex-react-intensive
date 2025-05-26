@@ -29,7 +29,6 @@ export const Login = () => {
 	const loading = useSelector(getUserLoading);
 
 	useEffect(() => {
-		//@ts-expect-error "sprint4"
 		dispatch(clearError());
 	}, []);
 
