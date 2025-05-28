@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 import { Layout } from '../../layout/layout';
 import { Container } from '../../container/container';
 import { pathPages } from '@utils/page-paths';
-import { useDispatch, useSelector } from 'react-redux';
+// import { useDispatch,	useSelector } from 'react-redux';
 import { registerUser } from '@services/user/action';
 import { LoaderForm } from '../../loader-form/loader-form';
 import {
@@ -17,6 +17,7 @@ import {
 	getUserError,
 	getUserLoading,
 } from '@services/user/reducer';
+import { useDispatch, useSelector } from '@services/store';
 
 export const Register = () => {
 	const [form, onChange, setFormValue] = useForm({
@@ -39,7 +40,7 @@ export const Register = () => {
 
 	const onRegisterClick = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		// @ts-expect-error "sprint4"
+
 		dispatch(registerUser(form));
 	};
 

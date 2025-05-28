@@ -5,7 +5,8 @@ import {
 import styles from './styles.module.css';
 import { useState } from 'react';
 import { useForm } from '@utils/custom-hooks';
-import { useDispatch, useSelector } from 'react-redux';
+// import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '@services/store';
 import { getUser } from '@services/user/reducer';
 import { editProfileUser } from '@services/user/action';
 
@@ -40,7 +41,6 @@ export const EditingProfile = () => {
 
 	const onEditProfile = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		//@ts-expect-error "sprint4"
 		dispatch(editProfileUser({ ...user, ...form }));
 	};
 

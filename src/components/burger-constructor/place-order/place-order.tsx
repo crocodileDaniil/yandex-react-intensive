@@ -3,7 +3,8 @@ import {
 	CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './styles.module.css';
-import { useSelector, useDispatch } from 'react-redux';
+// import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from '@services/store';
 import { getBun, getFilling } from '@services/constructor/reducer';
 import { useCallback, useMemo } from 'react';
 import { getLoading } from '@services/order/reducer';
@@ -28,7 +29,6 @@ export const PlaceOrder = () => {
 		const orderFill = filling.map((fil) => `${fil['_id']}`);
 		order.push(...orderFill);
 		bun && order.push(`${bun['_id']}`);
-		//@ts-expect-error "sprint4"
 		dispatch(postPlaceOrder(order));
 	}, [filling, bun]);
 

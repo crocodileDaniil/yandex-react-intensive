@@ -24,10 +24,7 @@ export const Pages = () => {
 			<Routes location={state?.backgroundLocation || location}>
 				{/* домашняя страницы */}
 				<Route path={pathPages.home} element={<PageConstructorBurger />} />
-				<Route
-					path={pathPages.checkList}
-					element={<OnlyAuth component={<CheckList />} />}
-				/>
+				<Route path={pathPages.checkList} element={<CheckList />} />
 				<Route
 					path={pathPages.personalAccount}
 					element={<OnlyAuth component={<PersonalAccount />} />}>

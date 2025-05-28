@@ -1,9 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getAllIngredients } from './action';
 import { TIngredient } from '@utils/types/types';
+import { getIngredientsMap } from '@utils/helper-function';
 
 type TStateIngredients = {
 	ingredients: TIngredient[];
+	ingredientsMap: Record<string, TIngredient>;
 	loading: boolean;
 	error: string | undefined;
 	hasError: boolean;
@@ -11,6 +13,7 @@ type TStateIngredients = {
 
 const initialState: TStateIngredients = {
 	ingredients: [],
+	ingredientsMap: {},
 	loading: false,
 	error: '',
 	hasError: false,
@@ -35,6 +38,9 @@ export const ingredientsSlice = createSlice({
 				state.loading = false;
 				state.hasError = false;
 				state.ingredients = action.payload.data;
+				state.ingredientsMap = getIngredientsMap<TIngredient>(
+					action.payload.data
+				);
 			})
 			.addCase(getAllIngredients.rejected, (state, action) => {
 				state.loading = false;

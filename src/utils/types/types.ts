@@ -5,7 +5,8 @@ export type TPropsChildren = {
 export type TPropsClassName = {
 	className?: string;
 };
-
+// что-то было в в нижнем типе
+//reduce(arg0: (acc: Record<string, TIngredient>, ingredient: TIngredient) => TIngredient, arg1: Record<string, TIngredient>): Record<string, TIngredient>;
 export type TIngredient = {
 	_id: string;
 	name: string;

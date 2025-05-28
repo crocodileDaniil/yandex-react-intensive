@@ -32,3 +32,15 @@ export const getLastPath = (path: string): string => {
 	const index = path.lastIndexOf('/');
 	return path.slice(index + 1);
 };
+
+export const getIngredientsMap = <T extends { _id: string }>(
+	ingredients: T[]
+): Record<string, T> => {
+	return ingredients.reduce<Record<string, T>>(
+		(acc: Record<string, T>, ingredient: T) => {
+			acc[ingredient._id] = ingredient;
+			return acc;
+		},
+		{} as Record<string, T>
+	);
+};

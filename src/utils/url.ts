@@ -27,3 +27,11 @@ export const URL_GET_AUTH_USER =
 
 export const URL_PATCH_AUTH_USER =
 	'https://norma.nomoreparties.space/api/auth/user';
+
+export const urlWsConnect = (isAuth = false): string => {
+	return !isAuth
+		? 'wss://norma.nomoreparties.space/orders/all'
+		: `wss://norma.nomoreparties.space/orders?token=${localStorage.getItem(
+				'accessToken'
+		  )}`;
+};

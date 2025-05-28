@@ -316,3 +316,39 @@ export const editingProfileUserApi = async (body: TEditingProfileUser) => {
 		throw err;
 	}
 };
+
+export const refreshTokenWithWs = async () => {
+	const refreshToken = localStorage.getItem('refreshToken');
+
+	if (!refreshToken) {
+		throw new Error('Refresh token is missing');
+	}
+
+	const tokenResponse = await fetch(
+		URL_POST_AUTH_TOKEN, // переобновление токена
+		{
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json;charset=utf-8',
+			},
+			body: JSON.stringify({ token: refreshToken }),
+		}
+	);
+
+	if (tokenResponse.ok) {
+		const newTokens = await tokenResponse.json();
+		const accessToken = newTokens.accessToken.split(' ')[1];
+
+		localStorage.setItem('accessToken', accessToken);
+		localStorage.setItem('refreshToken', newTokens.refreshToken);
+		return accessToken;
+	} else {
+		const errorData = await tokenResponse.json();
+		console.error('Ошибка обновления токена:', errorData);
+
+		localStorage.removeItem('accessToken');
+		localStorage.removeItem('refreshToken');
+
+		throw new Error(errorData.message || 'Ошибка обновления токена');
+	}
+};
