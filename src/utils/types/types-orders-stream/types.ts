@@ -5,6 +5,7 @@ export type TOrder = {
 	number: number;
 	createdAt: string;
 	updatedAt: string;
+	name: string;
 };
 
 export type TOrdersStream = {
@@ -23,5 +24,5 @@ export enum WebsocketStatus {
 export const translateStatusOrder: Record<string, string> = {
 	created: 'Создан',
 	pending: 'Готовится',
-	done: 'Готов',
+	done: 'Выполнен',
 };

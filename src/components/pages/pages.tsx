@@ -61,6 +61,7 @@ export const Pages = () => {
 					path={`${pathPages.ingredients}/:id`}
 					element={<ProductDetails />}
 				/>
+				<Route path={`${pathPages.profileOrders}:id`} />
 				<Route path='*' element={<Page404 />} />
 			</Routes>
 			{state?.backgroundLocation && (

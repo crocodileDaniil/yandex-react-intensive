@@ -3,6 +3,10 @@ import { getOrders } from '@services/ordersStream/reducer';
 import { useDispatch, useSelector } from '@services/store';
 import { urlWsConnect } from '@utils/url';
 import { useEffect } from 'react';
+import { OrderCard } from '../../burger-orders/order-cart/order-card';
+import { nanoid } from '@reduxjs/toolkit';
+
+import styles from './styles.module.css';
 
 export const ProfileOrder = () => {
 	const dispatch = useDispatch();
@@ -20,5 +24,11 @@ export const ProfileOrder = () => {
 			dispatch(disconnect());
 		};
 	}, []);
-	return <p className='text text_type_main-medium'> History cel </p>;
+	return (
+		<div className={styles.orders}>
+			{orders.map((order) => (
+				<OrderCard key={nanoid()} {...order} />
+			))}
+		</div>
+	);
 };

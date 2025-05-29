@@ -1,6 +1,6 @@
 export const pathPages = {
 	home: '/',
-	checkList: '/check-list',
+	checkList: '/feed',
 	personalAccount: '/profile',
 	editingProfile: 'editing-profile',
 	profileOrders: 'orders',
