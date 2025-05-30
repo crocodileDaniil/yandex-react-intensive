@@ -3,7 +3,7 @@ import { getOrders } from '@services/ordersStream/reducer';
 import { useDispatch, useSelector } from '@services/store';
 import { urlWsConnect } from '@utils/url';
 import { useEffect } from 'react';
-import { OrderCard } from '../../burger-orders/order-cart/order-card';
+import { OrderCard } from '../../burger-orders/order-card/order-card';
 import { nanoid } from '@reduxjs/toolkit';
 
 import styles from './styles.module.css';

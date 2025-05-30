@@ -10,6 +10,8 @@ import {
 	FormattedDate,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ImageIngredients } from '../image-ingredients/image-ingredients';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { Cash } from '../cash/cash';
 
 export const OrderCard = ({
 	_id,
@@ -19,12 +21,17 @@ export const OrderCard = ({
 	ingredients,
 	name,
 }: TOrder) => {
+	const navigate = useNavigate();
+	const location = useLocation();
 	const ingredientsMap = useSelector(getMapIngredients);
 
-	const price = ingredients.reduce(
-		(acc, ingredient) => acc + ingredientsMap[ingredient].price,
-		0
-	);
+	if (!ingredients || !ingredientsMap) return;
+
+	const price = ingredients.reduce((acc, ingredient) => {
+		// допустим кто-то написал чушь при отправке
+		acc += ingredientsMap[ingredient]?.price;
+		return acc;
+	}, 0);
 
 	// const keysStatus = Object.keys(translateStatusOrder);
 	const statusOrder = translateStatusOrder[status]
@@ -33,8 +40,15 @@ export const OrderCard = ({
 
 	const statusStyle = translateStatusOrder[status] ? status : 'repeal';
 
+	const onClick = () => {
+		navigate(`${location.pathname}/${_id}`, {
+			state: { backgroundLocation: location },
+		});
+	};
+
+
 	return (
-		<div className={styles.card}>
+		<div className={styles.card} onClick={onClick}>
 			<div className={styles['card-header']}>
 				<p
 					className={`${styles.number} text text_type_digits-default`}>{`#${number}`}</p>
@@ -50,10 +64,7 @@ export const OrderCard = ({
 			</div>
 			<div className={`${styles.footer}`}>
 				<ImageIngredients ingredients={ingredients} />
-				<div className={styles.price}>
-					<p className='text text_type_digits-default'>{price}</p>{' '}
-					<CurrencyIcon type='primary' />
-				</div>
+				<Cash count={`${price}`} />
 			</div>
 		</div>
 	);

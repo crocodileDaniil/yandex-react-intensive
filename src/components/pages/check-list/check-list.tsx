@@ -5,12 +5,13 @@ import { useDispatch, useSelector } from '@services/store';
 import { connect, disconnect } from '@services/ordersStream/actions';
 import { urlWsConnect } from '@utils/url';
 import { getOrders } from '@services/ordersStream/reducer';
+import { Feed } from '../../feed/feed';
+
+import styles from './styles.module.css';
 
 export const CheckList = () => {
 	const dispatch = useDispatch();
-	const orders = useSelector(getOrders);
 
-	console.log(orders);
 	useEffect(() => {
 		dispatch(connect(urlWsConnect()));
 
@@ -22,7 +23,9 @@ export const CheckList = () => {
 	return (
 		<Layout>
 			<Container>
-				<main> пока пусто </main>
+				<main className={styles.main}>
+					<Feed />
+				</main>
 			</Container>
 		</Layout>
 	);

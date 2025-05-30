@@ -37,6 +37,7 @@ export const orderStreamSlice = createSlice({
 			})
 			.addCase(onMessage, (state, action) => {
 				state.orders = [...action.payload.orders].reverse();
+				console.log(state.orders);
 			});
 	},
 	selectors: {

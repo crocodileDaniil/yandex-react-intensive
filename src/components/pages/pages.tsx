@@ -14,6 +14,8 @@ import { ProductDetails } from './product-details/product-details';
 import { IngredientDetailsModal } from '../burger-ingredients/modal-ingredient-details/ingredient-details-modal';
 import { OnlyAuth, OnlyUnAuth } from '../protected/protected';
 import { Exit } from './exit/exit';
+import { OrderDetails } from '../burger-orders/order-details/order-detailsl';
+import { OrderDetailsModal } from '../burger-orders/order-details-modal/order-details-modal';
 
 export const Pages = () => {
 	const location = useLocation();
@@ -62,6 +64,10 @@ export const Pages = () => {
 					element={<ProductDetails />}
 				/>
 				<Route path={`${pathPages.profileOrders}:id`} />
+				{/* <Route
+					path={`${pathPages.personalAccount}/${pathPages.profileOrders}/:id`}
+					element={<OrderDetails />}
+				/> */}
 				<Route path='*' element={<Page404 />} />
 			</Routes>
 			{state?.backgroundLocation && (
@@ -69,6 +75,14 @@ export const Pages = () => {
 					<Route
 						path={`${pathPages.ingredients}/:id`}
 						element={<IngredientDetailsModal />}
+					/>
+					<Route
+						path={`${pathPages.personalAccount}/${pathPages.profileOrders}/:id`}
+						element={<OrderDetailsModal />}
+					/>
+					<Route
+						path={`${pathPages.checkList}/:id`}
+						element={<OrderDetailsModal />}
 					/>
 				</Routes>
 			)}

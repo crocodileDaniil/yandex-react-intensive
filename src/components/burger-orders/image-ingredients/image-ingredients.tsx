@@ -18,9 +18,10 @@ export const ImageIngredients = ({ ingredients }: TImageIngredients) => {
 						key={nanoid()}
 						className={styles['img-layout']}
 						style={{ zIndex: ingredients.length - index }}>
+						{/* допустим тоже чушь */}
 						<img
 							className={styles.img}
-							src={`${ingredientsMap[ingr].image}`}
+							src={`${ingredientsMap[ingr]?.image}`}
 							alt='ингредиент'
 						/>
 					</div>
@@ -34,7 +35,9 @@ export const ImageIngredients = ({ ingredients }: TImageIngredients) => {
 						src={`${ingredientsMap[ingredients[6]].image}`}
 						alt='ингредиент'
 					/>
-					<p className={`${styles.count} text text_type_digits-small`}>{`+${ingredients.length - 5}`}</p>
+					<p className={`${styles.count} text text_type_digits-small`}>{`+${
+						ingredients.length - 5
+					}`}</p>
 				</div>
 			</div>
 		);
@@ -45,9 +48,10 @@ export const ImageIngredients = ({ ingredients }: TImageIngredients) => {
 					key={nanoid()}
 					className={styles['img-layout']}
 					style={{ zIndex: ingredients.length - index }}>
+					{/* допустим тоже чушь */}
 					<img
 						className={styles.img}
-						src={`${ingredientsMap[ingr].image}`}
+						src={`${ingredientsMap[ingr]?.image}`}
 						alt='ингредиент'
 					/>
 				</div>

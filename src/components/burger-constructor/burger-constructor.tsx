@@ -1,7 +1,7 @@
 import styles from './styles.module.css';
 import { IngredientConstructor } from './ingredient-constructor/ingredient-constructor';
 import { PlaceOrder } from './place-order/place-order';
-import { OrderDetails } from './modal-order-details/modal-order-details';
+import { BuyInfo } from './buy-info/buy-info';
 import { useSelector, useDispatch } from 'react-redux';
 import { getBun, setBun } from '@services/constructor/reducer';
 import { IngredientPlace } from './ingredient-place/ingredient-place';
@@ -50,7 +50,7 @@ export const BurgerConstructor = () => {
 				)}
 			</div>
 			<PlaceOrder />
-			{isOpenModal && requestCompleted && <OrderDetails />}
+			{isOpenModal && requestCompleted && <BuyInfo />}
 		</section>
 	);
 };

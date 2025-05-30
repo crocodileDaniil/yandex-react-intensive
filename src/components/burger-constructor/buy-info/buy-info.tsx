@@ -9,7 +9,7 @@ import {
 	getOrderNumber,
 } from '@services/order/reducer';
 
-export const OrderDetails = () => {
+export const BuyInfo = () => {
 	const dispatch = useDispatch();
 	const modalStylesClass = `${styles.modal} pt-30 pr-25 pl-25 pb-30`;
 	const buttonStylesClass = styles.close ? `${styles.close}` : ' ';
