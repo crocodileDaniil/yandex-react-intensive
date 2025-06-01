@@ -64,10 +64,11 @@ export const Pages = () => {
 					element={<ProductDetails />}
 				/>
 				<Route path={`${pathPages.profileOrders}:id`} />
-				{/* <Route
+				<Route
 					path={`${pathPages.personalAccount}/${pathPages.profileOrders}/:id`}
 					element={<OrderDetails />}
-				/> */}
+				/>
+				<Route path={`${pathPages.checkList}/:id`} element={<OrderDetails />} />
 				<Route path='*' element={<Page404 />} />
 			</Routes>
 			{state?.backgroundLocation && (

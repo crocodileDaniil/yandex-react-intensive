@@ -1,0 +1,43 @@
+.container {
+  margin-left: 10px;
+	display: grid;
+  grid-template-columns: 1fr 1fr;
+	gap: 16px; /* отступ между колонками */
+}
+
+.column {
+	/* flex: 1; */
+}
+
+.heading {
+	font-size: 24px;
+	font-weight: bold;
+	margin-bottom: 24px;
+}
+
+.orders {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	row-gap: 8px;
+	column-gap: 24px;
+}
+
+.order {
+	font-size: 24px;
+}
+
+.done {
+	color: #00ffff; /* cyan */
+}
+
+.pending {
+	color: white;
+}
+
+.column-order {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}

@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { postPlaceOrderApi } from '@utils/api';
+import { getCurrentOrderApi, postPlaceOrderApi } from '@utils/api';
 import { TIngredient } from '@utils/types/types';
 
 type TOwner = {
@@ -9,9 +9,9 @@ type TOwner = {
 	email: string;
 };
 
-type TOrder = {
+export type TOrder = {
 	createdAt: string;
-	ingredient: TIngredient[];
+	ingredients: TIngredient[];
 	name: string;
 	number: number;
 	owner: TOwner;
@@ -38,6 +38,25 @@ export const postPlaceOrder = createAsyncThunk<
 		const data = await postPlaceOrderApi(arg);
 		console.log(data);
 		return data as TOrderResponse;
+	} catch (e: any) {
+		return thunkApi.rejectWithValue(e.message || 'Неизвестная ошибка');
+	}
+});
+
+type TCurrentOrderResponse = {
+	success: true;
+	orders: TOrder[];
+};
+
+export const getCurrentOrder = createAsyncThunk<
+	TCurrentOrderResponse,
+	string,
+	{ rejectValue: string }
+>('order/currentOrder', async (arg, thunkApi) => {
+	try {
+		const data = (await getCurrentOrderApi(arg)) as TCurrentOrderResponse;
+		console.log(data);
+		return data;
 	} catch (e: any) {
 		return thunkApi.rejectWithValue(e.message || 'Неизвестная ошибка');
 	}

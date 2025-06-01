@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Modal } from '../../modal/modal';
 
 import { FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector } from '@services/store';
+import { useDispatch, useSelector } from '@services/store';
 import { getMapIngredients } from '@services/ingredients/reducer';
 import {
 	TOrder,
@@ -12,6 +12,11 @@ import { getOrders } from '@services/ordersStream/reducer';
 import { Cash } from '../cash/cash';
 import { CompoundIngredientDetails } from './compound-ingredient-details/compound-ingredient-details';
 import styles from './styles.module.css';
+import { URL_POST_PLACE_ORDER } from '@utils/url';
+import { useEffect } from 'react';
+import { getCurrentOrder } from '@services/order/action';
+import { getLoading } from '@services/order/reducer';
+import { CometLoader } from '../../loader/comet-loader';
 
 type TIngredientMap = Record<
 	string,
@@ -23,9 +28,13 @@ export const OrderDetailsModal = () => {
 	const location = useLocation();
 	const ordersAll = useSelector(getOrders);
 	const ingredientsMap = useSelector(getMapIngredients);
+	const dispatch = useDispatch();
+	const loading = useSelector(getLoading);
+	const currentOrders = useSelector(getCurrentOrder);
 
 	// можно через lastIndexof...но в данном контексте и так работает
-	const orderId = location.pathname.split('/')[3] || location.pathname.split('/')[2];
+	const orderId =
+		location.pathname.split('/')[3] || location.pathname.split('/')[2];
 
 	if (!ordersAll) return;
 
@@ -33,7 +42,21 @@ export const OrderDetailsModal = () => {
 		(order) => order._id === orderId
 	);
 
-	if (!order) return;
+	useEffect(() => {
+		if (!order) dispatch(getCurrentOrder('orderId'));
+	}, []);
+
+	if (loading) {
+		return <CometLoader />;
+	}
+
+	if (!order)
+		return (
+			<p className={`${styles.not} text text_type_digits-large`}>
+				{' '}
+				Заказ не найден
+			</p>
+		);
 
 	const { updatedAt, status, number, ingredients, name } = order;
 

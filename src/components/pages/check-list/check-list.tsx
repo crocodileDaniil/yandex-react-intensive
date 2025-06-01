@@ -8,6 +8,7 @@ import { getOrders } from '@services/ordersStream/reducer';
 import { Feed } from '../../feed/feed';
 
 import styles from './styles.module.css';
+import { FeedInfo } from '../../feed-info/feed-info';
 
 export const CheckList = () => {
 	const dispatch = useDispatch();

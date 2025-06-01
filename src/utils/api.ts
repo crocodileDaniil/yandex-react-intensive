@@ -39,6 +39,15 @@ export const getAllIngredientsApi = async () => {
 	}
 };
 
+export const getCurrentOrderApi = async (arg: string) => {
+	try {
+		const response = await fetch(`${URL_POST_PLACE_ORDER}/${arg}`);
+		return await getResponse(response);
+	} catch (e) {
+		throw e;
+	}
+};
+
 export const postPlaceOrderApi = async (body: string[]) => {
 	try {
 		const accessToken: TAccessToken = localStorage.getItem('accessToken');

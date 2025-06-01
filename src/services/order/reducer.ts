@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { postPlaceOrder } from './action';
+import { getCurrentOrder, postPlaceOrder, TOrder } from './action';
 
 type TOrderState = {
 	orderNumbers: number[];
+	currentOrders: Array<TOrder>;
 	requestCompleted: boolean;
 	isOpen: boolean;
 	loading: boolean;
@@ -12,6 +13,7 @@ type TOrderState = {
 
 const initialState: TOrderState = {
 	orderNumbers: [],
+	currentOrders: [],
 	requestCompleted: false,
 	isOpen: false,
 	loading: false,
@@ -30,6 +32,7 @@ export const orderSlice = createSlice({
 	extraReducers: (builder) => {
 		builder
 			.addCase(postPlaceOrder.pending, (state) => {
+				state.orderError = '';
 				state.loading = true;
 			})
 			.addCase(postPlaceOrder.fulfilled, (state, action) => {
@@ -39,6 +42,23 @@ export const orderSlice = createSlice({
 				state.requestCompleted = true;
 			})
 			.addCase(postPlaceOrder.rejected, (state, action) => {
+				state.orderError = action.payload;
+				state.isError = true;
+				state.loading = false;
+				state.isOpen = true;
+				state.requestCompleted = true;
+			})
+			.addCase(getCurrentOrder.pending, (state) => {
+				state.orderError = '';
+				state.loading = true;
+			})
+			.addCase(getCurrentOrder.fulfilled, (state, action) => {
+				state.currentOrders = action.payload.orders;
+				state.loading = false;
+				state.isOpen = true;
+				state.requestCompleted = true;
+			})
+			.addCase(getCurrentOrder.rejected, (state, action) => {
 				state.orderError = action.payload;
 				state.isError = true;
 				state.loading = false;
@@ -54,6 +74,7 @@ export const orderSlice = createSlice({
 		getLoading: (state) => state.loading,
 		getOrderError: (state) => state.orderError,
 		getIsError: (state) => state.isError,
+		getCurrentOrder: (state) => state.currentOrders,
 	},
 });
 
@@ -65,4 +86,5 @@ export const {
 	getLoading,
 	getOrderError,
 	getIsError,
+	getCurrentOrder,
 } = orderSlice.selectors;

@@ -9,12 +9,16 @@ type TStateOrdersStream = {
 	orders: TOrder[];
 	status: WebsocketStatus;
 	error: string | null;
+	total?: number | null;
+	totalToDay?: number | null;
 };
 
 const initialState: TStateOrdersStream = {
 	orders: [],
 	status: WebsocketStatus.OFFLINE,
 	error: null,
+	total: null,
+	totalToDay: null,
 };
 
 export const orderStreamSlice = createSlice({
@@ -36,15 +40,22 @@ export const orderStreamSlice = createSlice({
 				state.error = action.payload;
 			})
 			.addCase(onMessage, (state, action) => {
+				console.log(action.payload);
 				state.orders = [...action.payload.orders].reverse();
-				console.log(state.orders);
+				state.total = action.payload.total ? action.payload.total : null;
+				state.totalToDay = action.payload.totalToday
+					? action.payload.totalToday
+					: null;
 			});
 	},
 	selectors: {
 		getOrders: (state) => state.orders,
 		getStatus: (state) => state.status,
 		getError: (state) => state.error,
+		getTotalToDay: (state) => state.totalToDay,
+		getTotal: (state) => state.total,
 	},
 });
 
-export const { getOrders, getStatus, getError } = orderStreamSlice.selectors;
+export const { getOrders, getStatus, getError, getTotal, getTotalToDay } =
+	orderStreamSlice.selectors;
