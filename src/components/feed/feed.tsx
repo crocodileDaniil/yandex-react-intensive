@@ -1,6 +1,6 @@
 import { FeedInfo } from '../feed-info/feed-info';
 import { FeedLens } from './feed-lens/feed-lens';
-import styles from './styles.module.css'
+import styles from './styles.module.css';
 
 export const Feed = () => {
 	return (

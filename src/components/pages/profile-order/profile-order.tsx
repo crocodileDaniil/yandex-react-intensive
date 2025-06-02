@@ -12,7 +12,6 @@ export const ProfileOrder = () => {
 	const dispatch = useDispatch();
 	const orders = useSelector(getOrders);
 
-	console.log(orders);
 	useEffect(() => {
 		const token = localStorage.getItem('accessToken');
 

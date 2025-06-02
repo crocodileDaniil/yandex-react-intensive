@@ -21,21 +21,21 @@
 }
 
 .footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .done {
-  color: aqua;
+	color: aqua;
 }
 
 .pending {
-  color: orange;
+	color: orange;
 }
 
 .repeal {
-  color: red;
+	color: red;
 }
 
 .price {

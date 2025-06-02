@@ -40,8 +40,7 @@ export const orderStreamSlice = createSlice({
 				state.error = action.payload;
 			})
 			.addCase(onMessage, (state, action) => {
-				console.log(action.payload);
-				state.orders = [...action.payload.orders].reverse();
+				state.orders = action.payload.orders;
 				state.total = action.payload.total ? action.payload.total : null;
 				state.totalToDay = action.payload.totalToday
 					? action.payload.totalToday

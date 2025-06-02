@@ -33,11 +33,11 @@ export const FeedInfo = () => {
 	return (
 		<section className={styles.info}>
 			<InfoAboutReadiness
-				feedCompleted={orderReadiness.feedCompleted.slice(0, 10).reverse()}
-				feedJobs={orderReadiness.feedJobs.slice(0, 10).reverse()}
+				feedCompleted={orderReadiness.feedCompleted.slice(0, 10)}
+				feedJobs={orderReadiness.feedJobs.slice(0, 10)}
 			/>
 			<FeedTotal />
-      <FeedToDay />
+			<FeedToDay />
 		</section>
 	);
 };

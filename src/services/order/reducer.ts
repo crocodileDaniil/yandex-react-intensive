@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getCurrentOrder, postPlaceOrder, TOrder } from './action';
+import { getCurrentOrder, postPlaceOrder, TCurrentOrder } from './action';
 
 type TOrderState = {
 	orderNumbers: number[];
-	currentOrders: Array<TOrder>;
+	currentOrders: Array<TCurrentOrder>;
 	requestCompleted: boolean;
 	isOpen: boolean;
 	loading: boolean;
@@ -55,7 +55,6 @@ export const orderSlice = createSlice({
 			.addCase(getCurrentOrder.fulfilled, (state, action) => {
 				state.currentOrders = action.payload.orders;
 				state.loading = false;
-				state.isOpen = true;
 				state.requestCompleted = true;
 			})
 			.addCase(getCurrentOrder.rejected, (state, action) => {
@@ -74,7 +73,7 @@ export const orderSlice = createSlice({
 		getLoading: (state) => state.loading,
 		getOrderError: (state) => state.orderError,
 		getIsError: (state) => state.isError,
-		getCurrentOrder: (state) => state.currentOrders,
+		getCurrentOrders: (state) => state.currentOrders,
 	},
 });
 
@@ -86,5 +85,5 @@ export const {
 	getLoading,
 	getOrderError,
 	getIsError,
-	getCurrentOrder,
+	getCurrentOrders,
 } = orderSlice.selectors;

@@ -49,4 +49,3 @@ export const Ingredient = (props) => {
 		</article>
 	);
 };
-

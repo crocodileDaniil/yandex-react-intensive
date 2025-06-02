@@ -46,7 +46,6 @@ export const OrderCard = ({
 		});
 	};
 
-
 	return (
 		<div className={styles.card} onClick={onClick}>
 			<div className={styles['card-header']}>

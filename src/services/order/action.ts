@@ -18,7 +18,7 @@ export type TOrder = {
 	price: number;
 	status: string;
 	updatedAt: string;
-	_id: number;
+	_id: string;
 };
 
 type TOrderResponse = {
@@ -36,16 +36,19 @@ export const postPlaceOrder = createAsyncThunk<
 >('order/postPlaceOrder', async (arg, thunkApi) => {
 	try {
 		const data = await postPlaceOrderApi(arg);
-		console.log(data);
 		return data as TOrderResponse;
 	} catch (e: any) {
 		return thunkApi.rejectWithValue(e.message || 'Неизвестная ошибка');
 	}
 });
 
+export type TCurrentOrder = Omit<TOrder, 'ingredients'> & {
+	ingredients: string[];
+};
+
 type TCurrentOrderResponse = {
 	success: true;
-	orders: TOrder[];
+	orders: TCurrentOrder[];
 };
 
 export const getCurrentOrder = createAsyncThunk<
@@ -55,7 +58,6 @@ export const getCurrentOrder = createAsyncThunk<
 >('order/currentOrder', async (arg, thunkApi) => {
 	try {
 		const data = (await getCurrentOrderApi(arg)) as TCurrentOrderResponse;
-		console.log(data);
 		return data;
 	} catch (e: any) {
 		return thunkApi.rejectWithValue(e.message || 'Неизвестная ошибка');

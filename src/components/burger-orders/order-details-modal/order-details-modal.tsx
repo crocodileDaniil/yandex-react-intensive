@@ -12,10 +12,9 @@ import { getOrders } from '@services/ordersStream/reducer';
 import { Cash } from '../cash/cash';
 import { CompoundIngredientDetails } from './compound-ingredient-details/compound-ingredient-details';
 import styles from './styles.module.css';
-import { URL_POST_PLACE_ORDER } from '@utils/url';
 import { useEffect } from 'react';
 import { getCurrentOrder } from '@services/order/action';
-import { getLoading } from '@services/order/reducer';
+import { getCurrentOrders, getLoading } from '@services/order/reducer';
 import { CometLoader } from '../../loader/comet-loader';
 
 type TIngredientMap = Record<
@@ -30,25 +29,25 @@ export const OrderDetailsModal = () => {
 	const ingredientsMap = useSelector(getMapIngredients);
 	const dispatch = useDispatch();
 	const loading = useSelector(getLoading);
-	const currentOrders = useSelector(getCurrentOrder);
+	const currentOrders = useSelector(getCurrentOrders);
 
 	// можно через lastIndexof...но в данном контексте и так работает
 	const orderId =
 		location.pathname.split('/')[3] || location.pathname.split('/')[2];
 
-	if (!ordersAll) return;
-
-	const order: TOrder | undefined = ordersAll.find(
+	let order: TOrder | undefined | null = ordersAll.find(
 		(order) => order._id === orderId
 	);
 
 	useEffect(() => {
-		if (!order) dispatch(getCurrentOrder('orderId'));
+		if (!order) dispatch(getCurrentOrder(orderId));
 	}, []);
 
 	if (loading) {
 		return <CometLoader />;
 	}
+
+	if (!order) order = currentOrders.find((order) => order._id === orderId);
 
 	if (!order)
 		return (
