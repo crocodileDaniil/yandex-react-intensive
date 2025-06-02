@@ -32,22 +32,23 @@ export const OrderDetailsModal = () => {
 	const currentOrders = useSelector(getCurrentOrders);
 
 	// можно через lastIndexof...но в данном контексте и так работает
-	const orderId =
+	const orderNumber =
 		location.pathname.split('/')[3] || location.pathname.split('/')[2];
 
 	let order: TOrder | undefined | null = ordersAll.find(
-		(order) => order._id === orderId
+		(order) => order.number === Number(orderNumber)
 	);
 
 	useEffect(() => {
-		if (!order) dispatch(getCurrentOrder(orderId));
+		if (!order) dispatch(getCurrentOrder(orderNumber));
 	}, []);
 
 	if (loading) {
 		return <CometLoader />;
 	}
 
-	if (!order) order = currentOrders.find((order) => order._id === orderId);
+	if (!order)
+		order = currentOrders.find((order) => order.number === Number(orderNumber));
 
 	if (!order)
 		return (

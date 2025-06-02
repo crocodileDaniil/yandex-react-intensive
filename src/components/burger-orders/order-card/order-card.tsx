@@ -5,16 +5,12 @@ import {
 import styles from './styles.module.css';
 import { useSelector } from '@services/store';
 import { getMapIngredients } from '@services/ingredients/reducer';
-import {
-	CurrencyIcon,
-	FormattedDate,
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ImageIngredients } from '../image-ingredients/image-ingredients';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Cash } from '../cash/cash';
 
 export const OrderCard = ({
-	_id,
 	updatedAt,
 	status,
 	number,
@@ -41,7 +37,7 @@ export const OrderCard = ({
 	const statusStyle = translateStatusOrder[status] ? status : 'repeal';
 
 	const onClick = () => {
-		navigate(`${location.pathname}/${_id}`, {
+		navigate(`${location.pathname}/${number}`, {
 			state: { backgroundLocation: location },
 		});
 	};
