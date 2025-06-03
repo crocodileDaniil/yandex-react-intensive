@@ -3,7 +3,7 @@ import {
 	translateStatusOrder,
 } from '@utils/types/types-orders-stream/types';
 import styles from './styles.module.css';
-import { useSelector } from '@services/store';
+import { useSelector } from '@utils/custom-hooks';
 import { getMapIngredients } from '@services/ingredients/reducer';
 import { FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ImageIngredients } from '../image-ingredients/image-ingredients';

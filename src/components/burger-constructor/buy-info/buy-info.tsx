@@ -1,7 +1,7 @@
 import { CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './styles.module.css';
 import { Modal } from '../../modal/modal';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '@utils/custom-hooks';
 import {
 	closeModal,
 	getIsError,

@@ -1,5 +1,5 @@
 import { getOrders } from '@services/ordersStream/reducer';
-import { useSelector } from '@services/store';
+import { useSelector } from '@utils/custom-hooks';
 import { InfoAboutReadiness } from './info-about-readiness/info-about-readiness';
 import { FeedTotal } from './feed-total/feed-total';
 import styles from './style.module.css';

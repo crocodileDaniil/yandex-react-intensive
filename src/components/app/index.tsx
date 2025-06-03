@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { CometLoader } from '../loader/comet-loader';
 import { Error } from '../error/error';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '@utils/custom-hooks';
 import { getAllIngredients } from '@services/ingredients/action';
 import {
 	getIngredients,
@@ -20,7 +20,6 @@ export const App = () => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		// @ts-expect-error "sprint4"
 		dispatch(getAllIngredients());
 	}, []);
 

@@ -4,12 +4,11 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './styles.module.css';
 import { useNavigate } from 'react-router-dom';
-import { useForm } from '@utils/custom-hooks';
 import { useEffect, useState } from 'react';
 import { Layout } from '../../layout/layout';
 import { Container } from '../../container/container';
 import { pathPages } from '@utils/page-paths';
-// import { useDispatch,	useSelector } from 'react-redux';
+import { useDispatch, useSelector, useForm } from '@utils/custom-hooks';
 import { registerUser } from '@services/user/action';
 import { LoaderForm } from '../../loader-form/loader-form';
 import {
@@ -17,7 +16,6 @@ import {
 	getUserError,
 	getUserLoading,
 } from '@services/user/reducer';
-import { useDispatch, useSelector } from '@services/store';
 
 export const Register = () => {
 	const [form, onChange, setFormValue] = useForm({

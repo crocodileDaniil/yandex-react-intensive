@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Modal } from '../../modal/modal';
 
 import { FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch, useSelector } from '@services/store';
+import { useDispatch, useSelector } from '@utils/custom-hooks';
 import { getMapIngredients } from '@services/ingredients/reducer';
 import {
 	TOrder,

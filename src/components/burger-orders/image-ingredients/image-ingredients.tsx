@@ -1,6 +1,6 @@
 import { nanoid } from '@reduxjs/toolkit';
 import { getMapIngredients } from '@services/ingredients/reducer';
-import { useSelector } from '@services/store';
+import { useSelector } from '@utils/custom-hooks';
 import styles from './styles.module.css';
 
 type TImageIngredients = {

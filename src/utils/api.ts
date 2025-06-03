@@ -50,8 +50,9 @@ export const getCurrentOrderApi = async (arg: string) => {
 
 export const postPlaceOrderApi = async (body: string[]) => {
 	try {
-		const accessToken: TAccessToken = localStorage.getItem('accessToken');
+		await getUserApi();
 
+		const accessToken: TAccessToken = localStorage.getItem('accessToken');
 		const response = await fetchWithAuthRefreshTokenApi(URL_POST_PLACE_ORDER, {
 			method: 'POST',
 			headers: {
@@ -62,7 +63,6 @@ export const postPlaceOrderApi = async (body: string[]) => {
 		});
 
 		const data = await getResponse(response);
-
 		return data;
 	} catch (e) {
 		throw e;
@@ -116,7 +116,7 @@ async function fetchWithAuthRefreshTokenApi(
 			// return newTokens ? newTokens.statusText : 'Необходимо авторизоваться';
 		} else {
 			const errorData = await tokenResponse.json();
-			console.error('Ошибка обновления токена:', errorData);
+			// console.error('Ошибка обновления токена:', errorData);
 
 			localStorage.removeItem('accessToken');
 			localStorage.removeItem('refreshToken');
@@ -148,11 +148,12 @@ export const registerUserApi = async (userData: TRegisterUser) => {
 			const { success, user } = data;
 			return { success, user };
 		} else {
-			console.error('Registration error:', data.message);
+			// console.error('Registration error:', data.message);
 			return data;
 		}
 	} catch (error) {
-		console.error('Request failed:', error);
+		// console.error('Request failed:', error);
+		throw error;
 	}
 };
 
@@ -204,11 +205,12 @@ export const loginUserApi = async (body: TLoginUser) => {
 
 			return { user: data.user, success: data.success };
 		} else {
-			console.error('Registration error:', data.message);
+			// console.error('Registration error:', data.message);
 			return data;
 		}
 	} catch (error) {
-		console.error('Request failed:', error);
+		// console.error('Request failed:', error);
+		throw error;
 	}
 };
 
@@ -353,7 +355,7 @@ export const refreshTokenWithWs = async () => {
 		return accessToken;
 	} else {
 		const errorData = await tokenResponse.json();
-		console.error('Ошибка обновления токена:', errorData);
+		// console.error('Ошибка обновления токена:', errorData);
 
 		localStorage.removeItem('accessToken');
 		localStorage.removeItem('refreshToken');

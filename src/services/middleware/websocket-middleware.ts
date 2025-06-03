@@ -3,8 +3,9 @@ import {
 	ActionCreatorWithPayload,
 	Middleware,
 } from '@reduxjs/toolkit';
-import { RootState } from '../store';
+
 import { refreshTokenWithWs } from '@utils/api';
+import { RootState } from '@utils/custom-hooks';
 
 export type TWsActions<R, S> = {
 	connect: ActionCreatorWithPayload<string>;

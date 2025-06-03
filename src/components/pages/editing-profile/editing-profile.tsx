@@ -4,9 +4,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './styles.module.css';
 import { useState } from 'react';
-import { useForm } from '@utils/custom-hooks';
-// import { useDispatch, useSelector } from 'react-redux';
-import { useDispatch, useSelector } from '@services/store';
+import { useDispatch, useSelector, useForm } from '@utils/custom-hooks';
 import { getUser } from '@services/user/reducer';
 import { editProfileUser } from '@services/user/action';
 

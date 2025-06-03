@@ -2,7 +2,7 @@ import styles from './styles.module.css';
 import { IngredientConstructor } from './ingredient-constructor/ingredient-constructor';
 import { PlaceOrder } from './place-order/place-order';
 import { BuyInfo } from './buy-info/buy-info';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from '@utils/custom-hooks';
 import { getBun, setBun } from '@services/constructor/reducer';
 import { IngredientPlace } from './ingredient-place/ingredient-place';
 import { getIsOpen, getRequestCompleted } from '@services/order/reducer';

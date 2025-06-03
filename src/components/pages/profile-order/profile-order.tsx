@@ -1,6 +1,6 @@
 import { connect, disconnect } from '@services/ordersStream/actions';
 import { getOrders } from '@services/ordersStream/reducer';
-import { useDispatch, useSelector } from '@services/store';
+import { useDispatch, useSelector } from '@utils/custom-hooks';
 import { urlWsConnect } from '@utils/url';
 import { useEffect } from 'react';
 import { OrderCard } from '../../burger-orders/order-card/order-card';

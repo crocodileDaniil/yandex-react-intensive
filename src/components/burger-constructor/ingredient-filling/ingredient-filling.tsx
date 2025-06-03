@@ -1,5 +1,5 @@
 import styles from './styles.module.css';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from '@utils/custom-hooks';
 import { IngredientConstructor } from '../ingredient-constructor/ingredient-constructor';
 import { IngredientPlace } from '../ingredient-place/ingredient-place';
 import { getFilling, setIngredient } from '@services/constructor/reducer';

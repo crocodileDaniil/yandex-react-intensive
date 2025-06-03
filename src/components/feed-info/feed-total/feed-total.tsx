@@ -1,4 +1,4 @@
-import { useSelector } from '@services/store';
+import { useSelector } from '@utils/custom-hooks';
 import styles from './style.module.css';
 import { getTotal } from '@services/ordersStream/reducer';
 

@@ -32,6 +32,7 @@ export const orderSlice = createSlice({
 	extraReducers: (builder) => {
 		builder
 			.addCase(postPlaceOrder.pending, (state) => {
+				state.isError = false;
 				state.orderError = '';
 				state.loading = true;
 			})

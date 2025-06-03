@@ -3,18 +3,23 @@ import {
 	CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './styles.module.css';
-// import { useSelector, useDispatch } from 'react-redux';
-import { useDispatch, useSelector } from '@services/store';
+import { useDispatch, useSelector } from '@utils/custom-hooks';
 import { getBun, getFilling } from '@services/constructor/reducer';
 import { useCallback, useMemo } from 'react';
-import { getLoading } from '@services/order/reducer';
+import { closeModal, getLoading, getOrderError } from '@services/order/reducer';
 import { postPlaceOrder } from '@services/order/action';
 import { TIngredient } from '@utils/types/types';
+
+import { useNavigate } from 'react-router-dom';
+import { pathPages } from '@utils/page-paths';
+import { ORDER_ERROR_FOR_REDIRECT } from '@utils/errorsMessages';
 
 export const PlaceOrder = () => {
 	const bun: TIngredient | undefined | null = useSelector(getBun);
 	const filling: TIngredient[] = useSelector(getFilling);
 	const loading = useSelector(getLoading);
+	const error = useSelector(getOrderError);
+	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
 	const totalPrice = useMemo(
@@ -31,6 +36,11 @@ export const PlaceOrder = () => {
 		bun && order.push(`${bun['_id']}`);
 		dispatch(postPlaceOrder(order));
 	}, [filling, bun]);
+
+	if (error === ORDER_ERROR_FOR_REDIRECT) {
+		dispatch(closeModal());
+		navigate(pathPages.login);
+	}
 
 	return (
 		<article className={`${styles['place-order']} mr-4`}>
