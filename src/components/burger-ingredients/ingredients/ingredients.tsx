@@ -5,13 +5,14 @@ import {
 import { IngredientsSection } from '../ingredients-section/ingredients-section';
 import { FILTER_DECRYPTION } from '@utils/filter-decryption';
 import styles from './styles.module.css';
-import { useSelector } from 'react-redux';
+
 import { getIngredients } from '@services/ingredients/reducer';
 import { useMemo } from 'react';
 import { getAllIngredients, getBun } from '@services/constructor/reducer';
 import { REFS_TABS_DECRYPTION } from '@utils/refs-tabs-decryption';
 import { TObjRefDiv } from '../burger-ingredients';
 import { TIngredient } from '@utils/types/types';
+import { useSelector } from '@utils/custom-hooks';
 
 const categoryDecr = Object.values(FILTER_DECRYPTION);
 
