@@ -4,12 +4,11 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './styles.module.css';
 import { useNavigate } from 'react-router-dom';
-import { useForm } from '@utils/custom-hooks';
 import { useEffect, useState } from 'react';
 import { Layout } from '../../layout/layout';
 import { Container } from '../../container/container';
 import { pathPages } from '@utils/page-paths';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, useForm } from '@utils/custom-hooks';
 import { registerUser } from '@services/user/action';
 import { LoaderForm } from '../../loader-form/loader-form';
 import {
@@ -30,7 +29,6 @@ export const Register = () => {
 	const error = useSelector(getUserError);
 
 	useEffect(() => {
-		// @ts-expect-error "sprint4"
 		dispatch(clearError());
 	}, []);
 
@@ -40,7 +38,7 @@ export const Register = () => {
 
 	const onRegisterClick = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		// @ts-expect-error "sprint4"
+
 		dispatch(registerUser(form));
 	};
 

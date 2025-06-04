@@ -3,20 +3,20 @@ import {
 	Input,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './styles.module.css';
-import { useForm } from '@utils/custom-hooks';
 import { useEffect, useState } from 'react';
 import { Layout } from '../../layout/layout';
 import { Container } from '../../container/container';
 import { useNavigate } from 'react-router-dom';
 import { pathPages } from '@utils/page-paths';
 import { loginUser } from '@services/user/action';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, useForm } from '@utils/custom-hooks';
 import {
 	clearError,
 	getUserError,
 	getUserLoading,
 } from '@services/user/reducer';
 import { LoaderForm } from '../../loader-form/loader-form';
+import { ORDER_ERROR_FOR_REDIRECT } from '@utils/errorsMessages';
 
 export const Login = () => {
 	const [form, onChange] = useForm({
@@ -29,7 +29,6 @@ export const Login = () => {
 	const loading = useSelector(getUserLoading);
 
 	useEffect(() => {
-		//@ts-expect-error "sprint4"
 		dispatch(clearError());
 	}, []);
 
@@ -43,7 +42,6 @@ export const Login = () => {
 
 	const onLoginClick = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		//@ts-expect-error "sprint4"
 		dispatch(loginUser(form));
 	};
 
@@ -76,7 +74,14 @@ export const Login = () => {
 							Войти
 						</Button>
 						{loading && <LoaderForm />}
-						{error && <p className='text text_type_main-medium'> {error} </p>}
+						{error && (
+							<p className='text text_type_main-medium'>
+								{' '}
+								{error === ORDER_ERROR_FOR_REDIRECT
+									? 'Выполните вход'
+									: error}{' '}
+							</p>
+						)}
 					</form>
 					<p className={`${styles.login} mb-4`}>
 						<span className='text text_type_main-default text_color_inactive'>

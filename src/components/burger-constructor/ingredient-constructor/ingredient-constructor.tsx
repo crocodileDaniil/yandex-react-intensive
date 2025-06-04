@@ -7,12 +7,12 @@ import styles from './styles.module.css';
 import { useDrag, useDrop } from 'react-dnd';
 import { useRef } from 'react';
 import { ItemDropTypes } from '@utils/items-drop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '@utils/custom-hooks';
 import {
 	deleteIngredient,
 	swapIngredient,
 } from '@services/constructor/reducer';
-import { TIngredient } from '@utils/types';
+import { TIngredient } from '@utils/types/types';
 
 export type TTypeSkin = 'top' | 'bottom' | undefined;
 

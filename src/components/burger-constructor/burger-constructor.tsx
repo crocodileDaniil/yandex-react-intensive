@@ -1,15 +1,15 @@
 import styles from './styles.module.css';
 import { IngredientConstructor } from './ingredient-constructor/ingredient-constructor';
 import { PlaceOrder } from './place-order/place-order';
-import { OrderDetails } from './modal-order-details/modal-order-details';
-import { useSelector, useDispatch } from 'react-redux';
+import { BuyInfo } from './buy-info/buy-info';
+import { useDispatch, useSelector } from '@utils/custom-hooks';
 import { getBun, setBun } from '@services/constructor/reducer';
 import { IngredientPlace } from './ingredient-place/ingredient-place';
 import { getIsOpen, getRequestCompleted } from '@services/order/reducer';
 import { useDrop } from 'react-dnd';
 import { ItemDropTypes } from '@utils/items-drop-types';
 import { IngredientFilling } from './ingredient-filling/ingredient-filling';
-import { TIngredient } from '@utils/types';
+import { TIngredient } from '@utils/types/types';
 
 export const BurgerConstructor = () => {
 	const isOpenModal = useSelector(getIsOpen);
@@ -27,7 +27,7 @@ export const BurgerConstructor = () => {
 		}),
 	}));
 
-	const bun: TIngredient = useSelector(getBun);
+	const bun: TIngredient | null | undefined = useSelector(getBun);
 	const styleDropBun = canDropBun ? 'drop-bun' : '';
 	const styleOverBun = isOverBun ? 'over-bun' : '';
 
@@ -50,7 +50,7 @@ export const BurgerConstructor = () => {
 				)}
 			</div>
 			<PlaceOrder />
-			{isOpenModal && requestCompleted && <OrderDetails />}
+			{isOpenModal && requestCompleted && <BuyInfo />}
 		</section>
 	);
 };

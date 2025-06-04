@@ -1,5 +1,5 @@
 import { getIsAuthChecked, getUser } from '@services/user/reducer';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '@utils/custom-hooks';
 import { Navigate, useLocation } from 'react-router-dom';
 import { CometLoader } from '../loader/comet-loader';
 import { useEffect } from 'react';

@@ -1,4 +1,4 @@
-import { TPropsChildren } from '@utils/types';
+import { TPropsChildren } from '@utils/types/types';
 import { AppHeader } from '../app-header/app-header';
 import styles from './styles.module.css';
 

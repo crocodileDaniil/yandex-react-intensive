@@ -3,7 +3,7 @@ import { ModalOverlay } from '../modal-overlay/modal-overlay';
 import ReactDOM from 'react-dom';
 import { useEffect } from 'react';
 import styles from './styles.module.css';
-import { TPropsChildren } from '@utils/types';
+import { TPropsChildren } from '@utils/types/types';
 
 type TModalProps = {
 	onClose: () => void;

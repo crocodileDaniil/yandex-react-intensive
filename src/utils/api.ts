@@ -5,7 +5,7 @@ import {
 	TRegisterUser,
 	TRequestOptions,
 	TResetPassword,
-} from './types';
+} from './types/types';
 import {
 	URL_GET_AUTH_USER,
 	URL_GET_INGREDIENTS,
@@ -39,10 +39,20 @@ export const getAllIngredientsApi = async () => {
 	}
 };
 
+export const getCurrentOrderApi = async (arg: string) => {
+	try {
+		const response = await fetch(`${URL_POST_PLACE_ORDER}/${arg}`);
+		return await getResponse(response);
+	} catch (e) {
+		throw e;
+	}
+};
+
 export const postPlaceOrderApi = async (body: string[]) => {
 	try {
-		const accessToken: TAccessToken = localStorage.getItem('accessToken');
+		await getUserApi();
 
+		const accessToken: TAccessToken = localStorage.getItem('accessToken');
 		const response = await fetchWithAuthRefreshTokenApi(URL_POST_PLACE_ORDER, {
 			method: 'POST',
 			headers: {
@@ -53,7 +63,6 @@ export const postPlaceOrderApi = async (body: string[]) => {
 		});
 
 		const data = await getResponse(response);
-
 		return data;
 	} catch (e) {
 		throw e;
@@ -107,7 +116,7 @@ async function fetchWithAuthRefreshTokenApi(
 			// return newTokens ? newTokens.statusText : 'Необходимо авторизоваться';
 		} else {
 			const errorData = await tokenResponse.json();
-			console.error('Ошибка обновления токена:', errorData);
+			// console.error('Ошибка обновления токена:', errorData);
 
 			localStorage.removeItem('accessToken');
 			localStorage.removeItem('refreshToken');
@@ -136,13 +145,15 @@ export const registerUserApi = async (userData: TRegisterUser) => {
 			localStorage.setItem('accessToken', accessToken);
 			localStorage.setItem('refreshToken', data.refreshToken);
 
-			return data.user;
+			const { success, user } = data;
+			return { success, user };
 		} else {
-			console.error('Registration error:', data.message);
+			// console.error('Registration error:', data.message);
 			return data;
 		}
 	} catch (error) {
-		console.error('Request failed:', error);
+		// console.error('Request failed:', error);
+		throw error;
 	}
 };
 
@@ -194,11 +205,12 @@ export const loginUserApi = async (body: TLoginUser) => {
 
 			return { user: data.user, success: data.success };
 		} else {
-			console.error('Registration error:', data.message);
+			// console.error('Registration error:', data.message);
 			return data;
 		}
 	} catch (error) {
-		console.error('Request failed:', error);
+		// console.error('Request failed:', error);
+		throw error;
 	}
 };
 
@@ -313,5 +325,41 @@ export const editingProfileUserApi = async (body: TEditingProfileUser) => {
 		return data;
 	} catch (err) {
 		throw err;
+	}
+};
+
+export const refreshTokenWithWs = async () => {
+	const refreshToken = localStorage.getItem('refreshToken');
+
+	if (!refreshToken) {
+		throw new Error('Refresh token is missing');
+	}
+
+	const tokenResponse = await fetch(
+		URL_POST_AUTH_TOKEN, // переобновление токена
+		{
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json;charset=utf-8',
+			},
+			body: JSON.stringify({ token: refreshToken }),
+		}
+	);
+
+	if (tokenResponse.ok) {
+		const newTokens = await tokenResponse.json();
+		const accessToken = newTokens.accessToken.split(' ')[1];
+
+		localStorage.setItem('accessToken', accessToken);
+		localStorage.setItem('refreshToken', newTokens.refreshToken);
+		return accessToken;
+	} else {
+		const errorData = await tokenResponse.json();
+		// console.error('Ошибка обновления токена:', errorData);
+
+		localStorage.removeItem('accessToken');
+		localStorage.removeItem('refreshToken');
+
+		throw new Error(errorData.message || 'Ошибка обновления токена');
 	}
 };

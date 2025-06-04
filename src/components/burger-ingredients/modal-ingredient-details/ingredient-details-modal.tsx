@@ -1,10 +1,10 @@
 import { Modal } from '../../modal/modal';
-import { useSelector } from 'react-redux';
 
 import styles from './styles.module.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getIngredients } from '@services/ingredients/reducer';
-import { TIngredient } from '@utils/types';
+import { TIngredient } from '@utils/types/types';
+import { useSelector } from '@utils/custom-hooks';
 
 export const IngredientDetailsModal = () => {
 	const navigate = useNavigate();

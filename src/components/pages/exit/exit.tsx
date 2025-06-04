@@ -1,7 +1,7 @@
 import { logoutUser } from '@services/user/action';
 import { pathPages } from '@utils/page-paths';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '@utils/custom-hooks';
 import { useNavigate } from 'react-router-dom';
 
 export const Exit = () => {
@@ -10,7 +10,6 @@ export const Exit = () => {
 
 	useEffect(() => {
 		const logout = async () => {
-			// @ts-expect-error "sprint4"
 			dispatch(logoutUser());
 			navigate(pathPages.login, { replace: true });
 		};

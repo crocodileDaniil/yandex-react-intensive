@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom';
 import styles from './styles.module.css';
-import { TPropsChildren } from '@utils/types';
+import { TPropsChildren } from '@utils/types/types';
 
 type TPropsModalOverlay = {
 	onClose?: () => void;
