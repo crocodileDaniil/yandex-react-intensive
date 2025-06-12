@@ -16,7 +16,7 @@ type TInitialUserState = {
 	hasError: boolean;
 };
 
-const initialState: TInitialUserState = {
+export const initialState: TInitialUserState = {
 	user: null,
 	isAuthChecked: false,
 	loading: false,
@@ -130,3 +130,5 @@ export const {
 } = userSlice.selectors;
 
 export const { setUser, clearError } = userSlice.actions;
+
+export default userSlice.reducer;

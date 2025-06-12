@@ -8,7 +8,7 @@ type TConstructorState = {
 	ingredients: TIngredientWithKey[];
 };
 
-const initialState: TConstructorState = {
+export const initialState: TConstructorState = {
 	bun: null,
 	ingredients: [],
 };
@@ -28,11 +28,6 @@ export const constructorSlice = createSlice({
 				const key = nanoid();
 				return { payload: { ingredient: { ...ingredient, key } } };
 			},
-		},
-		removeIngredient: (state, action) => {
-			state.ingredients = state.ingredients.filter(
-				(ingredient) => ingredient != action.payload.key
-			);
 		},
 		setBun: (state, action) => {
 			state.bun = action.payload.bun;
@@ -57,6 +52,10 @@ export const constructorSlice = createSlice({
 			);
 			state.ingredients = newIngredients;
 		},
+		clearConstructor: (state) => {
+			state.ingredients = initialState.ingredients;
+			state.bun = initialState.bun;
+		},
 	},
 	selectors: {
 		getAllIngredients: (state) => state.ingredients,
@@ -67,11 +66,13 @@ export const constructorSlice = createSlice({
 
 export const {
 	setIngredient,
-	removeIngredient,
 	setBun,
 	removeBun,
 	swapIngredient,
 	deleteIngredient,
+	clearConstructor,
 } = constructorSlice.actions;
 export const { getAllIngredients, getBun, getFilling } =
 	constructorSlice.selectors;
+
+export default constructorSlice.reducer;

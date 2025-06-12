@@ -17,10 +17,10 @@ const constructorActions = constructorSlice.actions;
 export type TConstructorActions =
 	| ReturnType<typeof constructorActions.deleteIngredient>
 	| ReturnType<typeof constructorActions.removeBun>
-	| ReturnType<typeof constructorActions.removeIngredient>
 	| ReturnType<typeof constructorActions.setBun>
 	| ReturnType<typeof constructorActions.setIngredient>
-	| ReturnType<typeof constructorActions.swapIngredient>;
+	| ReturnType<typeof constructorActions.swapIngredient>
+	| ReturnType<typeof constructorActions.clearConstructor>;
 
 const ingredientInfoActions = ingredientInfoSlice.actions;
 export type TIngredientInfoActions =
