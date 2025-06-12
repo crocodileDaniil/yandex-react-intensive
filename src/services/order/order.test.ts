@@ -1,4 +1,4 @@
-import orderReducer, {closeModal, initialState} from './reducer';
+import orderReducer, { closeModal, initialState } from './reducer';
 import { postPlaceOrder, getCurrentOrder } from './action';
 import { TCurrentOrder } from './action';
 
@@ -41,8 +41,6 @@ const mockCurrentOrders: TCurrentOrder[] = [
 		ingredients: ['123', '456'],
 	},
 ];
-
-
 
 describe('orderSlice', () => {
 	it('should return the initial state', () => {

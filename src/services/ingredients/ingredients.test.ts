@@ -1,11 +1,10 @@
-import ingredientsReducer, {initialState} from './reducer';
+import ingredientsReducer, { initialState } from './reducer';
 import { getAllIngredients } from './action';
 import { TIngredient } from '@utils/types/types';
-import { getIngredientsMap } from "@utils/helper-function";
-import { MOCK_DATA } from "../../constants/mock";
+import { getIngredientsMap } from '@utils/helper-function';
+import { MOCK_DATA } from '../../constants/mock';
 
 // const mockIngredients: TIngredient[] = MOCK_DATA
-
 
 describe('ingredientsSlice', () => {
 	it('should return the initial state', () => {

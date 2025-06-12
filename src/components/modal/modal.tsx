@@ -29,9 +29,11 @@ export const Modal = (props: TModalProps) => {
 			<section
 				className={`${styles.modal} ${classModal} `}
 				onClick={(e) => e.stopPropagation()}
-				data-modal="ingredient-details"
-			>
-				<button className={`${styles.close} ${classButton}`} onClick={onClose} data-modal={'close-button-modal'}>
+				data-modal='ingredient-details'>
+				<button
+					className={`${styles.close} ${classButton}`}
+					onClick={onClose}
+					data-modal={'close-button-modal'}>
 					<CloseIcon type='primary' />
 				</button>
 				{children}

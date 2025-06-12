@@ -2,7 +2,7 @@ import ingredientInfoReducer, {
 	setIngredientDetails,
 	removeIngredientDetails,
 	closeIngredientDetails,
-	initialState
+	initialState,
 } from './reducer';
 
 const mockIngredient = {
@@ -21,9 +21,10 @@ const mockIngredient = {
 };
 
 describe('ingredientInfoSlice', () => {
-
 	it('should return the initial state', () => {
-		expect(ingredientInfoReducer(undefined, { type: '' })).toEqual(initialState);
+		expect(ingredientInfoReducer(undefined, { type: '' })).toEqual(
+			initialState
+		);
 	});
 
 	it('should handle setIngredientDetails (open modal)', () => {

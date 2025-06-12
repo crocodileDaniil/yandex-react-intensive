@@ -1,14 +1,11 @@
 import orderStreamReducer, { initialState } from './reducer';
 
-import {
-	onConnecting,
-	onOpen,
-	onClose,
-	onError,
-	onMessage,
-} from './actions';
+import { onConnecting, onOpen, onClose, onError, onMessage } from './actions';
 
-import { WebsocketStatus, TOrder } from '@utils/types/types-orders-stream/types';
+import {
+	WebsocketStatus,
+	TOrder,
+} from '@utils/types/types-orders-stream/types';
 
 const mockOrders: TOrder[] = [
 	{
@@ -53,7 +50,10 @@ describe('orderStreamSlice reducer', () => {
 	});
 
 	it('should handle onError', () => {
-		const state = orderStreamReducer(initialState, onError('Ошибка соединения'));
+		const state = orderStreamReducer(
+			initialState,
+			onError('Ошибка соединения')
+		);
 		expect(state.error).toBe('Ошибка соединения');
 	});
 
@@ -82,4 +82,3 @@ describe('orderStreamSlice reducer', () => {
 		expect(state.totalToDay).toBeNull();
 	});
 });
-

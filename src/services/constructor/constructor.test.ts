@@ -30,18 +30,21 @@ const mockIngredient = {
 
 const mockIngredientWithKey = {
 	...mockIngredient,
-	key: testKey
+	key: testKey,
 };
 
 describe('constructorSlice', () => {
-
 	it('should handle setIngredient', () => {
 		// пришлось сделат так, чтобы обойти nanoid, поскольку он не мокался. возможно, подскажете способ для решения этой проблемы
-		expect(constructorSlice.reducer(undefined, {type: 'burgerConstructor/setIngredient', payload: {ingredient: mockIngredientWithKey}})).toEqual({
+		expect(
+			constructorSlice.reducer(undefined, {
+				type: 'burgerConstructor/setIngredient',
+				payload: { ingredient: mockIngredientWithKey },
+			})
+		).toEqual({
 			...initialState,
 			ingredients: [mockIngredientWithKey],
-		})
-
+		});
 	});
 
 	it('should handle setBun', () => {

@@ -42,15 +42,14 @@ export const Ingredient = (props: TPropsIngredient) => {
 					})
 				)
 			}
-			data-ingredient={_id}
-		>
+			data-ingredient={_id}>
 			<div className={styles.count}>{!!count && <Counter count={count} />}</div>
 			<img src={image} alt={`${name}`} />
 			<div className={styles.price}>
 				<p className='text text_type_digits-default'>{price}</p>{' '}
 				<CurrencyIcon type='primary' />
 			</div>
-			<p className={`${styles.text} text text_type_main-default`} >{name}</p>
+			<p className={`${styles.text} text text_type_main-default`}>{name}</p>
 		</article>
 	);
 };

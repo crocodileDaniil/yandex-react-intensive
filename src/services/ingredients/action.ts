@@ -7,7 +7,6 @@ type TIngredientsResponse = {
 	data: TIngredient[];
 };
 
-
 export const getAllIngredients = createAsyncThunk<
 	TIngredientsResponse,
 	void,

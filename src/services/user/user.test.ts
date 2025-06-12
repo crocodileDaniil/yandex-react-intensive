@@ -1,8 +1,4 @@
-import reducer, {
-	initialState,
-	setUser,
-	clearError,
-} from './reducer';
+import reducer, { initialState, setUser, clearError } from './reducer';
 import {
 	registerUser,
 	loginUser,
@@ -33,7 +29,9 @@ describe('userSlice', () => {
 	});
 
 	it('registerUser.pending должен устанавливать loading', () => {
-		const nextState = reducer(initialState, { type: registerUser.pending.type });
+		const nextState = reducer(initialState, {
+			type: registerUser.pending.type,
+		});
 		expect(nextState.loading).toBe(true);
 	});
 
