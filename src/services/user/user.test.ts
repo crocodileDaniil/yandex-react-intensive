@@ -13,11 +13,11 @@ const mockUser = {
 };
 
 describe('userSlice', () => {
-	it('должен вернуть начальное состояние', () => {
+	it('should return initial State', () => {
 		expect(reducer(undefined, { type: '' })).toEqual(initialState);
 	});
 
-	it('setUser должен устанавливать пользователя', () => {
+	it('should handle setUser', () => {
 		const nextState = reducer(initialState, setUser(mockUser));
 		expect(nextState.user).toEqual(mockUser);
 	});
@@ -28,14 +28,14 @@ describe('userSlice', () => {
 		expect(nextState.error).toBeNull();
 	});
 
-	it('registerUser.pending должен устанавливать loading', () => {
+	it('should handle registerUser.pending', () => {
 		const nextState = reducer(initialState, {
 			type: registerUser.pending.type,
 		});
 		expect(nextState.loading).toBe(true);
 	});
 
-	it('registerUser.fulfilled должен установить пользователя', () => {
+	it('should handle registerUser.fulfilled', () => {
 		const payload = { user: mockUser, success: true };
 		const nextState = reducer(initialState, {
 			type: registerUser.fulfilled.type,
@@ -47,7 +47,7 @@ describe('userSlice', () => {
 		expect(nextState.hasError).toBe(false);
 	});
 
-	it('registerUser.rejected должен установить ошибку', () => {
+	it('should handle registerUser.rejected', () => {
 		const nextState = reducer(initialState, {
 			type: registerUser.rejected.type,
 			payload: 'Ошибка регистрации',
@@ -57,7 +57,7 @@ describe('userSlice', () => {
 		expect(nextState.loading).toBe(false);
 	});
 
-	it('loginUser.fulfilled должен установить пользователя', () => {
+	it('should handle loginUser.fulfilled', () => {
 		const payload = { user: mockUser, success: true };
 		const nextState = reducer(initialState, {
 			type: loginUser.fulfilled.type,
@@ -67,7 +67,7 @@ describe('userSlice', () => {
 		expect(nextState.isAuthChecked).toBe(true);
 	});
 
-	it('loginUser.rejected должен сбросить пользователя и установить ошибку', () => {
+	it('should handle loginUser.rejected', () => {
 		const nextState = reducer(initialState, {
 			type: loginUser.rejected.type,
 			payload: 'Ошибка входа',
@@ -77,7 +77,7 @@ describe('userSlice', () => {
 		expect(nextState.hasError).toBe(true);
 	});
 
-	it('logoutUser.fulfilled должен сбрасывать пользователя', () => {
+	it('should handle logoutUser.fulfilled', () => {
 		const loggedInState = {
 			...initialState,
 			user: mockUser,
@@ -90,7 +90,7 @@ describe('userSlice', () => {
 		expect(nextState.isAuthChecked).toBe(true);
 	});
 
-	it('checkUserAuth.fulfilled должен устанавливать пользователя', () => {
+	it('should handle checkUserAuth.fulfilled', () => {
 		const payload = { user: mockUser };
 		const nextState = reducer(initialState, {
 			type: checkUserAuth.fulfilled.type,
@@ -100,7 +100,7 @@ describe('userSlice', () => {
 		expect(nextState.isAuthChecked).toBe(true);
 	});
 
-	it('editProfileUser.fulfilled должен обновлять пользователя', () => {
+	it('should handle editProfileUser.fulfilled', () => {
 		const payload = { user: { ...mockUser, name: 'Updated User' } };
 		const nextState = reducer(initialState, {
 			type: editProfileUser.fulfilled.type,

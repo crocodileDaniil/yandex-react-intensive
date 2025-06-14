@@ -48,7 +48,7 @@ describe('ingredientInfoSlice', () => {
 		expect(state.isOpenModal).toBe(false);
 	});
 
-	it('should handle closeIngredientDetails (just close modal)', () => {
+	it('should handle closeIngredientDetails (close modal)', () => {
 		const openState = {
 			ingredient: mockIngredient,
 			isOpenModal: true,
