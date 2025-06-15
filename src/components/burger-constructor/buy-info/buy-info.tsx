@@ -8,6 +8,7 @@ import {
 	getOrderError,
 	getOrderNumber,
 } from '@services/order/reducer';
+import { clearConstructor } from '@services/constructor/reducer';
 
 export const BuyInfo = () => {
 	const dispatch = useDispatch();
@@ -18,6 +19,7 @@ export const BuyInfo = () => {
 	const numberOrder = useSelector(getOrderNumber);
 
 	const onClose = () => {
+		dispatch(clearConstructor());
 		dispatch(closeModal());
 	};
 

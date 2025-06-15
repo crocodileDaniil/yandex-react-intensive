@@ -10,7 +10,7 @@ export type TPropsClassName = {
 export type TIngredient = {
 	_id: string;
 	name: string;
-	type: 'string';
+	type: string;
 	proteins: number;
 	fat: number;
 	carbohydrates: number;

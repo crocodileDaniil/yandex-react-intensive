@@ -24,16 +24,17 @@ export const IngredientsSection = (props: TIngredientSection) => {
 			</p>
 			<div className={`${styles['ingr-section']} pl-4 pb-10 pr-1`}>
 				{data.map((ingredient) => (
-					<Link
-						key={ingredient['_id']}
-						to={`${pathPages.ingredients}/${ingredient['_id']}`}
-						state={{ backgroundLocation: { ...location } }}>
-						<Ingredient
-							key={ingredient['_id']}
-							{...ingredient}
-							count={countIngredient[ingredient['_id']]}
-						/>
-					</Link>
+					<div key={ingredient['_id']}>
+						<Link
+							to={`${pathPages.ingredients}/${ingredient['_id']}`}
+							state={{ backgroundLocation: { ...location } }}>
+							<Ingredient
+								key={ingredient['_id']}
+								{...ingredient}
+								count={countIngredient[ingredient['_id']]}
+							/>
+						</Link>
+					</div>
 				))}
 			</div>
 		</article>

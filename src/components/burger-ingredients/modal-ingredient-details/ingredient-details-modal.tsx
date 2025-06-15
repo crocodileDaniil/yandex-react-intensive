@@ -36,7 +36,9 @@ export const IngredientDetailsModal = () => {
 			<>
 				<p className='text text_type_main-large'>Детали ингредиента</p>
 				<img className={`${styles.image} mb-1`} src={image} alt='' />
-				<p className={`text text_type_main-medium ${styles.name} mb-8`}>
+				<p
+					className={`text text_type_main-medium ${styles.name} mb-8`}
+					data-ingredient={'name'}>
 					{name}
 				</p>
 				<div className={`${styles['ingredient-info']}`}>

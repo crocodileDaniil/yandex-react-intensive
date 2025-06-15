@@ -25,7 +25,7 @@ const getResponse = async <T>(res: Response): Promise<T> => {
 	}
 
 	throw new Error(
-		`Error ${res.status}: 
+		`Error ${res.status}:
     ${res.statusText}`
 	);
 };

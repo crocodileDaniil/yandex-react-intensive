@@ -7,12 +7,6 @@ type TIngredientsResponse = {
 	data: TIngredient[];
 };
 
-// type TReject = {
-// 	success?: boolean;
-// 	rejectValue?: string;
-// 	message?: string;
-// };
-
 export const getAllIngredients = createAsyncThunk<
 	TIngredientsResponse,
 	void,
@@ -20,6 +14,7 @@ export const getAllIngredients = createAsyncThunk<
 >('ingredients/getAllIngredients', async (_, thunkApi) => {
 	try {
 		const data = await getAllIngredientsApi();
+		// console.log(data);
 		return data as TIngredientsResponse;
 	} catch (err: any) {
 		return thunkApi.rejectWithValue(err.message ?? 'Неизвестная ошибка');

@@ -11,7 +11,7 @@ type TOrderState = {
 	isError: boolean;
 };
 
-const initialState: TOrderState = {
+export const initialState: TOrderState = {
 	orderNumbers: [],
 	currentOrders: [],
 	requestCompleted: false,
@@ -88,3 +88,5 @@ export const {
 	getIsError,
 	getCurrentOrders,
 } = orderSlice.selectors;
+
+export default orderSlice.reducer;

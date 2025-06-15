@@ -11,7 +11,7 @@ type TStateIngredients = {
 	hasError: boolean;
 };
 
-const initialState: TStateIngredients = {
+export const initialState: TStateIngredients = {
 	ingredients: [],
 	ingredientsMap: {},
 	loading: false,
@@ -58,3 +58,5 @@ export const {
 	getIngredientsHasError,
 	getMapIngredients,
 } = ingredientsSlice.selectors;
+
+export default ingredientsSlice.reducer;

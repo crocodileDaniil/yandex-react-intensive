@@ -11,8 +11,8 @@ export type TOrder = {
 export type TOrdersStream = {
 	success: string;
 	orders: TOrder[];
-	total: number;
-	totalToday: number;
+	total: number | undefined;
+	totalToday: number | undefined;
 };
 
 export enum WebsocketStatus {
