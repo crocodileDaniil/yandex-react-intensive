@@ -1,4 +1,15 @@
+import {
+	CLOSE_BUTTON,
+	INGREDIENT_DETAILS,
+	NAME_INGREDIENT,
+} from './../../src/constants/test-data-selectors';
 import mockIngredients from '../fixtures/mock-data.json';
+
+const selectorModal = `[data-modal=${INGREDIENT_DETAILS}]`;
+const selectorTestIngredient = `[data-ingredient="${mockIngredients.data.data[0]._id}"]`;
+const selectorNameIngredient = `[data-ingredient=${NAME_INGREDIENT}]`;
+const selectorCloseButton = `[data-modal=${CLOSE_BUTTON}]`;
+const selectorOverlay = '[data-overlay="overlay"]';
 
 describe('Проверка открытия модалки ингредиента', () => {
 	beforeEach(() => {
@@ -25,42 +36,36 @@ describe('Проверка открытия модалки ингредиент�
 	it('открывается модалка с корректными данными', () => {
 		const firstIngredient = mockIngredients.data.data[0];
 
-		cy.get(`[data-ingredient="${firstIngredient._id}"]`).click();
+		cy.get(selectorTestIngredient).click();
 
-		cy.get('[data-modal="ingredient-details"]').should('exist');
-		cy.get('[data-ingredient="name"]').should('contain.text', firstIngredient.name);
+		cy.get(selectorModal).should('exist');
+		cy.get(selectorNameIngredient).should('contain.text', firstIngredient.name);
 	});
 
 	it('модалка закрывается по кнопке закрытия', () => {
-		const firstIngredient = mockIngredients.data.data[0];
+		cy.get(selectorTestIngredient).click();
+		cy.get(selectorModal).should('exist');
 
-		cy.get(`[data-ingredient="${firstIngredient._id}"]`).click();
-		cy.get('[data-modal="ingredient-details"]').should('exist');
+		cy.get(selectorCloseButton).click();
 
-		cy.get('[data-modal="close-button-modal"]').click();
-
-		cy.get('[data-modal="ingredient-details"]').should('not.exist');
+		cy.get(selectorModal).should('not.exist');
 	});
 
 	it('модалка закрывается по Escape', () => {
-		const firstIngredient = mockIngredients.data.data[0];
-
-		cy.get(`[data-ingredient="${firstIngredient._id}"]`).click();
-		cy.get('[data-modal="ingredient-details"]').should('exist');
+		cy.get(selectorTestIngredient).click();
+		cy.get(selectorModal).should('exist');
 
 		cy.get('body').type('{esc}');
 
-		cy.get('[data-modal="ingredient-details"]').should('not.exist');
+		cy.get(selectorModal).should('not.exist');
 	});
 
 	it('модалка закрывается по клику на оверлей', () => {
-		const firstIngredient = mockIngredients.data.data[0];
+		cy.get(selectorTestIngredient).click();
+		cy.get(selectorModal).should('exist');
 
-		cy.get(`[data-ingredient="${firstIngredient._id}"]`).click();
-		cy.get('[data-modal="ingredient-details"]').should('exist');
+		cy.get(selectorOverlay).click('topLeft');
 
-		cy.get('[data-overlay="overlay"]').click('topLeft');
-
-		cy.get('[data-modal="ingredient-details"]').should('not.exist');
+		cy.get(selectorModal).should('not.exist');
 	});
 });

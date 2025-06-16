@@ -4,6 +4,10 @@ import ReactDOM from 'react-dom';
 import { useEffect } from 'react';
 import styles from './styles.module.css';
 import { TPropsChildren } from '@utils/types/types';
+import {
+	CLOSE_BUTTON,
+	INGREDIENT_DETAILS,
+} from '../../constants/test-data-selectors';
 
 type TModalProps = {
 	onClose: () => void;
@@ -29,11 +33,11 @@ export const Modal = (props: TModalProps) => {
 			<section
 				className={`${styles.modal} ${classModal} `}
 				onClick={(e) => e.stopPropagation()}
-				data-modal='ingredient-details'>
+				data-modal={INGREDIENT_DETAILS}>
 				<button
 					className={`${styles.close} ${classButton}`}
 					onClick={onClose}
-					data-modal={'close-button-modal'}>
+					data-modal={CLOSE_BUTTON}>
 					<CloseIcon type='primary' />
 				</button>
 				{children}
