@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { getIngredients } from '@services/ingredients/reducer';
 import { TIngredient } from '@utils/types/types';
 import { useSelector } from '@utils/custom-hooks';
+import { NAME_INGREDIENT } from '../../../constants/test-data-selectors';
 
 export const IngredientDetailsModal = () => {
 	const navigate = useNavigate();
@@ -36,7 +37,9 @@ export const IngredientDetailsModal = () => {
 			<>
 				<p className='text text_type_main-large'>Детали ингредиента</p>
 				<img className={`${styles.image} mb-1`} src={image} alt='' />
-				<p className={`text text_type_main-medium ${styles.name} mb-8`}>
+				<p
+					className={`text text_type_main-medium ${styles.name} mb-8`}
+					data-ingredient={NAME_INGREDIENT}>
 					{name}
 				</p>
 				<div className={`${styles['ingredient-info']}`}>

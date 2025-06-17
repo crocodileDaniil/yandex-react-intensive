@@ -6,7 +6,7 @@ type TStateIngredientInfo = {
 	isOpenModal: boolean;
 };
 
-const initialState: TStateIngredientInfo = {
+export const initialState: TStateIngredientInfo = {
 	ingredient: null,
 	isOpenModal: false,
 };
@@ -40,3 +40,5 @@ export const {
 } = ingredientInfoSlice.actions;
 export const { getDataIngredientDetails, getActiveIngredientDetails } =
 	ingredientInfoSlice.selectors;
+
+export default ingredientInfoSlice.reducer;

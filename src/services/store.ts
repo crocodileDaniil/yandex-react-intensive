@@ -42,7 +42,7 @@ const store = configureStore({
 		getDefaultMiddlewares().concat(ordersStreamMiddleware),
 });
 
-console.log('redux_store: ', store.getState());
+// console.log('redux_store: ', store.getState());
 
 export const getStore = () => store.getState();
 

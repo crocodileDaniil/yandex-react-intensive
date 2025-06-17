@@ -13,7 +13,7 @@ type TStateOrdersStream = {
 	totalToDay?: number | null;
 };
 
-const initialState: TStateOrdersStream = {
+export const initialState: TStateOrdersStream = {
 	orders: [],
 	status: WebsocketStatus.OFFLINE,
 	error: null,
@@ -58,3 +58,5 @@ export const orderStreamSlice = createSlice({
 
 export const { getOrders, getStatus, getError, getTotal, getTotalToDay } =
 	orderStreamSlice.selectors;
+
+export default orderStreamSlice.reducer;

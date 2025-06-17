@@ -7,8 +7,11 @@ import { useDispatch } from '@utils/custom-hooks';
 import { setIngredientDetails } from '@services/ingredient-info/reducer';
 import { useDrag } from 'react-dnd';
 import { ItemDropTypes } from '@utils/items-drop-types';
+import { TIngredient } from '@utils/types/types';
 
-export const Ingredient = (props) => {
+type TPropsIngredient = TIngredient & { count: number };
+
+export const Ingredient = (props: TPropsIngredient) => {
 	const { type, image, price, name, _id, count } = props;
 
 	const dispatch = useDispatch();
@@ -26,7 +29,7 @@ export const Ingredient = (props) => {
 			isDrag: monitor.isDragging(),
 		}),
 	}));
-	const styleBorder = isDrag && 'drag';
+	const styleBorder: '' | 'drag' = isDrag ? 'drag' : '';
 
 	return (
 		<article
@@ -38,7 +41,8 @@ export const Ingredient = (props) => {
 						...props,
 					})
 				)
-			}>
+			}
+			data-ingredient={_id}>
 			<div className={styles.count}>{!!count && <Counter count={count} />}</div>
 			<img src={image} alt={`${name}`} />
 			<div className={styles.price}>
